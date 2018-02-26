@@ -1,0 +1,37 @@
+<ion-header>    
+    <ion-navbar color="primary"  >
+        <ion-buttons start>
+          <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+          </button>
+        </ion-buttons>
+        <ion-title>EXAM LIST</ion-title>
+    </ion-navbar>
+    
+</ion-header>
+
+  <ion-content>     
+    <ion-card>    
+    <ion-list> 
+      <ion-list-header color="light">
+        Check out the list of online test and be able to take test.          
+      </ion-list-header>        
+      <button ion-item (click)="showExamDetailPage()">
+        <h2>Test exam 1</h2> 
+        <p>2018.01.02 11:00 ~ 2018.01.02 17:00</p> 
+      </button>
+      <hr>
+      <button ion-item (click)="showExamDetailPage()">
+        <h2>Test exam 2</h2> 
+        <p>2018.01.02 11:00 ~ 2018.01.02 17:00</p>
+      </button>
+      <hr>
+      <button ion-item (click)="showExamDetailPage()">
+        <h2>Test exam 3</h2> 
+        <p>2018.01.02 11:00 ~ 2018.01.02 17:00</p> 
+      </button> 
+      <hr>
+    </ion-list> 
+  </ion-card>
+  </ion-content> 
+ 

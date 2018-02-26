@@ -1,0 +1,32 @@
+page-score-list {
+    .boxBasic {
+        width: 100%;
+        height: 100%;   
+   }
+   .leftBasicBox {
+      // background-color: aquamarine;
+      float: left;
+      margin-left: -18px;
+      width: 68%;
+      height: 40%;  
+   }
+   .rightBasicBox {
+       //background-color: #000;
+       float: right;
+       width: 43%;
+       height: 40%;
+       margin-right: -18px;
+   }
+
+   .boxBasic {
+       width: 110%;
+       margin-left: -16px;
+       // margin-top: 
+     }    
+     .leftbox{
+       width: 65%; 
+     }
+     .rightbox{
+       width: 45%; 
+     }
+}

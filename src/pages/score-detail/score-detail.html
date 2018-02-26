@@ -1,0 +1,62 @@
+<!--
+  Generated template for the ScoreDetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar color="primary">
+        <ion-buttons start>
+          <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+          </button>
+        </ion-buttons>
+        <ion-title>Score Detail</ion-title>
+      </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>    
+  <ion-card>
+    <ion-list>  
+       <ion-list-header color="light">
+          Confimation result test and check correct answer, explaining and marking are correct.          
+       </ion-list-header>
+       <ion-item>  
+         <ion-label stacked>Test name</ion-label>  
+         <ion-label>Test exam 2</ion-label>  
+       </ion-item>
+       <hr>
+       <ion-item>  
+         <ion-label stacked>Test allotting</ion-label>  
+         <!--<ion-label>Test at the anytime</ion-label>-->
+         <ion-label>100.0 allotting</ion-label>
+       </ion-item>
+       <hr>
+       <ion-item>  
+         <ion-label stacked>Score period</ion-label>  
+         <ion-label>2018.01.10 10:00 ~ 2018.01.15 18:00</ion-label>
+         <!--<ion-label>Private</ion-label>-->
+         <!--<ion-label>No period setting</ion-label>-->
+       </ion-item>
+       <hr>
+       <ion-item>  
+         <ion-label stacked>My score</ion-label>  
+         <!--<ion-label>Incompleted</ion-label>-->
+         <!--<ion-label>Absent</ion-label>-->
+         <!--<ion-label>Unmarked</ion-label>-->
+         <ion-label>90.0 score</ion-label>
+       </ion-item>             
+       <hr>
+       <button ion-button full large color="danger" (click)="goViewAnswerExpl()">View Answer & Explain</button>
+       <!--<ion-item>  
+         <ion-label stacked>View answer</ion-label>  
+         <ion-label>Incompleted</ion-label>
+         <ion-label>Absent</ion-label>
+       </ion-item>-->      
+       <hr>
+       <button ion-button full large color="secondary" (click)="goViewStatic()">View Static</button>
+    </ion-list>
+  </ion-card>
+ </ion-content>

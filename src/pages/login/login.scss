@@ -1,0 +1,54 @@
+page-login {
+
+  #txt{
+      text-align: center;
+      vertical-align: middle;
+      
+  }
+  #cloud-layer {
+      width: 95%;
+      height: 285px;      
+      text-align: center;
+      border: 2px solid #bdbdbd;
+      vertical-align: middle;
+      margin-left: 9px;
+  }
+  
+  #userID {
+      margin-left: 2%;
+      margin-right: 2%;
+      width: 96%;
+      height: 60px;
+      line-height: 30px;
+      font-size: 18px;
+      text-align: center;
+      vertical-align: middle;
+      background: #e0e0e0;
+     
+  }
+  #password {
+    margin-left: 2%;
+    margin-right: 2%;
+    width: 96%;
+    height: 60px;
+    line-height: 30px;
+    font-size: 18px;
+    text-align: center;
+    vertical-align: middle;
+    background: #e0e0e0;
+   
+}
+  .checkbox{
+      font-size: 15px;
+    }
+    .login-button{
+      margin-left: 2%;
+      margin-right: 2%;
+      width: 96%;
+      height: 60px;            
+      font-size: 25px;      
+      background-color:#283593;
+    }
+    
+  }
+  
