@@ -8,6 +8,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
  * Ionic pages and navigation.
  */
 
+ /*
+  khanh try to push content of file
+ */
+
 @IonicPage()
 @Component({
   selector: 'page-admin-tab1',
