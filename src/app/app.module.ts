@@ -17,6 +17,7 @@ import { MultistatPage } from '../pages/multistat/multistat';
 import { MenuPage }   from '../pages/menu/menu';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
     MenuPage
   ],
   imports: [
-    BrowserModule, HttpModule,
+    BrowserModule, HttpModule,HttpClientModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
