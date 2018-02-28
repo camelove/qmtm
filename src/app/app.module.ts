@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpModule } from '@angular/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -13,7 +14,9 @@ import { ExamDetailPage}  from '../pages/exam-detail/exam-detail';
 import { EtestPage } from '../pages/etest/etest';
 import { AdminTabsPage } from '../pages/admin-tabs/admin-tabs';
 import { MultistatPage } from '../pages/multistat/multistat';
-import {MenuPage}   from '../pages/menu/menu';
+import { MenuPage }   from '../pages/menu/menu';
+import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -25,7 +28,7 @@ import {MenuPage}   from '../pages/menu/menu';
     MenuPage
   ],
   imports: [
-    BrowserModule,
+    BrowserModule, HttpModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -43,7 +46,8 @@ import {MenuPage}   from '../pages/menu/menu';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     PrincipalProvider,
-    AppEventsProvider
+    AppEventsProvider,
+    AuthServiceProvider
   ]
 })
 export class AppModule {}

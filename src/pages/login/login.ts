@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
-import {MenuPage} from '../menu/menu';
-// import { LoadingController } from 'ionic-angular';
+import { MenuPage } from '../menu/menu';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+//import { LoadingController } from 'ionic-angular';
 
 /**
  * Generated class for the LoginPage page.
@@ -17,7 +18,9 @@ import {MenuPage} from '../menu/menu';
 })
 export class LoginPage {
 
-  // constructor(public loadingCtrl: LoadingController) {}
+  username:string = '';
+  password:string = '';
+    
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController) {}
 
   public ionViewDidLoad() {
@@ -25,20 +28,14 @@ export class LoginPage {
   }
 
   public doLogin(){
-    // let loader = this.loadingCtrl.create({
-    //   content: "Please wait...",
-    //   duration: 1000
-    // });
-    // loader.present();
+
+
+    /* let loader = this.loadingCtrl.create({
+    content: "Please wait...",
+    duration: 1000
+    });
+    loader.present(); */
     this.navCtrl.setRoot(MenuPage);
   }
-
-  // presentLoading() {
-  //   this.loadingCtrl.create({
-  //       content: 'please wait...',
-  //       duration: 3000,
-  //       dismissOnPageChange: true  
-  //   }).present;
-  // }
 
 }
