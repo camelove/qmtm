@@ -17,6 +17,7 @@ import { MultistatPage } from '../pages/multistat/multistat';
 import { MenuPage }   from '../pages/menu/menu';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 
+
 @NgModule({
   declarations: [
     MyApp,
