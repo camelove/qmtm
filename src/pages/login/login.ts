@@ -19,7 +19,7 @@ export class LoginPage {
 
   // username:string = '';
   // password:string = '';
-  loginData = { username:'', password:'' };
+  loginData = { userID:'', password:'' };
   loading: any;
   data:any;
   isLoggedIn: boolean = false;
@@ -42,10 +42,6 @@ export class LoginPage {
       this.loading.dismiss();
       this.presentToast(err);
     });  // case condition if userID or password wrong !!    
-    
-    
-
-    // if(username == this.username)
     
 
     /* let loader = this.loadingCtrl.create({

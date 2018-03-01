@@ -11,14 +11,14 @@ import 'rxjs/add/operator/map';
 */
 
 let loginURL = 'http://localhost:8080/QMTM_DEMO/mobile/user_check.jsp';
-let myTestURL = 'http://URL/mobile/exam/mytest.jsp';
-let examDetailURL = 'http://URL/mobile/exam/etest.jsp';
-let examPaperURL = 'http://URL/mobile/paper/etest.jsp';
-let saveAnswerAndLogurl = 'http://URL/mobile/paper/saveans.jsp';
-let scoreListURL = 'http://URL/mobile/score/myscore.jsp';
-let scoreDetailURL = 'http://URL/mobile/score/scoreinfo.jsp';
-let viewTestURL = 'http://URL/mobile/score/qa.jsp';
-let viewStaticURL = 'http://URL/mobile/score/multistat.jsp';
+let myTestURL = 'http://localhost:8080/QMTM_DEMO/mobile/exam/mytest.jsp';
+let examDetailURL = 'http://localhost:8080/QMTM_DEMO/mobile/exam/etest.jsp';
+let examPaperURL = 'http://localhost:8080/QMTM_DEMO/mobile/paper/etest.jsp';
+let saveAnswerAndLogurl = 'http://localhost:8080/QMTM_DEMO/mobile/paper/saveans.jsp';
+let scoreListURL = 'http://localhost:8080/QMTM_DEMO/mobile/score/myscore.jsp';
+let scoreDetailURL = 'http://localhost:8080/QMTM_DEMO/mobile/score/scoreinfo.jsp';
+let viewTestURL = 'http://localhost:8080/QMTM_DEMO/mobile/score/qa.jsp';
+let viewStaticURL = 'http://localhost:8080/QMTM_DEMO/mobile/score/multistat.jsp';
 
 
 @Injectable()
