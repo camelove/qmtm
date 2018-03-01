@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { MenuPage } from '../menu/menu';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms'; 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /**
  * Generated class for the LoginPage page.
@@ -17,21 +19,40 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 })
 export class LoginPage {
 
-  // username:string = '';
-  // password:string = '';
   // loginData = { userID:'', password:'' };
+  formgroup:FormGroup;
+  userID:AbstractControl;
+  password:AbstractControl;
+
   loginData = { "userID":"", "password":"" };
   loading: any;
   data:any;
   isLoggedIn: boolean = false;
     
-  constructor(public navCtrl: NavController, public authService: AuthServiceProvider, public navParams: NavParams, public loadingCtrl: LoadingController, private toastCtrl: ToastController) {}
+  constructor(public navCtrl: NavController, 
+              public authService: AuthServiceProvider, 
+              public navParams: NavParams, 
+              public loadingCtrl: LoadingController, 
+              public formbuilder: FormBuilder,
+              private toastCtrl: ToastController) {
+
+                /* 
+                this.formgroup = formbuilder.group({
+                  userID:['',Validators.required, Validators.minLength(5)],
+                  password:['',Validators.required, Validators.maxLength(15)]
+                });
+
+                this.userID = this.formgroup.controls['userID'];
+                this.password = this.formgroup.controls['password']; 
+                */
+              }
 
   public ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
   }
 
   public doLogin() {
+    
     this.showLoader();
     this.authService.authenLogin(this.loginData).then((result) => {
       this.loading.dismiss();
@@ -42,7 +63,7 @@ export class LoginPage {
     }, (err) => {
       this.loading.dismiss();
       this.presentToast(err);
-    });  // case condition if userID or password wrong !!    
+    });    
     
 
     /* let loader = this.loadingCtrl.create({

@@ -10,9 +10,8 @@ import 'rxjs/add/operator/map';
   and Angular DI.
 */
 
-let loginURL = 'http://localhost:8080/QMTM_DEMO/mobile/user_check.jsp';
-// let loginURL = 'https://swapi.co/api/films';
-
+//let loginURL = 'http://localhost:8080/QMTM_DEMO/mobile/user_check.jsp';
+let loginURL = 'http://192.168.100.2:8080/QMTM_DEMO/mobile/user_check.jsp';
 let myTestURL = 'http://localhost:8080/QMTM_DEMO/mobile/exam/mytest.jsp';
 let examDetailURL = 'http://localhost:8080/QMTM_DEMO/mobile/exam/etest.jsp';
 let examPaperURL = 'http://localhost:8080/QMTM_DEMO/mobile/paper/etest.jsp';
@@ -35,6 +34,11 @@ export class AuthServiceProvider {
   * URL: http://localhost:8080/QMTM_DEMO/mobile/user_check.jsp
   */
   authenLogin(credentials) {
+
+    // check status of url when debug on broswers
+    this.http.get(loginURL).subscribe(data => {
+      console.log(data);
+    });
 
     return new Promise((resolve, reject) => {  
       let headers = new Headers();

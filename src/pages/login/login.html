@@ -2,17 +2,15 @@
   <ion-navbar>
     <ion-title>TEST LOGIN</ion-title>
   </ion-navbar>
-
 </ion-header>
-<!-->lam test <!-->
-<ion-content>        
-  
+
+<ion-content>          
+    
     <ion-list-header color="light">
         Input ID and PASSWORD.            
-    </ion-list-header>
-      
-    <ion-list>
+    </ion-list-header>      
 
+    <ion-list>
       <ion-item>
         <ion-label floating>ID</ion-label>
         <ion-input type="text" value="" [(ngModel)]="loginData.userID"></ion-input>
@@ -25,8 +23,34 @@
         <ion-label>SaveID</ion-label>
         <ion-checkbox color="dark" checked="true"></ion-checkbox>
       </ion-item>
-
     </ion-list>
 
     <button ion-button full large color="danger" (click)="doLogin()">Login</button>  
+  
+  
+  <!-- 
+  <form [formGroup]="formgroup">
+      <ion-list>
+         <ion-item>
+           <ion-label>UserID</ion-label>
+           <ion-input type="text" formControlName="userID"></ion-input> 
+         </ion-item> 
+            <ion-item *ngIf="userID.hasError('required') && userID.touched">
+                <p>* UserID is required !</p>
+            </ion-item>
+
+
+         <ion-item>
+          <ion-label>Password</ion-label>
+          <ion-input type="password" formControlName="password"></ion-input> 
+        </ion-item> 
+            <ion-item *ngIf="password.hasError('required') && password.touched">
+                <p>* Password is required !</p>
+            </ion-item>
+      </ion-list>
+
+      <button clear ion-button>Submit</button>
+  </form>  
+  -->
+
 </ion-content>

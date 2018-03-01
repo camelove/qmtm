@@ -18,6 +18,8 @@ import { MenuPage }   from '../pages/menu/menu';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -29,8 +31,13 @@ import { HttpClientModule } from '@angular/common/http';
     MultistatPage,
     MenuPage
   ],
+  exports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
   imports: [
-    BrowserModule, HttpModule,HttpClientModule,
+    BrowserModule, HttpModule, HttpClientModule, FormsModule, ReactiveFormsModule, CommonModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -46,7 +53,7 @@ import { HttpClientModule } from '@angular/common/http';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     PrincipalProvider,
     AppEventsProvider,
     AuthServiceProvider
