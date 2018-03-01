@@ -11,6 +11,8 @@ import 'rxjs/add/operator/map';
 */
 
 let loginURL = 'http://localhost:8080/QMTM_DEMO/mobile/user_check.jsp';
+// let loginURL = 'https://swapi.co/api/films';
+
 let myTestURL = 'http://localhost:8080/QMTM_DEMO/mobile/exam/mytest.jsp';
 let examDetailURL = 'http://localhost:8080/QMTM_DEMO/mobile/exam/etest.jsp';
 let examPaperURL = 'http://localhost:8080/QMTM_DEMO/mobile/paper/etest.jsp';
@@ -38,7 +40,7 @@ export class AuthServiceProvider {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       
-      this.http.post(loginURL + 'login' , JSON.stringify(credentials), {headers: headers})
+      this.http.post(loginURL, JSON.stringify(credentials), {headers: headers})
         .subscribe(res => {
           resolve(res.json());  
         }, (err) => {

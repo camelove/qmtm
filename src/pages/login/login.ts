@@ -19,7 +19,8 @@ export class LoginPage {
 
   // username:string = '';
   // password:string = '';
-  loginData = { userID:'', password:'' };
+  // loginData = { userID:'', password:'' };
+  loginData = { "userID":"", "password":"" };
   loading: any;
   data:any;
   isLoggedIn: boolean = false;
