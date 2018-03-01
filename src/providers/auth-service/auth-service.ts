@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-// import { Headers } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -24,7 +24,7 @@ let viewStaticURL = 'http://URL/mobile/score/multistat.jsp';
 @Injectable()
 export class AuthServiceProvider {
   
-  constructor(public http: HttpClient) {
+  constructor(public http: Http) {
     console.log('Hello AuthServiceProvider Provider');
   }
 
@@ -32,12 +32,15 @@ export class AuthServiceProvider {
   * Method authenLogin() to credential and authen userid and password..
   * URL: http://localhost:8080/QMTM_DEMO/mobile/user_check.jsp
   */
-  authenLogin(credentials/* , type */) {
+  authenLogin(credentials) {
 
-    return new Promise((resolve, reject) => {      
-      this.http.post(loginURL /* + type */, JSON.stringify(credentials))
+    return new Promise((resolve, reject) => {  
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      
+      this.http.post(loginURL + 'login' , JSON.stringify(credentials), {headers: headers})
         .subscribe(res => {
-          resolve(res);   //.json()
+          resolve(res.json());  
         }, (err) => {
           reject(err);
         });
