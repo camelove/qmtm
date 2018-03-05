@@ -5,19 +5,19 @@
 </ion-header>
 
 <ion-content>          
-    
     <ion-list-header color="light">
         Input ID and PASSWORD.            
     </ion-list-header>      
 
+    <form (ngSubmit)="doLogin()" #registerForm="ngForm">
     <ion-list>
       <ion-item>
         <ion-label floating>ID</ion-label>
-        <ion-input type="text" value="" [(ngModel)]="loginData.userID"></ion-input>
+        <ion-input type="text" name="userID" [(ngModel)]="loginData.userID" required></ion-input>
       </ion-item>
       <ion-item>
         <ion-label floating>PASSWORD</ion-label>
-        <ion-input type="password" [(ngModel)]="loginData.password"></ion-input>
+        <ion-input type="password" name="password" [(ngModel)]="loginData.password" required></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>SaveID</ion-label>
@@ -25,9 +25,46 @@
       </ion-item>
     </ion-list>
 
-    <button ion-button full large color="danger" (click)="doLogin()">Login</button>  
-  
-  
+    <button ion-button full large color="danger" type="submit" [disabled]="!registerForm.form.valid">Login</button>  
+    
+   </form>
+    <!-- <ion-content class="login-content" padding>
+
+    <ion-row class="logo-row">
+        <ion-col></ion-col>
+        <ion-col width-67>
+          <img src="http://placehold.it/300x200"/>
+        </ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+      <div class="login-box">
+        <form (ngSubmit)="login()" #registerForm="ngForm">
+          <ion-row>
+            <ion-col>
+              <ion-list inset>
+                
+                <ion-item>
+                  <ion-input type="text" placeholder="userID" name="userID" [(ngModel)]="registerCredentials.userID" required></ion-input>
+                </ion-item>
+                
+                <ion-item>
+                  <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="registerCredentials.password" required></ion-input>
+                </ion-item>
+                
+              </ion-list>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col class="signup-col">
+              <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">Login</button>
+              <button ion-button class="register-btn" block clear (click)="createAccount()">Create New Account</button>
+            </ion-col>
+          </ion-row>
+          
+        </form>
+      </div> -->
+
   <!-- 
   <form [formGroup]="formgroup">
       <ion-list>
