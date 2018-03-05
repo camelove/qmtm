@@ -69,8 +69,8 @@ export class LoginPage {
       this.resposeData = result;
       console.log(this.resposeData);
 
-      if(this.resposeData.userData) {
-        localStorage.setItem('token', this.resposeData.access_token);
+      if(this.resposeData.loginData) {
+        localStorage.setItem('loginData', JSON.stringify(this.resposeData))   // 'token', 'this.resposeData.access_token'
         this.navCtrl.setRoot(MenuPage);
       }
       else {
