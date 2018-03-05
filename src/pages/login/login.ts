@@ -5,6 +5,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms'; 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+
 /**
  * Generated class for the LoginPage page.
  *
@@ -18,6 +19,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   templateUrl: 'login.html',
 })
 export class LoginPage {
+
+  
 
   loginData = { "userID":"", "password":"" };
   
@@ -57,6 +60,9 @@ export class LoginPage {
 
   public doLogin() {
 
+    const STATUS_ok = 200;
+    const STATUS_failed = 400;
+
    if(this.loginData.userID && this.loginData.password) {
 
       this.showLoader();
@@ -71,7 +77,15 @@ export class LoginPage {
 
       if(this.resposeData.loginData) {
         localStorage.setItem('loginData', JSON.stringify(this.resposeData))   // 'token', 'this.resposeData.access_token'
-        this.navCtrl.setRoot(MenuPage);
+
+        if(this.resposeData.status == STATUS_ok) {  
+          // resolve(this.loginData);
+          this.navCtrl.setRoot(MenuPage);
+        }
+        else {
+          console.log("response status: " + STATUS_failed);
+        }
+        
       }
       else {
         this.presentToast("Please give valid userID and password");
@@ -85,7 +99,7 @@ export class LoginPage {
     }
     
     else {
-      this.presentToast("Give userID and password");
+      this.presentToast("please give userID and password");
     }
   }
 
