@@ -4,7 +4,7 @@ import { MenuPage } from '../menu/menu';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms'; 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { Network } from '@ionic-native/network';
 
 /**
  * Generated class for the LoginPage page.
@@ -32,10 +32,14 @@ export class LoginPage {
   userID:AbstractControl;
   password:AbstractControl;
   */
+
+ public online:boolean = true;
+
     
   constructor(public navCtrl: NavController, 
               public authService: AuthServiceProvider, 
               public navParams: NavParams, 
+              private network:Network,
               public loadingCtrl: LoadingController, 
               private alertCtrl: AlertController,
               public formbuilder: FormBuilder,
@@ -84,8 +88,7 @@ export class LoginPage {
         }
         else {
           console.log("response status: " + STATUS_failed);
-        }
-        
+        }        
       }
       else {
         this.presentToast("Please give valid userID and password");
@@ -93,6 +96,16 @@ export class LoginPage {
 
       }, (err) => {
         // Connection failed message, please check your internet..
+        this.network.onDisconnect().subscribe( () => {
+          this.online = false;
+          this.presentToast("network was disconnected");
+          //console.log('network was disconnected :-(');
+        });    
+        this.network.onConnect().subscribe( () => {
+          this.online = true;
+          this.presentToast("network was connected");
+          //console.log('network was connected :-)');
+        });
         this.loading.dismiss();
         this.presentToast(err);
       });   

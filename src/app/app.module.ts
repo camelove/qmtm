@@ -20,7 +20,7 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { Network } from '@ionic-native/network';
 
 @NgModule({
   declarations: [
@@ -38,7 +38,7 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule
   ],
   imports: [
-    BrowserModule, HttpModule, HttpClientModule, FormsModule, ReactiveFormsModule, CommonModule,
+    BrowserModule, HttpModule, HttpClientModule, FormsModule, ReactiveFormsModule, CommonModule, Network,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
