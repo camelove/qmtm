@@ -111,7 +111,7 @@ export class LoginPage {
   }
 
   /*
-  * Check remember user when login
+  * Check remember user when login    
   */
   checkRememberMe(rmChecked):void  {
     var isChecked = rmChecked.currentTarget.checked;
