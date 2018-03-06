@@ -25,13 +25,9 @@ export class LoginPage {
  
   loading: any;
   resposeData:any;
-  /* 
-  isLoggedIn: boolean = false;
-  formgroup:FormGroup;
-  userID:AbstractControl;
-  password:AbstractControl;
-  */
- items: Array<{title: string, note: string}>;
+
+  items: Array<{title: string, note: string}>;
+  
   constructor(public navCtrl: NavController, 
               public authService: AuthServiceProvider, 
               public navParams: NavParams, 
@@ -39,8 +35,7 @@ export class LoginPage {
               private alertCtrl: AlertController,
               public formbuilder: FormBuilder,
               private toastCtrl: ToastController,
-              public httpClient: HttpClient) {
-                   
+              public httpClient: HttpClient) {                   
               }
 
   public ionViewDidLoad() {
@@ -75,14 +70,18 @@ export class LoginPage {
       });
  
       }, (err) => {
-        // Connection failed message, please check your internet..
+        /* 
+        Connection failed message, please check your internet..
+        Create more method to check connection internet
+        */
         this.loading.dismiss();
         this.presentToast(err);
+        this.presentToast("Please check your internet, 3g, 4g ...");
       });   
     }
     
     else {
-      this.presentToast("Give userID and password");
+      this.presentToast("Please give userID and password");
     }
   }
 
