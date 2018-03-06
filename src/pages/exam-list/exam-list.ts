@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ExamDetailPage } from '../exam-detail/exam-detail';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { Observable } from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading, ToastController } from 'ionic-angular';
+
 /**
  * Generated class for the ExamListPage page.
  *
@@ -15,15 +19,32 @@ import { ExamDetailPage } from '../exam-detail/exam-detail';
 })
 export class ExamListPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  userID = '';
+  password = '';
+  loginData = { "userID":"", "password":"" };
+  exams: any;
+  
+  constructor(public navCtrl: NavController, public navParams: NavParams, public auth: AuthServiceProvider) {
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ExamListPage');
-  }
-  showExamDetailPage() {
-
-    this.navCtrl.setRoot(ExamDetailPage);
-  }
+   let info = this.auth.getUserInfo();
+   // this.userID = info['userID'];
+   // this.password = info['password'];
+   // this.loginData=info;
+   this.auth.exam_list(info).then((result) => {
+     var json;
+    
+     json =  result;
+     this.exams = json.Items;
  
+   })
+ }
+
+ ionViewDidLoad() {
+   console.log('ionViewDidLoad ExamListPage');
+ }
+ showExamDetailPage(exam) {
+
+   this.navCtrl.setRoot(ExamDetailPage,'exam:exam');
+ }
+
 }

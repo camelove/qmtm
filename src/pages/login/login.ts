@@ -116,4 +116,8 @@ export class LoginPage {
   display by toast message
   */
 
+  //
+  public checkRememberMe() {
+    console.log("remember me");
+  }
 }

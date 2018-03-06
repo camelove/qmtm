@@ -16,11 +16,12 @@
       <ion-list-header color="light">
         Check out the list of online test and be able to take test.          
       </ion-list-header>        
-      <button ion-item (click)="showExamDetailPage()">
-        <h2>Test exam 1</h2> 
-        <p>2018.01.02 11:00 ~ 2018.01.02 17:00</p> 
+      <button  ion-item *ngFor="let exam of exams " (click)="showExamDetailPage(exam)">
+        {{exam.Test_name}} 
+        <p>   {{exam.Start_time}}  ~  {{exam.End_time}}</p>
+        <!-- <p>{{exams.End_time}}</p>  -->
       </button>
-      <hr>
+      <!-- <hr>
       <button ion-item (click)="showExamDetailPage()">
         <h2>Test exam 2</h2> 
         <p>2018.01.02 11:00 ~ 2018.01.02 17:00</p>
@@ -30,7 +31,7 @@
         <h2>Test exam 3</h2> 
         <p>2018.01.02 11:00 ~ 2018.01.02 17:00</p> 
       </button> 
-      <hr>
+      <hr> -->  
     </ion-list> 
   </ion-card>
   </ion-content> 

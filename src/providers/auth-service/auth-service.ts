@@ -13,7 +13,7 @@ import 'rxjs/add/operator/map';
 
 // let loginURL = 'http://abc.com';
 let loginURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/user_check.jsp';
-let myTestURL = 'http://localhost:8080/QMTM_DEMO/mobile/exam/mytest.jsp';
+let exampleListURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/exam/mytest.jsp';
 let examDetailURL = 'http://localhost:8080/QMTM_DEMO/mobile/exam/etest.jsp';
 let examPaperURL = 'http://localhost:8080/QMTM_DEMO/mobile/paper/etest.jsp';
 let saveAnswerAndLogurl = 'http://localhost:8080/QMTM_DEMO/mobile/paper/saveans.jsp';
@@ -37,6 +37,8 @@ export class AuthServiceProvider {
 
   currentUser: User;
   login_url:any;
+  examlisturl:any;
+
   constructor(public http: Http) {
     console.log('AuthServiceProvider Provider');
   }
@@ -47,6 +49,7 @@ export class AuthServiceProvider {
   */
   public authenLogin(credentials) {
 
+    this.currentUser = credentials;
     this.login_url = loginURL+'?'+'userid='+credentials.userID +'&'+'password='+credentials.password;
 
     return new Promise((resolve, reject) => {  
@@ -74,6 +77,30 @@ export class AuthServiceProvider {
       this.currentUser = null;
       observer.next(true);
       observer.complete();
+    });
+  }
+
+  public getUserInfo() : User{
+    return this.currentUser;
+    
+  }
+
+  /*
+  * Method authenLogin() to credential and authen userid and password..
+  * URL: http://localhost:8080/QMTM_DEMO/mobile/user_check.jsp
+  */
+  public exam_list(currentUser) {
+    this.examlisturl = exampleListURL+'?'+'userid='+currentUser.userID;  
+      return new Promise((resolve, reject) => {  
+      let headers = new Headers();
+      headers.append('content-type','application/json');
+
+      this.http.get(this.examlisturl).map(res => res.json()).subscribe(data => {
+        console.log(data);
+   
+        console.log(data.headers);
+        resolve(data);    
+      });
     });
   }
 
