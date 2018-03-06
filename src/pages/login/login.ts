@@ -98,7 +98,7 @@ export class LoginPage {
   presentToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,
-      duration: 1000,
+      duration: 3000,
       position: 'bottom',
       dismissOnPageChange: true
     });
