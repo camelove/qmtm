@@ -25,8 +25,10 @@ export class LoginPage {
  
   loading: any;
   resposeData:any;
+  // rmchecked: any;
+  checked:boolean = true;
 
-  items: Array<{title: string, note: string}>;
+  items:Array<{title: string, note: string}>;
   
   constructor(public navCtrl: NavController, 
               public authService: AuthServiceProvider, 
@@ -107,17 +109,15 @@ export class LoginPage {
 
     toast.present();
   }
-  /*
-  check condition of some cases: 
-    1. input userID, 
-    2. input password, 
-    3. input userID wrong, 
-    4. input password wrong
-  display by toast message
-  */
 
-  //
-  public checkRememberMe() {
-    console.log("remember me");
+  /*
+  * Check remember user when login
+  */
+  checkRememberMe(rmChecked):void  {
+    var isChecked = rmChecked.currentTarget.checked;
+    console.log(rmChecked.currentTarget);
+    console.log(this.checked);
+    console.log("Debug on checkRememberMer() method...");
   }
+
 }

@@ -19,9 +19,9 @@
         <ion-label floating>PASSWORD</ion-label>
         <ion-input type="password" name="password" [(ngModel)]="loginData.password" required></ion-input>
       </ion-item>
-      <ion-item>
+      <ion-item >
         <ion-label>SaveID</ion-label>
-        <ion-checkbox color="dark" checked="true"></ion-checkbox>
+        <ion-checkbox color="#2962ff" (click)="checkRememberMe($event)"></ion-checkbox>    <!-- [(ngModel)]="checked" -->
       </ion-item>
     </ion-list>
 

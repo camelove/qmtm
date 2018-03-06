@@ -11,12 +11,11 @@ import 'rxjs/add/operator/map';
   and Angular DI.
 */
 
-// let loginURL = 'http://abc.com';
 let loginURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/user_check.jsp';
-let exampleListURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/exam/mytest.jsp';
+let examListURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/exam/mytest.jsp';
 let examDetailURL = 'http://localhost:8080/QMTM_DEMO/mobile/exam/etest.jsp';
 let examPaperURL = 'http://localhost:8080/QMTM_DEMO/mobile/paper/etest.jsp';
-let saveAnswerAndLogurl = 'http://localhost:8080/QMTM_DEMO/mobile/paper/saveans.jsp';
+let saveAnswerAndLogURL = 'http://localhost:8080/QMTM_DEMO/mobile/paper/saveans.jsp';
 let scoreListURL = 'http://localhost:8080/QMTM_DEMO/mobile/score/myscore.jsp';
 let scoreDetailURL = 'http://localhost:8080/QMTM_DEMO/mobile/score/scoreinfo.jsp';
 let viewTestURL = 'http://localhost:8080/QMTM_DEMO/mobile/score/qa.jsp';
@@ -35,6 +34,7 @@ export class User {
 @Injectable()
 export class AuthServiceProvider {
 
+  // List global variable and object
   currentUser: User;
   login_url:any;
   examlisturl:any;
@@ -69,8 +69,8 @@ export class AuthServiceProvider {
 
 
   /*
-  * Method authenLogin() to credential and authen userid and password..
-  * URL: http://localhost:8080/QMTM_DEMO/mobile/user_check.jsp
+  * Method logout() to user log out
+  * TODO Something
   */
   public logout() {
     return Observable.create(observer => {
@@ -80,17 +80,21 @@ export class AuthServiceProvider {
     });
   }
 
+  /*
+  * Method getUserInfo() method to get information of current user
+  * return value of current user
+  */
   public getUserInfo() : User{
     return this.currentUser;
     
   }
 
   /*
-  * Method authenLogin() to credential and authen userid and password..
-  * URL: http://localhost:8080/QMTM_DEMO/mobile/user_check.jsp
+  * Method exam_list() to show exam list and select
+  * URL: http://192.168.100.9:8080/QMTM_DEMO/mobile/exam/mytest.jsp
   */
   public exam_list(currentUser) {
-    this.examlisturl = exampleListURL+'?'+'userid='+currentUser.userID;  
+    this.examlisturl = examListURL+'?'+'userid='+currentUser.userID;  
       return new Promise((resolve, reject) => {  
       let headers = new Headers();
       headers.append('content-type','application/json');
