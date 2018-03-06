@@ -44,7 +44,7 @@ export class ExamListPage {
  }
  showExamDetailPage(exam) {
 
-   this.navCtrl.setRoot(ExamDetailPage,'exam:exam');
+   this.navCtrl.setRoot(ExamDetailPage,{exam:exam});
  }
 
 }

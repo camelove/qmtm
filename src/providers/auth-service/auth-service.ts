@@ -13,7 +13,7 @@ import 'rxjs/add/operator/map';
 
 let loginURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/user_check.jsp';
 let examListURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/exam/mytest.jsp';
-let examDetailURL = 'http://localhost:8080/QMTM_DEMO/mobile/exam/etest.jsp';
+let examDetailURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/exam/etest.jsp';
 let examPaperURL = 'http://localhost:8080/QMTM_DEMO/mobile/paper/etest.jsp';
 let saveAnswerAndLogURL = 'http://localhost:8080/QMTM_DEMO/mobile/paper/saveans.jsp';
 let scoreListURL = 'http://localhost:8080/QMTM_DEMO/mobile/score/myscore.jsp';
@@ -38,6 +38,7 @@ export class AuthServiceProvider {
   currentUser: User;
   login_url:any;
   examlisturl:any;
+  examdetailurl:any;
 
   constructor(public http: Http) {
     console.log('AuthServiceProvider Provider');
@@ -92,6 +93,7 @@ export class AuthServiceProvider {
   /*
   * Method exam_list() to show exam list and select
   * URL: http://192.168.100.9:8080/QMTM_DEMO/mobile/exam/mytest.jsp
+  * parameter: examListURL
   */
   public exam_list(currentUser) {
     this.examlisturl = examListURL+'?'+'userid='+currentUser.userID;  
@@ -107,5 +109,30 @@ export class AuthServiceProvider {
       });
     });
   }
+
+  /*
+  * Method exam_detail() to show exam list and select
+  * URL: http://192.168.100.9:8080/QMTM_DEMO/mobile/exam/etest.jsp
+  * parameter: examDetailURL
+  */
+  public exam_detail(credentials) {
+    
+    this.examdetailurl = examDetailURL+'?'+'userid='+credentials.userID +'&'+"id_exam="+credentials.id_exam;
+
+    return new Promise((resolve, reject) => {  
+    let headers = new Headers();
+    headers.append('content-type','application/json');
+
+      this.http.get(this.examdetailurl).map(res => res.json()).subscribe(data => {
+        console.log(data);
+  
+        console.log(data.headers);
+        resolve(data);    
+      });
+    });
+  }
+
+
+
 
 }
