@@ -12,7 +12,7 @@ import 'rxjs/add/operator/map';
 */
 
 // let loginURL = 'http://abc.com';
-let loginURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/user_check.jsp';
+let loginURL = 'http://192.168.100.6:8080/QMTM_DEMO/mobile/user_check.jsp';
 let myTestURL = 'http://localhost:8080/QMTM_DEMO/mobile/exam/mytest.jsp';
 let examDetailURL = 'http://localhost:8080/QMTM_DEMO/mobile/exam/etest.jsp';
 let examPaperURL = 'http://localhost:8080/QMTM_DEMO/mobile/paper/etest.jsp';
@@ -61,20 +61,34 @@ export class AuthServiceProvider {
     } */
     this.login_url = loginURL+'?'+'userid='+credentials.userID +'&'+'password='+credentials.password;
     // check status of url when debug on broswers
-    this.http.get(this.login_url).subscribe(data => {
-      console.log(data);
-    });
+    // this.http.get(this.login_url).subscribe(data => {
+    //   console.log(data);
+   
+      
+    // });
 
     return new Promise((resolve, reject) => {  
       let headers = new Headers();
-      headers.append('Content-Type', 'application/json');
+      headers.append('Access-Control-Allow-Origin' , '*');
+      headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
+      headers.append('Accept','application/json');
+      headers.append('content-type','application/json');
+       //let options = new RequestOptions({ headers:headers});
+     this.http.get(this.login_url).map(res => res.json()).subscribe(data => {
+      console.log(data);
+     
+      console.log(data.headers);
+      resolve(data);
       
-      this.http.post(this.login_url, JSON.stringify(credentials), {headers: headers})
-        .subscribe(res => {
-          resolve(res.json());      // .data
-        }, (err) => {
-          reject(err);
-        });
+    });
+     //headers.append('Content-Type', 'application/json');
+      
+      // this.http.post(this.login_url, JSON.stringify(credentials), {headers: headers})
+      //   .subscribe(res => {
+      //     resolve(res.json());      // .data
+      //   }, (err) => {
+      //     reject(err);
+      //   });
     });
   }
 

@@ -4,8 +4,8 @@ import { MenuPage } from '../menu/menu';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms'; 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Network } from '@ionic-native/network';
-
+import { Observable } from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
 /**
  * Generated class for the LoginPage page.
  *
@@ -20,10 +20,9 @@ import { Network } from '@ionic-native/network';
 })
 export class LoginPage {
 
-  
-
   loginData = { "userID":"", "password":"" };
-  
+  films: Observable<any>;
+ 
   loading: any;
   resposeData:any;
   /* 
@@ -32,30 +31,16 @@ export class LoginPage {
   userID:AbstractControl;
   password:AbstractControl;
   */
-
- public online:boolean = true;
-
-    
+ items: Array<{title: string, note: string}>;
   constructor(public navCtrl: NavController, 
               public authService: AuthServiceProvider, 
               public navParams: NavParams, 
-              private network:Network,
               public loadingCtrl: LoadingController, 
               private alertCtrl: AlertController,
               public formbuilder: FormBuilder,
-              private toastCtrl: ToastController) {
-
-                 
-                /*
-                Check condition validate for textbox if neccessary 
-                this.formgroup = formbuilder.group({
-                  userID:['',Validators.required, Validators.minLength(5)],
-                  password:['',Validators.required, Validators.maxLength(15)]
-                });
-
-                this.userID = this.formgroup.controls['userID'];
-                this.password = this.formgroup.controls['password'];  
-                */                
+              private toastCtrl: ToastController,
+              public httpClient: HttpClient) {
+                   
               }
 
   public ionViewDidLoad() {
@@ -64,55 +49,40 @@ export class LoginPage {
 
   public doLogin() {
 
-    const STATUS_ok = 200;
-    const STATUS_failed = 400;
-
-   if(this.loginData.userID && this.loginData.password) {
+   if(this.loginData.userID && this.loginData.password)
+    {
 
       this.showLoader();
-      this.authService.authenLogin(this.loginData).then((result) => {
+      this.authService.authenLogin(this.loginData).then((result) => 
+      {
 
       console.log('response data from server');
       console.log(result);
 
       this.loading.dismiss();
-      this.resposeData = result;
-      console.log(this.resposeData);
-
-      if(this.resposeData.loginData) {
-        localStorage.setItem('loginData', JSON.stringify(this.resposeData))   // 'token', 'this.resposeData.access_token'
-
-        if(this.resposeData.status == STATUS_ok) {  
-          // resolve(this.loginData);
+      var json;
+      json =result;
+    
+      json.forEach(element => 
+        {
+        if((element.Username !="") && (element.Status=="ok"))
+        {
           this.navCtrl.setRoot(MenuPage);
         }
         else {
-          console.log("response status: " + STATUS_failed);
-        }        
-      }
-      else {
-        this.presentToast("Please give valid userID and password");
-      }
-
+          this.presentToast("Please give valid userID and password");
+        }
+      });
+ 
       }, (err) => {
         // Connection failed message, please check your internet..
-        this.network.onDisconnect().subscribe( () => {
-          this.online = false;
-          this.presentToast("network was disconnected");
-          //console.log('network was disconnected :-(');
-        });    
-        this.network.onConnect().subscribe( () => {
-          this.online = true;
-          this.presentToast("network was connected");
-          //console.log('network was connected :-)');
-        });
         this.loading.dismiss();
         this.presentToast(err);
       });   
     }
     
     else {
-      this.presentToast("please give userID and password");
+      this.presentToast("Give userID and password");
     }
   }
 

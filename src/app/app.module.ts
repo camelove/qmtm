@@ -38,7 +38,7 @@ import { Network } from '@ionic-native/network';
     ReactiveFormsModule
   ],
   imports: [
-    BrowserModule, HttpModule, HttpClientModule, FormsModule, ReactiveFormsModule, CommonModule, Network,
+    BrowserModule, HttpModule, HttpClientModule, FormsModule, ReactiveFormsModule, CommonModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
