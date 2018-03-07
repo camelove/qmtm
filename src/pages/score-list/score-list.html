@@ -24,11 +24,11 @@
           <ion-list-header color="light">
             Confimation result test and check correct answer, explaining and marking are correct.          
           </ion-list-header>        
-          <button ion-item (click)="Gotoscoredetail()">
-            <h2>Test exam 1</h2> 
-            <p>2018.01.02 11:00 ~ 2018.01.02 17:00</p> 
+          <button ion-item  ion-item *ngFor="let exam of exams" (click)="Gotoscoredetail(exam)">
+            <h2> {{exam.Test_name}} </h2> 
+            <p>   {{exam.Start_time}}  ~  {{exam.End_time}}</p> 
           </button>
-          <hr>
+          <!-- <hr>
           <button ion-item (click)="Gotoscoredetail()">
             <h2>Test exam 2</h2> 
             <p>Private</p>
@@ -38,7 +38,7 @@
             <h2>Test exam 3</h2> 
             <p>No period setting</p> 
           </button> 
-          <hr>
+          <hr> -->
         </ion-list> 
     </ion-card>
 </ion-content> 

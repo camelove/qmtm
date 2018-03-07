@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading, ToastController } from 'ionic-angular';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { Observable } from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
+
 
 /**
  * Generated class for the EtestPage page.
@@ -15,7 +19,24 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class EtestPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  get_all_etest = { "userid":"", "id_exam":"" };      // view_exam
+  exam_test:any;
+  do_exam:any;    // exam_detail
+  do_test:any;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams,private auth:AuthServiceProvider) {
+    let info = this.auth.getUserInfo();
+    this.exam_test = this.navParams.get('exam');
+    var json;
+    json = this.exam_test;
+ 
+    this.get_all_etest.id_exam =  json.Test_code;
+    this.get_all_etest.userid = info.userID;
+    this.auth.paper_etest(this.get_all_etest).then((result) => {
+      this.do_test =  Object.keys(result).map(function(key, index) {
+        return result[key]
+      });
+    });
   }
 
   ionViewDidLoad() {

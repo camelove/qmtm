@@ -23,8 +23,7 @@ export class ExamDetailPage {
   view_exam = { "userid":"", "id_exam":"" };
   exam:any;
   exam_detail:any;
-  viewexams:any;
-  jobs=[];
+  viewexams:any;  
 
   constructor(public navCtrl: NavController, public navParams: NavParams,private auth:AuthServiceProvider) {
     let info = this.auth.getUserInfo();

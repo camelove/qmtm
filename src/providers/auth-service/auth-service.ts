@@ -39,6 +39,9 @@ export class AuthServiceProvider {
   login_url:any;
   examlisturl:any;
   examdetailurl:any;
+  scorelist_url:any;
+  scoredetail_url:any;
+  exampaperurl:any;
 
   constructor(public http: Http) {
     console.log('AuthServiceProvider Provider');
@@ -137,8 +140,20 @@ export class AuthServiceProvider {
   * URL: http://192.168.100.9:8080/QMTM_DEMO/mobile/score/myscore.jsp
   * parameter: scoreListURL
   */
-  public score_list() {
+  public score_list(credentials) {
 
+    this.scorelist_url = scoreListURL+'?'+'userid='+credentials.userID;
+  return new Promise((resolve, reject) => {  
+    let headers = new Headers();
+    headers.append('content-type','application/json');
+
+    this.http.get(this.scorelist_url).map(res => res.json()).subscribe(data => {
+        console.log(data);
+   
+         console.log(data.headers);
+          resolve(data);    
+      });
+    });
   }
 
   /*
@@ -146,8 +161,21 @@ export class AuthServiceProvider {
   * URL: http://192.168.100.9:8080/QMTM_DEMO/mobile/score/scoreinfo.jsp
   * parameter: scoreDetailURL
   */
-  public score_detail() {
+  public score_detail(credentials) {
 
+    this.scoredetail_url = scoreDetailURL+'?'+'userid='+credentials.userid+'&'+'id_exam='+credentials.id_exam;;
+    return new Promise((resolve, reject) => {  
+      let headers = new Headers();
+      headers.append('content-type','application/json');
+  
+      this.http.get(this.scoredetail_url).map(res => res.json()).subscribe(data => {
+          console.log(data);
+     
+           console.log(data.headers);
+            resolve(data);
+      
+      });
+    });      
   }
 
   /*
@@ -155,8 +183,21 @@ export class AuthServiceProvider {
   * URL: http://192.168.100.9:8080/QMTM_DEMO/mobile/paper/etest.jsp
   * parameter: examPaperURL
   */
-  public paper_etest() {
+  public paper_etest(credentials) {
 
+    this.exampaperurl = examPaperURL+'?'+'userid='+credentials.userID +'&'+"id_exam="+credentials.id_exam;
+
+    return new Promise((resolve, reject) => {  
+      let headers = new Headers();
+      headers.append('content-type','application/json');
+  
+        this.http.get(this.exampaperurl).map(res => res.json()).subscribe(data => {
+          console.log(data);
+    
+          console.log(data.headers);
+          resolve(data);    
+        });
+      });
   }
 
   /*
@@ -183,7 +224,7 @@ export class AuthServiceProvider {
   * parameter: viewStaticURL
   */
   public view_static(){
-    
+
   } 
 
   
