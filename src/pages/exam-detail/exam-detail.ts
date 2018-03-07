@@ -44,8 +44,8 @@ export class ExamDetailPage {
     console.log('ionViewDidLoad ExamDetailPage');
   }
 
-  goEtestPage() {
-    this.navCtrl.push(EtestPage);
+  goEtestPage(exam) {
+    this.navCtrl.push(EtestPage,{exam:exam});
   }
 
 }

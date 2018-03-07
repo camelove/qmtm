@@ -19,24 +19,26 @@ import { HttpClient } from '@angular/common/http';
 })
 export class EtestPage {
 
-  get_all_etest = { "userid":"", "id_exam":"" };      // view_exam
-  exam_test:any;
-  do_exam:any;    // exam_detail
-  do_test:any;
+  view_exam = { "userid":"", "id_exam":"" };
+  exam:any;
+  exam_detail: any;
+  viewexams:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private auth:AuthServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private auth:AuthServiceProvider) {
+
     let info = this.auth.getUserInfo();
-    this.exam_test = this.navParams.get('exam');
+    this.exam = this.navParams.get('exam');
     var json;
-    json = this.exam_test;
+    json = this.exam;
  
-    this.get_all_etest.id_exam =  json.Test_code;
-    this.get_all_etest.userid = info.userID;
-    this.auth.paper_etest(this.get_all_etest).then((result) => {
-      this.do_test =  Object.keys(result).map(function(key, index) {
-        return result[key]
-      });
-    });
+    this.view_exam.id_exam =  json.Test_code;
+    this.view_exam.userid = info.userID;
+    this.auth.paper_etest(this.view_exam).then((result) => {
+      this.viewexams =  Object.keys(result).map(function(key, index) {
+        return result[key];
+      })
+    }) 
+
   }
 
   ionViewDidLoad() {

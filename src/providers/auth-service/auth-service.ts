@@ -185,19 +185,20 @@ export class AuthServiceProvider {
   */
   public paper_etest(credentials) {
 
-    this.exampaperurl = examPaperURL+'?'+'userid='+credentials.userID +'&'+"id_exam="+credentials.id_exam;
-
+    this.exampaperurl = examPaperURL+'?'+'userid='+credentials.userid+'&'+'id_exam='+credentials.id_exam;;
     return new Promise((resolve, reject) => {  
       let headers = new Headers();
       headers.append('content-type','application/json');
   
-        this.http.get(this.exampaperurl).map(res => res.json()).subscribe(data => {
+      this.http.get(this.exampaperurl).map(res => res.json()).subscribe(data => {
           console.log(data);
-    
-          console.log(data.headers);
-          resolve(data);    
-        });
+     
+           console.log(data.headers);
+            resolve(data);
+      
       });
+    });     
+
   }
 
   /*

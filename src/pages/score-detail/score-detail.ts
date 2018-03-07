@@ -20,7 +20,7 @@ export class ScoreDetailPage {
   exam:any;
   exam_detail: any;
   viewexams:any;
-  jobs=[];
+  
   constructor(public navCtrl: NavController, public navParams: NavParams,private auth:AuthServiceProvider) {
 
 
