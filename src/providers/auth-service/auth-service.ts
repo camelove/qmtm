@@ -14,12 +14,12 @@ import 'rxjs/add/operator/map';
 let loginURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/user_check.jsp';
 let examListURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/exam/mytest.jsp';
 let examDetailURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/exam/etest.jsp';
-let examPaperURL = 'http://localhost:8080/QMTM_DEMO/mobile/paper/etest.jsp';
-let saveAnswerAndLogURL = 'http://localhost:8080/QMTM_DEMO/mobile/paper/saveans.jsp';
-let scoreListURL = 'http://localhost:8080/QMTM_DEMO/mobile/score/myscore.jsp';
-let scoreDetailURL = 'http://localhost:8080/QMTM_DEMO/mobile/score/scoreinfo.jsp';
-let viewTestURL = 'http://localhost:8080/QMTM_DEMO/mobile/score/qa.jsp';
-let viewStaticURL = 'http://localhost:8080/QMTM_DEMO/mobile/score/multistat.jsp';
+let examPaperURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/paper/etest.jsp';
+let saveAnswerAndLogURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/paper/saveans.jsp';
+let scoreListURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/score/myscore.jsp';
+let scoreDetailURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/score/scoreinfo.jsp';
+let viewTestURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/score/qa.jsp';
+let viewStaticURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/score/multistat.jsp';
 
 export class User {
   userID: string;
@@ -111,7 +111,7 @@ export class AuthServiceProvider {
   }
 
   /*
-  * Method exam_detail() to show exam list and select
+  * Method exam_detail() to show detail exam
   * URL: http://192.168.100.9:8080/QMTM_DEMO/mobile/exam/etest.jsp
   * parameter: examDetailURL
   */
@@ -132,7 +132,61 @@ export class AuthServiceProvider {
     });
   }
 
+  /*
+  * Method score_list() to show score list and select
+  * URL: http://192.168.100.9:8080/QMTM_DEMO/mobile/score/myscore.jsp
+  * parameter: scoreListURL
+  */
+  public score_list() {
 
+  }
+
+  /*
+  * Method score_detail() to show detail score
+  * URL: http://192.168.100.9:8080/QMTM_DEMO/mobile/score/scoreinfo.jsp
+  * parameter: scoreDetailURL
+  */
+  public score_detail() {
+
+  }
+
+  /*
+  * Method paper_etest() to show detail score
+  * URL: http://192.168.100.9:8080/QMTM_DEMO/mobile/paper/etest.jsp
+  * parameter: examPaperURL
+  */
+  public paper_etest() {
+
+  }
+
+  /*
+  * Method save_answer_and_log() to show detail score
+  * URL: http://192.168.100.9:8080/QMTM_DEMO/mobile/paper/etest.jsp
+  * parameter: saveAnswerAndLogURL
+  */
+  public save_answer_and_log() {
+
+  }
+
+  /*
+  * Method save_answer_and_log() to show detail score
+  * URL: http://192.168.100.9:8080/QMTM_DEMO/mobile/score/qa.jsp
+  * parameter: viewTestURL
+  */
+  public view_test() {
+
+  }
+   
+  /*
+  * Method save_answer_and_log() to show detail score
+  * URL: http://192.168.100.9:8080/QMTM_DEMO/mobile/score/multistat.jsp
+  * parameter: viewStaticURL
+  */
+  public view_static(){
+    
+  } 
+
+  
 
 
 }
