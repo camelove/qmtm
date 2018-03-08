@@ -21,10 +21,12 @@ export class AdminTabsPage {
   public tab2Root: any = 'AdminTab2Page';
   public tab3Root: any = 'AdminTab3Page';
 
-
+exam:any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  this.exam = this.navParams.get('exam');
+  
 
+  }
 
   ionViewDidEnter() {
     this.tabRef.select(this.navParams.data.tabIndex || 0);

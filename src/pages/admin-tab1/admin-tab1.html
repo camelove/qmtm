@@ -1,67 +1,16 @@
-<!--
-  Generated template for the Tab1Page page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<!-- <ion-header>
-
-  <ion-navbar>
-    <ion-buttons start>
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-    </ion-buttons>
-    <ion-title>Admin tab1</ion-title>
-  </ion-navbar>
-
-khanh try edit content
-
-</ion-header> -->
-
 
 <ion-content>
     <ion-card>
     <ion-list>
         
-          <!-- <ion-toolbar dark>
-              <ion-tabs tabsHighlight="false" class="tabs-positive tabs-icon-only">
-                  <ion-tab class="boxTabBasic" [root]="GaPage" 
-                           tabsHideOnSubPages="true" 
-                           tabIcon="time"
-                           tabTitle="Report score">
-                  </ion-tab>
-                  <ion-tab tabTitle="All answers"></ion-tab>
-                  <ion-tab tabTitle="Incorrect answers"></ion-tab>
-              </ion-tabs>
-          </ion-toolbar>             -->
-  
-          <!-- <ion-tabs tabsHighlight="false">
-                  <ion-tab [root]="AaaPage" tabsHideOnSubPages="true"
-                           tabIcon="checkbox"
-                           tabTitle="A FAIRE"
-                           tabBadge="2"
-                           tabBadgeStyle="notif">
-                  </ion-tab>
-                  <ion-tab [root]="GaPage"
-                           tabsHideOnSubPages="true"
-                           tabIcon="time" tabTitle="A VENIR"
-                           tabBadge="1"
-                           tabBadgeStyle="notif">
-                  </ion-tab>
-                  <ion-tab [root]="Ga1Page"
-                           tabsHideOnSubPages="true"
-                           tabIcon="book"
-                           tabTitle="HISTORIQUE">
-                  </ion-tab>
-                </ion-tabs> -->
+     
   
           <ion-grid>
               <ion-row>
                   <ion-col class="colTitle">Test name</ion-col>
-                  <ion-col class="colContent">TestExam2</ion-col>
+                  <ion-col class="colContent">{{exam.Test_name}}</ion-col>
                   <ion-col class="colTitle">Username</ion-col>
-                  <ion-col class="colContent">Test 1</ion-col>
+                  <ion-col class="colContent">{{exam.Username}}</ion-col>
               </ion-row>                         
           
               <ion-row>

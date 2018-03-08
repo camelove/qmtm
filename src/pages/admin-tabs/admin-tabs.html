@@ -1,5 +1,6 @@
 <ion-tabs tabsPlacement="top" #adminTabs>
-  <ion-tab [root]="tab1Root" tabTitle="Report score"></ion-tab>   <!-- tabIcon="home" -->
-  <ion-tab [root]="tab2Root" tabTitle="All answers"></ion-tab>  <!-- tabIcon="contacts" -->
-  <ion-tab [root]="tab3Root" tabTitle="Incorrect answers"></ion-tab>  <!-- tabIcon="contacts" -->
+    <ion-tab [root]="tab1Root" tabTitle="Report score"   [rootParams]="exam"></ion-tab>   <!-- tabIcon="home" -->
+    <ion-tab [root]="tab2Root" tabTitle="All answers"   [rootParams]="exam"></ion-tab>  <!-- tabIcon="contacts" -->
+    <ion-tab [root]="tab3Root" tabTitle="Incorrect answers"  [rootParams]="exam"></ion-tab>  <!-- tabIcon="contacts" -->
 </ion-tabs>
+  

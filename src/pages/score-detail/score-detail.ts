@@ -20,7 +20,7 @@ export class ScoreDetailPage {
   exam:any;
   exam_detail: any;
   viewexams:any;
-  
+  jobs=[];
   constructor(public navCtrl: NavController, public navParams: NavParams,private auth:AuthServiceProvider) {
 
 
@@ -44,8 +44,8 @@ export class ScoreDetailPage {
     console.log('ionViewDidLoad ScoreDetailPage');
   }
 
-  goViewAnswerExpl() {
-    this.navCtrl.push(AdminTabsPage);
+  goViewAnswerExpl(exam) {
+    this.navCtrl.push(AdminTabsPage,{exam:exam});
   }
   goViewStatic() {
     this.navCtrl.push(MultistatPage);

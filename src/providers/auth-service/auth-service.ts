@@ -42,6 +42,7 @@ export class AuthServiceProvider {
   scorelist_url:any;
   scoredetail_url:any;
   exampaperurl:any;
+  viewscore_url:any;
 
   constructor(public http: Http) {
     console.log('AuthServiceProvider Provider');
@@ -215,8 +216,21 @@ export class AuthServiceProvider {
   * URL: http://192.168.100.9:8080/QMTM_DEMO/mobile/score/qa.jsp
   * parameter: viewTestURL
   */
-  public view_test() {
+  public view_score(credentials) {
 
+    this.viewscore_url = viewTestURL+'?'+'userid='+credentials.userid +'&'+"id_exam="+credentials.id_exam;
+
+    return new Promise((resolve, reject) => {  
+      let headers = new Headers();
+      headers.append('content-type','application/json');
+  
+        this.http.get(this.viewscore_url).map(res => res.json()).subscribe(data => {
+          console.log(data);
+    
+          console.log(data.headers);
+          resolve(data);    
+        });
+      });
   }
    
   /*
