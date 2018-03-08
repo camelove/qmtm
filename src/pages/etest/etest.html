@@ -22,13 +22,18 @@
         <div style="float: right; margin-right: 10px;">            
             <button ion-button small type="submit" onclick="refresh_onclick()" text-uppercase>refresh</button><button ion-button small type="submit" onclick="refresh_onclick()" text-uppercase>close</button>
         </div>   
-        <!-- Test info display -->         
+        <!-- Test info display -->    
+        
         <ion-card>
-            <ion-list>
-                <ion-grid class="text_size">
-                    <ion-row>                           
-                        <ion-col><ion-icon name="arrow-dropright"></ion-icon> Test name : Test exam2</ion-col>
-                    </ion-row>                    
+            <ion-list>                
+                <ion-grid class="text_size">                
+                        <ion-row>
+                            <ion-col>
+                                <ion-icon name="arrow-dropright"></ion-icon> Test name : {{exam.Test_name}}        <!-- title  --> 
+                            </ion-col>
+                        </ion-row>     
+                  
+
                     <ion-row>
                         <ion-col><ion-icon name="arrow-dropright"></ion-icon> Remain question : 4 question / total 9 question</ion-col>
                     </ion-row>
@@ -36,8 +41,10 @@
                         <ion-col><ion-icon name="arrow-dropright"></ion-icon> Remain time : 25 minutes / total 50 minutes</ion-col>
                     </ion-row>
                 </ion-grid>
+                
             </ion-list>
-        </ion-card>    
+        </ion-card>  
+        
 
         <ion-card>
             <!-- Question info -->

@@ -21,16 +21,17 @@ export class EtestPage {
 
   view_exam = { "userid":"", "id_exam":"" };
   exam:any;
-  exam_detail: any;
+ 
   viewexams:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private auth:AuthServiceProvider) {
 
     let info = this.auth.getUserInfo();
     this.exam = this.navParams.get('exam');
+ 
     var json;
     json = this.exam;
- 
+   
     this.view_exam.id_exam =  json.Test_code;
     this.view_exam.userid = info.userID;
     this.auth.paper_etest(this.view_exam).then((result) => {
