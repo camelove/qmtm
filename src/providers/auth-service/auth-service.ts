@@ -212,7 +212,7 @@ export class AuthServiceProvider {
   }
 
   /*
-  * Method save_answer_and_log() to show detail score
+  * Method view_score() to show view score
   * URL: http://192.168.100.9:8080/QMTM_DEMO/mobile/score/qa.jsp
   * parameter: viewTestURL
   */
@@ -234,7 +234,7 @@ export class AuthServiceProvider {
   }
    
   /*
-  * Method save_answer_and_log() to show detail score
+  * Method view_static() to show detail static
   * URL: http://192.168.100.9:8080/QMTM_DEMO/mobile/score/multistat.jsp
   * parameter: viewStaticURL
   */
