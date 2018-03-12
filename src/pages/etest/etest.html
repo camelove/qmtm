@@ -35,10 +35,10 @@
                   
 
                     <ion-row>
-                        <ion-col><ion-icon name="arrow-dropright"></ion-icon> Remain question : 4 question / total 9 question</ion-col>
+                        <ion-col><ion-icon name="arrow-dropright"></ion-icon> Remain question : 4 question / total {{data.qcount}} questions</ion-col>
                     </ion-row>
                     <ion-row>
-                        <ion-col><ion-icon name="arrow-dropright"></ion-icon> Remain time : 25 minutes / total 50 minutes</ion-col>
+                        <ion-col><ion-icon name="arrow-dropright"></ion-icon> Remain time : {{data.remain_time}} </ion-col>   <!-- 25 minutes / total 50 minutes -->
                     </ion-row>
                 </ion-grid>
                 
@@ -57,8 +57,7 @@
                     <!-- Start scope -->     
                     <ion-row>
                         <ion-col col-1 align="right">1.</ion-col>
-                        <ion-col>
-                            content of question in here<BR>(alloting) 10.0 score
+                        <ion-col>{{items.allotting}}<BR>(alloting) 10.0 score
                         </ion-col>
                     </ion-row>
                     <ion-row>

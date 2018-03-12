@@ -11,15 +11,15 @@ import 'rxjs/add/operator/map';
   and Angular DI.
 */
 
-let loginURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/user_check.jsp';
-let examListURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/exam/mytest.jsp';
-let examDetailURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/exam/etest.jsp';
-let examPaperURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/paper/etest.jsp';
-let saveAnswerAndLogURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/paper/saveans.jsp';
-let scoreListURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/score/myscore.jsp';
-let scoreDetailURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/score/scoreinfo.jsp';
-let viewTestURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/score/qa.jsp';
-let viewStaticURL = 'http://192.168.100.9:8080/QMTM_DEMO/mobile/score/multistat.jsp';
+let loginURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/user_check.jsp';
+let examListURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/exam/mytest.jsp';
+let examDetailURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/exam/etest.jsp';
+let examPaperURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/paper/etest.jsp';
+let saveAnswerAndLogURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/paper/saveans.jsp';
+let scoreListURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/score/myscore.jsp';
+let scoreDetailURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/score/scoreinfo.jsp';
+let viewTestURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/score/qa.jsp';
+let viewStaticURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/score/multistat.jsp';
 
 export class User {
   userID: string;
@@ -85,6 +85,30 @@ export class AuthServiceProvider {
     });
   }
 
+  /*
+  * Method isAuthenticated() method to check of current user
+  * return value of current user
+  */
+  public isAuthenticated(credentials) {
+
+    /* console.log("APP started");
+    // Listen to authNotifier
+    this.auth.
+      // filter on null so our app will wait for a real response
+      .filter(res => res !== null)
+      .subscribe(status => {
+        console.log("APP AuthNotifier said: ",status);
+        if(!status){ // when not auth'd
+          console.log("APP Logging out!");
+          this.auth.logout().subscribe(res => { // logout and then redirect to login
+            console.log("Logged out.",res);
+            this.nav.setRoot('LoginPage');
+          });
+        }
+      }); 
+      */
+  }
+  
   /*
   * Method getUserInfo() method to get information of current user
   * return value of current user
@@ -192,10 +216,9 @@ export class AuthServiceProvider {
       headers.append('content-type','application/json');
   
       this.http.get(this.exampaperurl).map(res => res.json()).subscribe(data => {
-          console.log(data);
-     
-           console.log(data.headers);
-            resolve(data);
+        console.log(data);     
+        console.log(data.headers);
+        resolve(data);
       
       });
     });     

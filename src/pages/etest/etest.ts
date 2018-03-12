@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading, ToastController, App } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
@@ -19,12 +19,19 @@ import { HttpClient } from '@angular/common/http';
 })
 export class EtestPage {
 
-  view_exam = { "userid":"", "id_exam":"" };
-  exam:any;
- 
-  viewexams:any;
+  public userID:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private auth:AuthServiceProvider) {
+  view_exam = { "userid":"", "id_exam":"" };
+  
+  data = {"remain_time":"","title":"", "qcount":""};
+
+  items = { "q":"", "allotting":"" };
+
+  exam:any; 
+  viewexams:any;
+  item_exam:any;
+
+  constructor(public navCtrl: NavController, private app: App, public navParams: NavParams, private auth:AuthServiceProvider) {
 
     let info = this.auth.getUserInfo();
     this.exam = this.navParams.get('exam');
@@ -35,14 +42,39 @@ export class EtestPage {
     this.view_exam.id_exam =  json.Test_code;
     this.view_exam.userid = info.userID;
     this.auth.paper_etest(this.view_exam).then((result) => {
-      this.viewexams =  Object.keys(result).map(function(key, index) {
-        return result[key];
-      })
+       
+    var view_result;
+    view_result = result;
+    this.viewexams = view_result;
+
+    // get object properties
+    this.data.remain_time= view_result.remain_time;
+    this.data.title = view_result.title;
+    this.data.qcount = view_result.qcount;
+
+    var item_object;
+    item_object = result;
+    this.item_exam = item_object;
+
+    // get item of object properties  
+    this.items.allotting = item_object.allotting;  
+
     }) 
 
   }
 
-  ionViewDidLoad() {
+  public ionViewDidLoad(credentials) {
+
+    // check if already authenticated
+    /* 
+    this.auth.isAuthenticated(credentials).then((res) => {
+      console.log("Already authenticated !!");
+      // this.auth.authenLogin(this.userID);
+    }, (res) => {
+        console.log("not already authenticated..");
+        this.app.getRootNav().setRoot("LoginPage");
+    }) 
+    */
     console.log('ionViewDidLoad EtestPage');
   }
 
