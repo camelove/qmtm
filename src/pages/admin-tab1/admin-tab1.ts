@@ -19,11 +19,11 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
   templateUrl: 'admin-tab1.html',
 })
 export class AdminTab1Page {
-  exam:any
-  view_exam = { "userid":"", "id_exam":"" };
-  viewexams:any;
-  view_score:any;
-  
+exam:any
+view_exam = { "userid":"", "id_exam":"" };
+viewexams:any;
+view_score:any;
+data = {"My_score":"","Test_name":""};
   constructor(public navCtrl: NavController, public navParams: NavParams,private auth:AuthServiceProvider) {
     let info = this.auth.getUserInfo();
     this.exam = navParams.data;
@@ -37,6 +37,7 @@ export class AdminTab1Page {
     
     this.view_score = result;
     this.viewexams = this.view_score.Items;
+    this.data.My_score = this.view_score.My_score;
   })
   }
 

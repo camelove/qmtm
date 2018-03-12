@@ -25,40 +25,40 @@
             <ion-grid>
                 <ion-row>
                     <ion-col class="colTitle">Test name</ion-col>
-                    <ion-col class="colContent">TestExam2</ion-col>
+                    <ion-col class="colContent">{{my_score.Test_name}}</ion-col>
                     <ion-col class="colTitle">Username</ion-col>
-                    <ion-col class="colContent">Test 1</ion-col>
+                    <ion-col class="colContent">{{view_exam.userid}}</ion-col>
                 </ion-row>                         
                 
                 <ion-row>
                     <ion-col class="colTitle">Allotting</ion-col>
-                    <ion-col class="colContent">100.0</ion-col>
+                    <ion-col class="colContent">{{my_score.Test_allott}}</ion-col>
                     <ion-col class="colTitle">My Score</ion-col>
-                    <ion-col class="colContent">80.0</ion-col>
+                    <ion-col class="colContent">{{my_score.My_score}}</ion-col>
                 </ion-row>            
             </ion-grid>
         </ion-list>
     </ion-card>
     
     <!-- scope 1 -->  
-    <ion-card>
+    <ion-card *ngFor="let view of viewexams">
         <!-- Question info -->
         <ion-list>
-            <ion-grid>
+            <ion-grid [hidden]="(view.UserAnswer == view.Answer)">
                 <ion-row>
-                    <ion-col col-1 style="background-image:url('../assets/imgs/X.gif');" class="question_number">2.</ion-col>
+                    <ion-col col-1 style="background-image:url('../assets/imgs/X.gif');" class="question_number">{{view.QuestionNo}}</ion-col>
                     <ion-col class="text_size">
-                        content of question in here <BR>(alloting) 10.0 score     
+                            {{view.Question}}  <BR>{{view.Allotting}} score  
                     </ion-col>
                 </ion-row>
                 <ion-row>
                     <ion-col col-1></ion-col> 
                     <ion-col class="text_size">                    
-                        ① incorrect<br>
-                        ② correct<br>
-                        ③ incorrect<br>
-                        ④ incorrect<br>
-                        ⑤ incorrect<br>                    
+                            {{view.Ex1}}<br>
+                            {{view.Ex2}}<br>
+                            {{view.Ex3}}<br>
+                            {{view.Ex4}}<br>
+                            {{view.Ex5}}<br>                
                     </ion-col>
                 </ion-row>
             </ion-grid>    
@@ -66,7 +66,7 @@
             
         <!-- list score -->    
         <ion-list>          
-            <ion-grid>
+            <ion-grid [hidden]="(view.UserAnswer == view.Answer)">
                 <ion-row>
                     <ion-col class="colTitle">Allotting</ion-col>
                     <ion-col class="colTitle">Score</ion-col>

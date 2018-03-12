@@ -52,13 +52,10 @@ export class EtestPage {
     this.data.title = view_result.title;
     this.data.qcount = view_result.qcount;
 
-    var item_object;
-    item_object = result;
-    this.item_exam = item_object;
+    
+    this.item_exam = this.viewexams.Items;
 
-    // get item of object properties  
-    this.items.allotting = item_object.allotting;  
-
+ 
     }) 
 
   }

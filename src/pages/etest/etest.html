@@ -55,14 +55,15 @@
                     </ion-row>
     
                     <!-- Start scope -->     
+                <div *ngFor="let etest of item_exam">
                     <ion-row>
                         <ion-col col-1 align="right">1.</ion-col>
-                        <ion-col>{{items.allotting}}<BR>(alloting) 10.0 score
+                        <ion-col>{{etest.q}}<BR>(alloting) 10.0 score           <!-- {{items.allotting}} -->
                         </ion-col>
                     </ion-row>
                     <ion-row>
                         <ion-col col-1></ion-col>
-                        <ion-label>① incorrect</ion-label>
+                        <ion-label>① {{etest.ex1}}</ion-label>
                     </ion-row>
                     <ion-row>
                         <ion-col col-1></ion-col>                    
@@ -76,6 +77,7 @@
                         <ion-col col-1></ion-col>
                         <ion-label>④ incorrect</ion-label>
                     </ion-row>
+                </div>
                     <!-- End scope -->
                         
                     <ion-row>
