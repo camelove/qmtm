@@ -21,6 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Network } from '@ionic-native/network';
+import { CKEditorModule } from 'ng2-ckeditor';
+
 
 @NgModule({
   declarations: [
@@ -35,10 +37,11 @@ import { Network } from '@ionic-native/network';
   exports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CKEditorModule
   ],
   imports: [
-    BrowserModule, HttpModule, HttpClientModule, FormsModule, ReactiveFormsModule, CommonModule,
+    BrowserModule, HttpModule, HttpClientModule, FormsModule, ReactiveFormsModule, CommonModule, CKEditorModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
