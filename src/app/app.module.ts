@@ -22,6 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Network } from '@ionic-native/network';
 import { CKEditorModule } from 'ng2-ckeditor';
+import { RichTextComponent } from '../components/rich-text/rich-text';
 
 
 
@@ -33,16 +34,19 @@ import { CKEditorModule } from 'ng2-ckeditor';
     EtestPage,
     AdminTabsPage,
     MultistatPage,
-    MenuPage
+    MenuPage,
+    // CKEditorModule,
+    // RichTextComponent
   ],
   exports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    CKEditorModule
+    // RichTextComponent,
+    // CKEditorModule
   ],
   imports: [
-    BrowserModule, HttpModule, HttpClientModule, FormsModule, ReactiveFormsModule, CommonModule, CKEditorModule,
+    BrowserModule, HttpModule, HttpClientModule, FormsModule, ReactiveFormsModule, CommonModule, /* CKEditorModule,  RichTextComponent, */
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
