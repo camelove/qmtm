@@ -24,6 +24,7 @@ import { Network } from '@ionic-native/network';
 import { CKEditorModule } from 'ng2-ckeditor';
 
 
+
 @NgModule({
   declarations: [
     MyApp,
