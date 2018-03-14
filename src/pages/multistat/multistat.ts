@@ -4,7 +4,7 @@ import { IonicPage,
          NavParams } from 'ionic-angular';
 
 import { Chart } from 'chart.js';
-
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
 /**
  * Generated class for the MultistatPage page.
@@ -27,9 +27,37 @@ export class MultistatPage {
     barChart: any;
     doughnutChart: any;
     lineChart: any;
- 
-    constructor(public navCtrl: NavController) {
- 
+    exam:any
+    view_exam = { "userid":"", "id_exam":"" };
+    viewexams:any;
+    view_score:any;
+    my_score = {"My_score":"","Test_name":"", "Test_allott":""};
+    
+
+
+
+
+
+
+
+    constructor(public navCtrl: NavController, public navParams: NavParams,private auth:AuthServiceProvider) {
+        let info = this.auth.getUserInfo();
+        this.exam = this.navParams.get('exam');
+       
+        this.view_exam.id_exam =  this.exam.Test_code;
+        this.view_exam.userid = info.userID;
+        
+        // console.log('Passed params', navParams.data);
+      this.auth.view_static(this.view_exam).then((result) => {
+       
+        this.view_score = result;
+        // this.viewexams = this.view_score.Items;
+        // this.my_score.My_score = this.view_score.My_score;
+        // this.my_score.Test_name = this.view_score.Test_name;
+        // this.my_score.Test_allott = this.view_score.Test_allott;
+      })
+      
+      
     }
  
     ionViewDidLoad() {
@@ -41,7 +69,7 @@ export class MultistatPage {
                 labels: ["0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80-89", "90-100"],
                 datasets: [{
                     // label: '# of Votes',
-                    data: [33, 0, 0, 0, 33, 0, 0, 0, 100, 0],
+                    data: [50, 0, 0, 0, 33, 0, 0, 0, 100, 0],
                     backgroundColor: [
                         '#FFA62F',  
                         '#FFA62F',  

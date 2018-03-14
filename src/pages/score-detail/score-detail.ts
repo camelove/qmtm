@@ -47,8 +47,8 @@ export class ScoreDetailPage {
   goViewAnswerExpl(exam) {
     this.navCtrl.push(AdminTabsPage,{exam:exam});
   }
-  goViewStatic() {
-    this.navCtrl.push(MultistatPage);
+  goViewStatic(exam) {
+    this.navCtrl.push(MultistatPage,{exam:exam});
   }
 
 }
