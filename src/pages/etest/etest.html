@@ -4,6 +4,7 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
+
 <ion-header>
 
         <!-- 
@@ -57,26 +58,40 @@
                     <!-- Start scope -->     
                 <div *ngFor="let etest of item_exam">
                     <ion-row>
-                        <ion-col col-1 align="right">1.</ion-col>
-                        <ion-col>{{etest.q}}<BR>(alloting) 10.0 score           <!-- {{items.allotting}} -->
+                        <ion-col col-1 align="right">{{etest.page}}</ion-col>                 <!-- {{etest.ex_order}}. -->
+                        <ion-col>{{etest.q}}<BR>(alloting) {{etest.allotting}} score           <!-- {{items.allotting}} -->
                         </ion-col>
                     </ion-row>
-                    <ion-row>
-                        <ion-col col-1></ion-col>
-                        <ion-label>① {{etest.ex1}}</ion-label>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col col-1></ion-col>                    
-                        <ion-label>② correct</ion-label>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col col-1></ion-col>                    
-                        <ion-label>③ incorrect</ion-label>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col col-1></ion-col>
-                        <ion-label>④ incorrect</ion-label>
-                    </ion-row>
+
+                    <div *ngIf="etest.id_qtype =='1' ; else elsetag">
+                        <ion-row>
+                            <ion-col col-1></ion-col>
+                            <ion-label>① {{etest.ex1}}</ion-label>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-1></ion-col>                    
+                            <ion-label>② {{etest.ex2}}</ion-label>
+                        </ion-row>
+                    </div>
+
+                    <ng-template #elsetag>  
+                        <ion-row>
+                            <ion-col col-1></ion-col>
+                            <ion-label>① {{etest.ex1}}</ion-label>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-1></ion-col>                    
+                            <ion-label>② {{etest.ex2}}</ion-label>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-1></ion-col>                    
+                            <ion-label>③ {{etest.ex3}}</ion-label>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-1></ion-col>
+                            <ion-label>④ {{etest.ex4}}</ion-label>
+                        </ion-row>
+                    </ng-template>
                 </div>
                     <!-- End scope -->
                         
