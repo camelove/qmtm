@@ -4,15 +4,15 @@
         <ion-grid>
           <ion-row>
             <ion-col class="colTitle">Test name</ion-col>
-            <ion-col class="colContent">TestExam2</ion-col>
+            <ion-col class="colContent">{{my_data.Test_name}}</ion-col>
             <ion-col class="colTitle">Username</ion-col>
-            <ion-col class="colContent">Test 1</ion-col>
+            <ion-col class="colContent">{{view_exam.userid}}</ion-col>
           </ion-row>                         
           <ion-row>
             <ion-col class="colTitle">Allotting</ion-col>
-            <ion-col class="colContent">100.0</ion-col>
+            <ion-col class="colContent">{{my_data.Test_allotting}}</ion-col>
             <ion-col class="colTitle">My Score</ion-col>
-            <ion-col class="colContent">80.0</ion-col>
+            <ion-col class="colContent">{{my_data.User_score}}</ion-col>
           </ion-row>            
         </ion-grid>                 
       </ion-list>
@@ -28,27 +28,27 @@
         <ion-grid>
           <ion-row>
             <ion-col class="colTitle">Total of question</ion-col>
-            <ion-col class="colContent">10 questions</ion-col>
+            <ion-col class="colContent">{{my_data.Test_qcount}}</ion-col>
             <ion-col class="colTitle">Score</ion-col>
-            <ion-col class="colContent">80%</ion-col>
+            <ion-col class="colContent">{{my_data["User_score pct"]}}%</ion-col>
           </ion-row>                         
           <ion-row>
             <ion-col class="colTitle">Ranking</ion-col>
-            <ion-col class="colContent">1 ranking</ion-col>
+            <ion-col class="colContent">{{my_data.User_rank}}</ion-col>
             <ion-col class="colTitle">Total of applicant</ion-col>
-            <ion-col class="colContent">3 peoples</ion-col>
+            <ion-col class="colContent">{{my_data.Test_user_cnt}}</ion-col>
           </ion-row>                  
           <ion-row>
             <ion-col class="colTitle">Total of average</ion-col>
-            <ion-col class="colContent">43.33 score</ion-col>
+            <ion-col class="colContent">{{my_data.Test_avg}} score</ion-col>
             <ion-col class="colTitle">Average of top</ion-col>
-            <ion-col class="colContent">80.0</ion-col>
+            <ion-col class="colContent">{{my_data.Test_user_avg}}</ion-col>
           </ion-row>                         
           <ion-row>
             <ion-col class="colTitle">Highest score</ion-col>
-            <ion-col class="colContent">80.0 score</ion-col>
+            <ion-col class="colContent">{{my_data.Test_max}} score</ion-col>
             <ion-col class="colTitle">Lowest score</ion-col>
-            <ion-col class="colContent">0.0 score</ion-col>
+            <ion-col class="colContent">{{my_data.Test_min}} score</ion-col>
           </ion-row>            
         </ion-grid>       
       </ion-list>

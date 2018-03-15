@@ -56,48 +56,81 @@
                         <ion-col class="title_text">> Question Sheet</ion-col>
                     </ion-row>
     
-                    <!-- Start scope -->     
-                <div *ngFor="let etest of item_exam">
-                <ion-slides pager loop slidesPerView="3">
-                <ion-slide>    
-                    <ion-row>
-                        <ion-col col-1 align="right">{{etest.page}}</ion-col>                 <!-- {{etest.ex_order}}. -->
-                        <ion-col>{{etest.q}}<BR>(alloting) {{etest.allotting}} score           <!-- {{items.allotting}} -->
-                        </ion-col>
-                    </ion-row>
+                <!-- Start scope -->     
+                <!-- <div *ngFor="let etest of item_exam"> -->
+                <ion-slides pager loop slidesPerView="1"> 
+                <!-- <div *ngFor="let etest of item_exam"> -->
+                    <ion-slide>
+                        <ion-row>
+                            <ion-col col-1 align="right">1.</ion-col>                                           <!-- {{etest.ex_order}}. -->
+                            <ion-label>Hãy lựa chọn đáp án sau đây<BR>(alloting) 10 score </ion-label>         <!-- {{items.allotting}} -->                            
+                        </ion-row> 
+                        <ion-row>
+                            <ion-col col-1></ion-col>
+                            <ion-label>① Đáp án đúng</ion-label>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-1></ion-col>                    
+                            <ion-label>② Đáp án sai</ion-label>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-1></ion-col>                    
+                            <ion-label>③ Đáp án sai</ion-label>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-1></ion-col>
+                            <ion-label>④ Đáp án sai</ion-label>
+                        </ion-row>
+                    </ion-slide>
+                    
+                    <ion-slide>
+                        <ion-row>
+                            <ion-col col-1 align="right">2.</ion-col>                                        <!-- {{etest.ex_order}}. -->
+                            <ion-label>Đáp án nào chính xác nhất<BR>(alloting) 10 score </ion-label>         <!-- {{items.allotting}} -->                            
+                        </ion-row> 
+                        <ion-row>
+                            <ion-col col-1></ion-col>
+                            <ion-label>① Đáp án 1</ion-label>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-1></ion-col>                    
+                            <ion-label>② Đáp án 2</ion-label>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-1></ion-col>                    
+                            <ion-label>③ Đáp án 3</ion-label>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-1></ion-col>
+                            <ion-label>④ Đáp án 4</ion-label>
+                        </ion-row>
+                    </ion-slide>
 
-                    <div *ngIf="etest.id_qtype =='1' ; else elsetag">
+                    <ion-slide>
+                        <ion-row>
+                            <ion-col col-1 align="right">3.</ion-col>                                       <!-- {{etest.ex_order}}. -->
+                            <ion-label>Có bao nhiêu câu trả lời<BR>(alloting) 10 score </ion-label>         <!-- {{items.allotting}} -->                            
+                        </ion-row> 
                         <ion-row>
                             <ion-col col-1></ion-col>
-                            <ion-label>① {{etest.ex1}}</ion-label>
+                            <ion-label>① 1 câu trả lời</ion-label>
                         </ion-row>
                         <ion-row>
                             <ion-col col-1></ion-col>                    
-                            <ion-label>② {{etest.ex2}}</ion-label>  
-                        </ion-row>
-                    </div>
-
-                    <ng-template #elsetag>  
-                        <ion-row>
-                            <ion-col col-1></ion-col>
-                            <ion-label>① {{etest.ex1}}</ion-label>
+                            <ion-label>② 2 câu trả lời</ion-label>
                         </ion-row>
                         <ion-row>
                             <ion-col col-1></ion-col>                    
-                            <ion-label>② {{etest.ex2}}</ion-label>
-                        </ion-row>
-                        <ion-row>
-                            <ion-col col-1></ion-col>                    
-                            <ion-label>③ {{etest.ex3}}</ion-label>
+                            <ion-label>③ 3 câu trả lời</ion-label>
                         </ion-row>
                         <ion-row>
                             <ion-col col-1></ion-col>
-                            <ion-label>④ {{etest.ex4}}</ion-label>
-                        </ion-row>
-                    </ng-template>
-                </ion-slide>
-            </ion-slides>
-                </div>
+                            <ion-label>④ 4 câu trả lời</ion-label>
+                        </ion-row>                         
+                    </ion-slide>
+                <!-- </div> -->
+                </ion-slides>
+                <!-- </div> -->
                     <!-- End scope -->
                         
                     <ion-row>
