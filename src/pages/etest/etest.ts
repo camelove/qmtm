@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading, ToastController, App } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { Observable } from 'rxjs/Observable';
@@ -7,7 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CKEditorModule } from 'ng2-ckeditor';
-
+import { Slides } from 'ionic-angular';
 
 /**
  * Generated class for the EtestPage page.
@@ -22,6 +22,8 @@ import { CKEditorModule } from 'ng2-ckeditor';
   templateUrl: 'etest.html',
 })
 export class EtestPage {
+
+  @ViewChild(Slides) slides: Slides;
 
   public userID:any;
 
@@ -100,7 +102,8 @@ export class EtestPage {
    * click button and call prev_button() method on etest.html
    */
   public prev_button() {
-    this.navCtrl.setRoot('PrevPage');
+    this.slides.slidePrev();
+    // this.navCtrl.setRoot('PrevPage');
   }
 
   /**
@@ -108,7 +111,8 @@ export class EtestPage {
    * click button and call next_button() method on etest.html
    */
   public next_button() {
-    this.navCtrl.setRoot('NextPage');
+    this.slides.slideNext();    
+    // this.navCtrl.setRoot('NextPage');
   }
   
   /**
