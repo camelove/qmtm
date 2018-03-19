@@ -50,6 +50,7 @@
     
         <ion-card>
             <!-- Question info -->
+            <form>
             <ion-list>
                 <ion-grid>                    
                     <ion-row>
@@ -70,30 +71,33 @@
                         <div *ngIf="etest.id_qtype =='1' ; else elsetag">
                             <ion-row>
                                 <ion-col col-1></ion-col>
-                                <ion-label>① {{etest.ex1}}</ion-label>
+                                <!-- <ion-label>① {{etest.ex1}}</ion-label> -->
+                                <!-- <ion-input value="{{etest.ex1 }}"></ion-input> -->
+                                <button class="btn_answer" ion-fab value="" full (click)="sendValueEx1OX(etest.ex1)">{{etest.ex1}}</button>
                             </ion-row>
                             <ion-row>
-                                <ion-col col-1></ion-col>                    
+                                <ion-col col-1></ion-col>
                                 <ion-label>② {{etest.ex2}}</ion-label>  
                             </ion-row>
                         </div>
     
-                        <ng-template #elsetag>  
+                        <ng-template #elsetag>
                             <ion-row>
                                 <ion-col col-1></ion-col>
-                                <ion-label>① {{etest.ex1}}</ion-label>
+                                <ion-label>① {{etest.ex1}}</ion-label>              <!-- exlabel: ①, ②, ③, ④ -->
+                                <!-- <ion-input value="{{etest.ex1}}"></ion-input> -->
                             </ion-row>
                             <ion-row>
                                 <ion-col col-1></ion-col>                    
-                                <ion-label>② {{etest.ex2}}</ion-label>
+                                <ion-label>② {{etest.ex2}}</ion-label>                                
                             </ion-row>
                             <ion-row>
                                 <ion-col col-1></ion-col>                    
-                                <ion-label>③ {{etest.ex3}}</ion-label>
+                                <ion-label>③ {{etest.ex3}}</ion-label>                                
                             </ion-row>
                             <ion-row>
                                 <ion-col col-1></ion-col>
-                                <ion-label>④ {{etest.ex4}}</ion-label>
+                                <ion-label>④ {{etest.ex4}}</ion-label>                                
                             </ion-row>
                         </ng-template>
                     </ion-slide>
@@ -104,18 +108,19 @@
                     <!-- End scope -->
                         
                     <ion-row>
-                        <ion-col>                 
-                            <button ion-button color="danger" color="danger" full (click)="prev_button()">Previous</button>
+                        <ion-col> 
+                            <button *ngIf="clickedShowHideButtonSubmit" ion-button color="danger" color="danger" full (click)="prev_button()">Previous</button>
                         </ion-col>
-                        <ion-col>                 
+                        <ion-col>
                             <button ion-button color="danger" color="danger" full (click)="next_button()">Next</button>
                         </ion-col>
-                        <!--<ion-col>                 
-                            <button ion-button type="submit" color="danger" full onclick="submit_button()">Submit</button>
-                        </ion-col>-->    
+                        <ion-col>                 
+                            <button *ngIf="clickedShowHideButtonSubmit" ion-button color="danger" full (click)="submitAnswer()">Submit</button>       <!-- type="submit"  | ng-hide="activeTab == 'info'" -->                             
+                        </ion-col>
                     </ion-row>
                 </ion-grid>    
             </ion-list>
+        </form>
         </ion-card>
                      
              
@@ -157,9 +162,19 @@
                 <ion-grid>
                     <ion-row>
                         <ion-col class="title_text">> Paper Sheet</ion-col>
-                    </ion-row>                    
+                    </ion-row>     
+
+                    <!--               
+                    <div *ngFor="let etest of item_exam">
+                    <ion-row>    
+                        <ion-col>{{etest.page}}</ion-col>
+                        <ion-col>①</ion-col>
+                    </ion-row>    
+                    </div>
+                    -->
+                     
                     <ion-row>
-                        <ion-col class="colTitle">1</ion-col>
+                        <ion-col class="colTitle">1</ion-col>           
                         <ion-col class="colContent">①</ion-col>
                         <ion-col class="colTitle">2</ion-col>
                         <ion-col class="colContent">①</ion-col>
@@ -167,6 +182,7 @@
                         <ion-col class="colContent">①</ion-col>
                     </ion-row> 
 
+                    
                     <ion-row>
                         <ion-col class="colTitle">4</ion-col>
                         <ion-col class="colContent">①</ion-col>
@@ -216,7 +232,7 @@
                         <ion-col class="colContent"></ion-col>
                         <ion-col class="colTitle"></ion-col>
                         <ion-col class="colContent"></ion-col>
-                    </ion-row> 
+                    </ion-row>                   
                 </ion-grid>
 
             </ion-list>

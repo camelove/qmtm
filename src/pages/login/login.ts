@@ -45,45 +45,40 @@ export class LoginPage {
   }
 
   public doLogin() {
-
-   if(this.loginData.userID && this.loginData.password)
-    {
+    if(this.loginData.userID && this.loginData.password) {
 
       this.showLoader();
       this.authService.authenLogin(this.loginData).then((result) => 
       {
+        console.log('response data from server');
+        console.log(result);
 
-      console.log('response data from server');
-      console.log(result);
-
-      this.loading.dismiss();
-      var json;
-      json =result;
-    
-      json.forEach(element => 
-        {
-        if((element.Username !="") && (element.Status=="ok"))
-        {
-          this.navCtrl.setRoot(MenuPage);
-        }
-        else {
-          this.presentToast("Please give valid userID and password");
-        }
-      });
- 
-      }, (err) => {
-        /* 
-        Connection failed message, please check your internet..
-        Create more method to check connection internet
-        */
         this.loading.dismiss();
-        this.presentToast(err);
-        this.presentToast("Please check your internet, 3g, 4g ...");
-      });   
+        var json;
+        json =result;
+      
+        json.forEach(element => {
+          if((element.Username !="") && (element.Status=="ok")) {
+            this.navCtrl.setRoot(MenuPage);
+          }
+          else {
+            this.presentToast("Please give valid userID and password");
+          }
+        });
+  
+        }, (err) => {
+          /* 
+          Connection failed message, please check your internet..
+          Create more method to check connection internet
+          */
+          this.loading.dismiss();
+          this.presentToast(err);
+          this.presentToast("Please check your internet, 3g, 4g ...");
+        });   
     }
-    
+      
     else {
-      this.presentToast("Please give userID and password");
+        this.presentToast("Please give userID and password");
     }
   }
 

@@ -36,8 +36,17 @@ export class EtestPage {
   exam:any; 
   viewexams:any;
   item_exam:any;
+  loading: any;
+  
+  public clickedShowHideButtonSubmit: boolean = false;
 
-  constructor(public navCtrl: NavController, private app: App, public navParams: NavParams, private auth:AuthServiceProvider) {
+  constructor(public navCtrl: NavController, 
+              private app: App, 
+              public navParams: NavParams, 
+              public loadingCtrl: LoadingController, 
+              private alertCtrl: AlertController,
+              private toastCtrl: ToastController,
+              private auth:AuthServiceProvider) {
 
     let info = this.auth.getUserInfo();
     this.exam = this.navParams.get('exam');
@@ -111,9 +120,24 @@ export class EtestPage {
    * click button and call next_button() method on etest.html
    */
   public next_button() {
+    /* * TODO Something, add more condition check parameter here */    
+    // this.loading.dismiss();
+
+    this.clickedShowHideButtonSubmit = true;
+
+    this.presentToast("You don't answer for this question..");    
     this.slides.slideNext();    
-    // this.navCtrl.setRoot('NextPage');
+    
   }
+
+  /*
+  * submitAnswer()method
+  * click button and send all answers to server
+  */
+  public submitAnswer() {    
+    
+    this.presentToast("You have clicked submit answer !!");
+  } 
   
   /**
    * review_answer() method
@@ -126,6 +150,44 @@ export class EtestPage {
   public AnsCheck() {
     
   }
+
+  public sendValueEx1MultiChoice() {
+    console.log("Ban vua chon cau tra loi multi choice !!");
+  }
+
+  public sendValueEx1OX() {
+    console.log("Ban vua chon cau tra loi OX !!");
+  }
+
+  /*
+  * Show and check all condition: 
+  * [1]check if not answered quetion and click 'next' button, 
+  * [2]check remain time, 
+  * [3]check  
+  */
+  showLoader() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Processing data...'
+  });
+
+  this.loading.present();
+  }
+
+  presentToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'bottom',
+      dismissOnPageChange: true
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
+  }
+
 
 }
 
