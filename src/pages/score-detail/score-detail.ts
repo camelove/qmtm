@@ -38,7 +38,7 @@ export class ScoreDetailPage {
       })
     
   }
-  
+ 
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ScoreDetailPage');
@@ -50,5 +50,34 @@ export class ScoreDetailPage {
   goViewStatic(exam) {
     this.navCtrl.push(MultistatPage,{exam:exam});
   }
+  
+  ischeck( viewexam:any){
+    let _return = false;
+    let c1 = viewexam.Score_view_option =='A';
+    let c2 = viewexam.Score_view_option =='B';
+    let c3 = viewexam.Score_view_option =='C';
+    _return = (c1||c2||c3);
+    return _return;
 
+  }
+
+  ischeck_score1( viewexam:any){
+    let _return = false;
+    
+    let c1 = (viewexam.Score_view_option =='D');
+    let c2 = (viewexam.Yn_end == 'Y');
+    _return = (c1&&c2);
+    return _return;
+
+  }
+
+  ischeck_score2( viewexam:any){
+    let _return = false;
+  
+    let c1 = (viewexam.Score_view_option =='E');
+    let c2 = (viewexam.Yn_end == 'Y');
+    _return = (c1&&c2);
+    return _return;
+
+  }
 }

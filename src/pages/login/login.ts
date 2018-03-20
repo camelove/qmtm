@@ -27,6 +27,8 @@ export class LoginPage {
   resposeData:any;
   // rmchecked: any;
   checked:boolean = true;
+  user: any;
+  pass: any;
 
   items:Array<{title: string, note: string}>;
   
@@ -45,40 +47,49 @@ export class LoginPage {
   }
 
   public doLogin() {
-    if(this.loginData.userID && this.loginData.password) {
+    
+    var re = new RegExp("\\s");
+    this.user = this.loginData.userID;
+    this.pass = this.loginData.password;
+    
+    if((this.user.search(re)!=-1)||(this.pass.search(re)!=-1)) {
+      this.presentToast("UserID or Password had space character, Please give again !");
+    }
+    else if(this.loginData.userID && this.loginData.password)
+    {
 
       this.showLoader();
       this.authService.authenLogin(this.loginData).then((result) => 
       {
-        console.log('response data from server');
-        console.log(result);
 
-        this.loading.dismiss();
-        var json;
-        json =result;
-      
-        json.forEach(element => {
-          if((element.Username !="") && (element.Status=="ok")) {
-            this.navCtrl.setRoot(MenuPage);
-          }
-          else {
-            this.presentToast("Please give valid userID and password");
-          }
-        });
-  
-        }, (err) => {
-          /* 
-          Connection failed message, please check your internet..
-          Create more method to check connection internet
-          */
-          this.loading.dismiss();
-          this.presentToast(err);
-          this.presentToast("Please check your internet, 3g, 4g ...");
-        });   
-    }
-      
+      console.log('response data from server');
+      console.log(result);
+
+      this.loading.dismiss();
+      var json;
+      json =result;
+    
+      json.forEach(element => {
+      if((element.Username !="") && (element.Status=="ok")) {
+          this.navCtrl.setRoot(MenuPage);
+      }
+      else {
+          this.presentToast("Please give valid userID and password");
+      }
+      });
+ 
+      }, (err) => {
+      /* 
+        Connection failed message, please check your internet..
+        Create more method to check connection internet
+      */
+      this.loading.dismiss();
+      this.presentToast(err);
+      this.presentToast("Please check your internet, 3g, 4g ...");
+      });   
+    }    
     else {
-        this.presentToast("Please give userID and password");
+      this.presentToast("Please give userID and password");
     }
   }
 

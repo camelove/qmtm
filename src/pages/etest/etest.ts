@@ -120,9 +120,10 @@ export class EtestPage {
    * click button and call next_button() method on etest.html
    */
   public next_button() {
+
     /* * TODO Something, add more condition check parameter here */    
     // this.loading.dismiss();
-
+    
     this.clickedShowHideButtonSubmit = true;
 
     this.presentToast("You don't answer for this question..");    
@@ -151,7 +152,7 @@ export class EtestPage {
     
   }
 
-  public sendValueEx1MultiChoice() {
+  public sendValueMultiChoice() {
     console.log("Ban vua chon cau tra loi multi choice !!");
   }
 

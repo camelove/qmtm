@@ -71,33 +71,30 @@
                         <div *ngIf="etest.id_qtype =='1' ; else elsetag">
                             <ion-row>
                                 <ion-col col-1></ion-col>
-                                <!-- <ion-label>① {{etest.ex1}}</ion-label> -->
-                                <!-- <ion-input value="{{etest.ex1 }}"></ion-input> -->
-                                <button class="btn_answer" ion-fab value="" full (click)="sendValueEx1OX(etest.ex1)">{{etest.ex1}}</button>
+                                <ion-label (click)="sendValueEx1OX(etest.ex1)">① {{etest.ex1}}</ion-label>                                
                             </ion-row>
                             <ion-row>
                                 <ion-col col-1></ion-col>
-                                <ion-label>② {{etest.ex2}}</ion-label>  
+                                <ion-label (click)="sendValueEx1OX(etest.ex2)">② {{etest.ex2}}</ion-label>  
                             </ion-row>
                         </div>
     
                         <ng-template #elsetag>
                             <ion-row>
                                 <ion-col col-1></ion-col>
-                                <ion-label>① {{etest.ex1}}</ion-label>              <!-- exlabel: ①, ②, ③, ④ -->
-                                <!-- <ion-input value="{{etest.ex1}}"></ion-input> -->
-                            </ion-row>
-                            <ion-row>
-                                <ion-col col-1></ion-col>                    
-                                <ion-label>② {{etest.ex2}}</ion-label>                                
-                            </ion-row>
-                            <ion-row>
-                                <ion-col col-1></ion-col>                    
-                                <ion-label>③ {{etest.ex3}}</ion-label>                                
+                                <ion-label (click)="sendValueMultiChoice(etest.ex1)">① {{etest.ex1}}</ion-label>
                             </ion-row>
                             <ion-row>
                                 <ion-col col-1></ion-col>
-                                <ion-label>④ {{etest.ex4}}</ion-label>                                
+                                <ion-label (click)="sendValueMultiChoice(etest.ex2)">② {{etest.ex2}}</ion-label>
+                            </ion-row>
+                            <ion-row>
+                                <ion-col col-1></ion-col>
+                                <ion-label (click)="sendValueMultiChoice(etest.ex3)">③ {{etest.ex3}}</ion-label>
+                            </ion-row>
+                            <ion-row>
+                                <ion-col col-1></ion-col>
+                                <ion-label (click)="sendValueMultiChoice(etest.ex4)">④ {{etest.ex4}}</ion-label>
                             </ion-row>
                         </ng-template>
                     </ion-slide>
@@ -164,16 +161,22 @@
                         <ion-col class="title_text">> Paper Sheet</ion-col>
                     </ion-row>     
 
-                    <!--               
-                    <div *ngFor="let etest of item_exam">
-                    <ion-row>    
-                        <ion-col>{{etest.page}}</ion-col>
-                        <ion-col>①</ion-col>
+                                   
+                    
+                    <ion-row *ngFor="let etest of item_exam">  
+                        <ion-col class="colTitle">{{etest.page}}</ion-col>
+                        <ion-col class="colContent">①</ion-col>
+                        <!--  
+                        <ion-col class="colTitle">{{etest.page}}</ion-col>
+                        <ion-col class="colContent">①</ion-col>
+                        <ion-col class="colTitle">{{etest.page}}</ion-col>
+                        <ion-col class="colContent">①</ion-col> 
+                        -->
                     </ion-row>    
-                    </div>
-                    -->
+                   
+                    
                      
-                    <ion-row>
+                    <!-- <ion-row>
                         <ion-col class="colTitle">1</ion-col>           
                         <ion-col class="colContent">①</ion-col>
                         <ion-col class="colTitle">2</ion-col>
@@ -232,7 +235,7 @@
                         <ion-col class="colContent"></ion-col>
                         <ion-col class="colTitle"></ion-col>
                         <ion-col class="colContent"></ion-col>
-                    </ion-row>                   
+                    </ion-row>      -->              
                 </ion-grid>
 
             </ion-list>

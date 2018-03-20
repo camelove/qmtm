@@ -5,60 +5,78 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-    <ion-navbar color="primary">
-        <ion-buttons start>
-          <button ion-button menuToggle>
-            <ion-icon name="menu"></ion-icon>
-          </button>
-        </ion-buttons>
-        <ion-title>Score Detail</ion-title>
-      </ion-navbar>
-  
-  </ion-header>
-  
-  
-  <ion-content>    
-  <ion-card>
-    <ion-list>  
-       <ion-list-header color="light">
-          Confimation result test and check correct answer, explaining and marking are correct.          
-       </ion-list-header>
-       <div *ngFor="let viewexam of viewexams">
-       <ion-item>  
-         <ion-label stacked>Test name</ion-label>  
-         <ion-label>{{viewexam.Test_name}}</ion-label>  
-       </ion-item>
-       <hr>
-       <ion-item>  
-         <ion-label stacked>Test allotting</ion-label>  
-         <!--<ion-label>Test at the anytime</ion-label>-->
-         <ion-label>{{viewexam.Test_allotting}}</ion-label>
-       </ion-item>
-       <hr>
-       <ion-item>  
-         <ion-label stacked>Score period</ion-label>  
-         <ion-label>{{viewexam.Start_time}}  ~ {{viewexam.End_time}}</ion-label>
-         <!--<ion-label>Private</ion-label>-->
-         <!--<ion-label>No period setting</ion-label>-->
-       </ion-item>
-       <hr>
-       <ion-item>  
-         <ion-label stacked>My score</ion-label>  
-         <!--<ion-label>Incompleted</ion-label>-->
-         <!--<ion-label>Absent</ion-label>-->
-         <!--<ion-label>Unmarked</ion-label>-->
-         <ion-label>{{viewexam.My_score}}</ion-label>
-       </ion-item>   
-      </div>          
-       <hr>
-       <button ion-button full large color="danger" (click)="goViewAnswerExpl(exam)">View Answer & Explain</button>
-       <!--<ion-item>  
-         <ion-label stacked>View answer</ion-label>  
-         <ion-label>Incompleted</ion-label>
-         <ion-label>Absent</ion-label>
-       </ion-item>-->      
-       <hr>
-       <button ion-button full large color="secondary" (click)="goViewStatic(exam)">View Static</button>
-    </ion-list>
-  </ion-card>
-  </ion-content>
+  <ion-navbar color="primary">
+      <ion-buttons start>
+        <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title>Score Detail</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>    
+<ion-card>
+  <ion-list>  
+     <ion-list-header color="light">
+        Confimation result test and check correct answer, explaining and marking are correct.          
+     </ion-list-header>
+     <div *ngFor="let viewexam of viewexams">
+     <ion-item>  
+       <ion-label stacked>Test name</ion-label>  
+       <ion-label>{{exam.Test_name}}</ion-label>  
+     </ion-item>
+     <hr>
+     <ion-item>  
+       <ion-label stacked>Test allotting</ion-label>  
+       <!--<ion-label>Test at the anytime</ion-label>-->
+       <ion-label>{{viewexam.Test_allotting}}</ion-label>
+     </ion-item>
+     <hr>
+     <ion-item>  
+       <ion-label   stacked>Score period</ion-label>  
+       
+      <ion-label *ngIf="(viewexam.Yn_end == 'N')" >Incompleted</ion-label> 
+      <ion-label *ngIf="(viewexam.Open_score == 'X')" >Absent </ion-label> 
+       <ion-label  *ngIf=" ischeck(viewexam) && (viewexam.Yn_end == 'Y')"  > No period setting </ion-label> 
+
+       <ion-label  *ngIf=" (viewexam.Yn_end == 'Y')&&(viewexam.My_score==-1)"  > Unmarked </ion-label> 
+       <ion-label  *ngIf=" (viewexam.Yn_end == 'Y')&&((viewexam.Score_view_option=='D')||(viewexam.Score_view_option=='E'))"> {{viewexam.Start_time}} ~ {{viewexam.End_time}}</ion-label>
+<!--         
+        <ng-template #othercase>{{viewexam.Start_time}}  ~ {{viewexam.End_time}}</ng-template> -->
+       <!--<ion-label>Private</ion-label>-->
+       <!--<ion-label>No period setting</ion-label>-->
+     </ion-item>
+     <hr>
+     <ion-item>  
+       <ion-label stacked >My score</ion-label>  
+       <!-->Incompleted<>-->     
+       <ion-label *ngIf="(viewexam.Yn_end == 'N')" >Can not view</ion-label>
+       <!-- Absent candidate -->
+       <ion-label *ngIf="(viewexam.Open_score == 'X')" >Can not view </ion-label> 
+       <!-- Unmarked -->
+       <ion-label  *ngIf=" (viewexam.Yn_end == 'Y')&&(viewexam.My_score==-1)"  >Can not view</ion-label>
+
+       <ion-label  *ngIf=" (viewexam.Yn_end == 'Y')&&(viewexam.Score_view_option=='A')">Private</ion-label>
+       <ion-label  *ngIf=" (viewexam.Yn_end == 'Y')&&((viewexam.Score_view_option=='B')||(viewexam.Score_view_option=='C'))">{{viewexam.My_score}}</ion-label>
+       <ion-label  *ngIf=" (ischeck_score1(viewexam)) && (viewexam.Open_score =='Y')"> {{viewexam.My_score}} </ion-label>
+       <ion-label  *ngIf=" (ischeck_score1(viewexam)) && (viewexam.Open_score =='N')"> No period to view result </ion-label>
+       <ion-label  *ngIf=" (ischeck_score2(viewexam)) && (viewexam.Open_score =='Y')"> {{viewexam.My_score}} </ion-label>
+       <ion-label  *ngIf=" (ischeck_score2(viewexam)) && (viewexam.Open_score =='N')"> No period to view result </ion-label>
+        
+     </ion-item>   
+    </div>          
+     <hr>
+     <button ion-button full large color="danger" (click)="goViewAnswerExpl(exam)">View Answer & Explain</button>
+     <!--<ion-item>  
+       <ion-label stacked>View answer</ion-label>  
+       <ion-label>Incompleted</ion-label>
+       <ion-label>Absent</ion-label>
+     </ion-item>-->      
+     <hr>
+     <button ion-button full large color="secondary" (click)="goViewStatic(exam)">View Static</button>
+  </ion-list>
+</ion-card>
+</ion-content>
