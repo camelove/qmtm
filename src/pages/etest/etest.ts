@@ -138,6 +138,30 @@ export class EtestPage {
   public submitAnswer() {    
     
     this.presentToast("You have clicked submit answer !!");
+    console.log("You have clicked submit answer ! ");
+
+
+
+    let alert = this.alertCtrl.create({
+      title: 'Confirm Submit Test',
+      message: 'Are you sure submit your test?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Submit',
+          handler: () => {
+            console.log('Submit clicked');
+          }
+        }
+      ]
+    });
+    alert.present();
   } 
   
   /**
@@ -156,10 +180,34 @@ export class EtestPage {
     console.log("Ban vua chon cau tra loi multi choice !!");
   }
 
-  public sendValueEx1OX() {
+  public markedValueAnswerOX(i:any) {      // event    
+    // console.log(ex1);
+    console.log("You selected OX, value is:  " + i);
+
+  }
+
+  public markedValueEx2OX(ex2) {
+    
+    console.log('ex1Selected', ex2);
     console.log("Ban vua chon cau tra loi OX !!");
   }
 
+  public markedValueEx3OX(ex3) {
+    
+    console.log('ex1Selected', ex3);
+    console.log("Ban vua chon cau tra loi OX !!");
+  }
+
+  public markedValueEx4OX(ex4) {
+    
+    console.log('ex1Selected', ex4);
+    console.log("Ban vua chon cau tra loi OX !!");
+  }
+  public markedValueEx5OX(ex5) {
+    
+    console.log('ex1Selected', ex5);
+    console.log("Ban vua chon cau tra loi OX !!");
+  }
   /*
   * Show and check all condition: 
   * [1]check if not answered quetion and click 'next' button, 

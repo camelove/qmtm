@@ -61,22 +61,43 @@
                 <!-- <div *ngFor="let etest of item_exam"> -->
                 <ion-slides pager loop slidesPerView="1"> 
                 <!-- <div *ngFor="let etest of item_exam"> -->
-                    <ion-slide *ngFor="let etest of item_exam">
+                    <ion-slide *ngFor="let etest of item_exam; let i = index;">
                         <ion-row>
-                            <ion-col col-1 align="right">{{etest.page}}</ion-col>                                           <!-- {{etest.ex_order}}. -->
-                            <ion-label>{{etest.q}}<BR>(alloting) {{etest.allotting}} scores </ion-label>                    <!-- {{items.allotting}} -->                            
+                            <ion-col col-1 align="right">{{etest.page}}</ion-col>                                           
+                            <ion-label>{{etest.q}}<BR>(alloting) {{etest.allotting}} scores </ion-label>
                         </ion-row> 
 
 
                         <div *ngIf="etest.id_qtype =='1' ; else elsetag">
-                            <ion-row>
+                            
+                            
+                            <!-- *ngFor="let etest of item_exam; let i= index;" (ionChange) = "markedValueEx1OX(i)" -->    
+                            <ion-list radio-group>
+                                <ion-item>
+                                  <ion-label>① {{etest.ex1}}</ion-label>
+                                  <ion-radio value="etest.ex1" (ionSelect)="markedValueAnswerOX(1)"></ion-radio>                  <!-- etest.ex1 -->
+                                </ion-item>
+                                
+                                <ion-item>
+                                  <ion-label>② {{etest.ex2}}</ion-label>
+                                  <ion-radio value="etest.ex2" (ionSelect)="markedValueAnswerOX(2)"></ion-radio>                    <!-- etest.ex2 -->      
+                                </ion-item>
+                              </ion-list>
+
+                            
+                            <!-- <ion-row>
                                 <ion-col col-1></ion-col>
-                                <ion-label (click)="sendValueEx1OX(etest.ex1)">① {{etest.ex1}}</ion-label>                                
+                                <ion-label (click)="sendValueEx1OX(etest.ex1)">① {{etest.ex1}}</ion-label>
+                                <ion-radio></ion-radio>                            
                             </ion-row>
                             <ion-row>
                                 <ion-col col-1></ion-col>
                                 <ion-label (click)="sendValueEx1OX(etest.ex2)">② {{etest.ex2}}</ion-label>  
-                            </ion-row>
+                            </ion-row> -->
+
+
+
+
                         </div>
     
                         <ng-template #elsetag>
@@ -168,7 +189,7 @@
                         <ion-col class="colContent">①</ion-col>
                         <!--  
                         <ion-col class="colTitle">{{etest.page}}</ion-col>
-                        <ion-col class="colContent">①</ion-col>
+                        <ion-col class="colConten      t">①</ion-col>
                         <ion-col class="colTitle">{{etest.page}}</ion-col>
                         <ion-col class="colContent">①</ion-col> 
                         -->
