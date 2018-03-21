@@ -180,12 +180,23 @@ export class EtestPage {
     console.log("Ban vua chon cau tra loi multi choice !!");
   }
 
+
+
+
+
+
   public markedValueAnswerOX(i:any) {      // event    
     // console.log(ex1);
     console.log("You selected OX, value is:  " + i);
 
   }
 
+
+
+
+
+
+  
   public markedValueEx2OX(ex2) {
     
     console.log('ex1Selected', ex2);

@@ -1,35 +1,17 @@
-<!--
-  Generated template for the Tab1Page page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-
-<!-- <ion-header>
-
-  <ion-navbar>
-    <ion-buttons start>
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-    </ion-buttons>
-    <ion-title>Admin tab3</ion-title>
-  </ion-navbar>
-
-</ion-header> -->
 
 
-<ion-content>
+<ion-content overflow-scroll="true">
     <ion-card>
         <ion-list>
+
             <ion-grid>
                 <ion-row>
                     <ion-col class="colTitle">Test name</ion-col>
-                    <ion-col class="colContent">{{my_score.Test_name}}</ion-col>
+                    <ion-col class="colContent">{{exam.Test_name}}</ion-col>
                     <ion-col class="colTitle">Username</ion-col>
                     <ion-col class="colContent">{{view_exam.userid}}</ion-col>
                 </ion-row>                         
-                
+            
                 <ion-row>
                     <ion-col class="colTitle">Allotting</ion-col>
                     <ion-col class="colContent">{{my_score.Test_allott}}</ion-col>
@@ -39,34 +21,52 @@
             </ion-grid>
         </ion-list>
     </ion-card>
-    
+
     <!-- scope 1 -->  
     <ion-card *ngFor="let view of viewexams">
         <!-- Question info -->
+        
+  
         <ion-list>
-            <ion-grid [hidden]="(view.UserAnswer == view.Answer)">
-                <ion-row>
-                    <ion-col col-1 style="background-image:url('../assets/imgs/X.gif');" class="question_number">{{view.QuestionNo}}</ion-col>
+            <ion-grid >
+                <ion-row  [hidden]="!(view.UserAnswer == view.Answer)" >
+                    
+                    <ion-col col-1 style="background-image:url('../assets/imgs/O.gif');" class="question_number">{{view.QuestionNo}}</ion-col>
                     <ion-col class="text_size">
-                            {{view.Question}}  <BR>{{view.Allotting}} score  
+                      {{view.Question}} <BR>(alloting) {{view.Allotting}} score    
                     </ion-col>
                 </ion-row>
+                <ion-row  [hidden]="view.UserAnswer == view.Answer" >
+                        
+                        <ion-col col-1 style="background-image:url('../assets/imgs/X.gif');" class="question_number">{{view.QuestionNo}}</ion-col>
+                        <ion-col  class="text_size">
+                        
+                            
+                        <p [innerHTML]= "view.Question"> </p> <BR>(alloting) {{view.Allotting}} score
+                        </ion-col>
+                    </ion-row>
                 <ion-row>
                     <ion-col col-1></ion-col> 
-                    <ion-col class="text_size">                    
-                            {{view.Ex1}}<br>
-                            {{view.Ex2}}<br>
-                            {{view.Ex3}}<br>
-                            {{view.Ex4}}<br>
-                            {{view.Ex5}}<br>                
+                    <ion-col class="text_size"  >   
+                      
+                         
+                            <p [innerHTML]= "view.Ex1"></p><br>
+                            <p [innerHTML]= "view.Ex2"></p><br>
+                            <p [innerHTML]= "view.Ex3"></p><br>
+                            <p [innerHTML]= "view.Ex4"></p><br>
+                            <p [innerHTML]= "view.Ex5"></p><br> 
+                        <!-- ③ incorrect<br>
+                        ④ incorrect<br>
+                        ⑤ incorrect<br>                     -->
                     </ion-col>
                 </ion-row>
             </ion-grid>    
         </ion-list>
-            
-        <!-- list score -->    
-        <ion-list>          
-            <ion-grid [hidden]="(view.UserAnswer == view.Answer)">
+   
+    
+ 
+         <ion-list>          
+            <ion-grid>
                 <ion-row>
                     <ion-col class="colTitle">Allotting</ion-col>
                     <ion-col class="colTitle">Score</ion-col>
@@ -75,14 +75,17 @@
                     <ion-col class="colTitle">Mark</ion-col>
                 </ion-row>             
                 <ion-row>
-                    <ion-col class="colListContent">10.0</ion-col>
-                    <ion-col class="colListContent">10.0</ion-col>
-                    <ion-col class="colListContent">②</ion-col>
-                    <ion-col class="colListContent">⑤</ion-col> 
-                    <ion-col class="colListContent">X</ion-col>
+                    <ion-col class="colListContent">{{view.Allotting}}</ion-col>
+                    <ion-col class="colListContent">{{view.Allotting}}</ion-col>
+                    <ion-col class="colListContent">{{view.Answer}}</ion-col>
+                    <ion-col class="colListContent">{{view.UserAnswer}}</ion-col> 
+                    <ion-col class="colListContent"     [hidden]="!(view.UserAnswer == view.Answer)">O</ion-col>
+                    <ion-col class="colListContent"     [hidden]="(view.UserAnswer == view.Answer)" >X</ion-col>
                 </ion-row>    
             </ion-grid>        
-        </ion-list>
-    </ion-card>    
-</ion-content>
+        </ion-list> 
+     </ion-card>
+
+    <!-- scope 2 -->  
     
+</ion-content>

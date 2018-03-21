@@ -16,18 +16,18 @@
       </ion-header>
 
       <ion-content>          
-        <!-- Button(Refresh, Close) display -->                  
+        <!-- Button(Refresh, Close) display -->
         <div style="float: left; margin-left: 10px; margin-top: 5px;">
             <ion-img src="../assets/imgs/logo_bg2.gif" width="80" height="30"></ion-img>
         </div>
-        <div style="float: right; margin-right: 10px;">            
+        <div style="float: right; margin-right: 10px;">
             <button ion-button small type="submit" onclick="refresh_onclick()" text-uppercase>refresh</button><button ion-button small type="submit" onclick="refresh_onclick()" text-uppercase>close</button>
-        </div>   
+        </div>
         <!-- Test info display -->    
         
         <ion-card>
-            <ion-list>                
-                <ion-grid class="text_size">                
+            <ion-list>
+                <ion-grid class="text_size">
                         <ion-row>
                             <ion-col>
                                 <ion-icon name="arrow-dropright"></ion-icon> Test name : {{exam.Test_name}}        <!-- title  --> 
@@ -67,10 +67,7 @@
                             <ion-label>{{etest.q}}<BR>(alloting) {{etest.allotting}} scores </ion-label>
                         </ion-row> 
 
-
                         <div *ngIf="etest.id_qtype =='1' ; else elsetag">
-                            
-                            
                             <!-- *ngFor="let etest of item_exam; let i= index;" (ionChange) = "markedValueEx1OX(i)" -->    
                             <ion-list radio-group>
                                 <ion-item>
@@ -82,10 +79,9 @@
                                   <ion-label>② {{etest.ex2}}</ion-label>
                                   <ion-radio value="etest.ex2" (ionSelect)="markedValueAnswerOX(2)"></ion-radio>                    <!-- etest.ex2 -->      
                                 </ion-item>
-                              </ion-list>
-
-                            
-                            <!-- <ion-row>
+                            </ion-list>
+                            <!-- 
+                            <ion-row>
                                 <ion-col col-1></ion-col>
                                 <ion-label (click)="sendValueEx1OX(etest.ex1)">① {{etest.ex1}}</ion-label>
                                 <ion-radio></ion-radio>                            
@@ -93,11 +89,8 @@
                             <ion-row>
                                 <ion-col col-1></ion-col>
                                 <ion-label (click)="sendValueEx1OX(etest.ex2)">② {{etest.ex2}}</ion-label>  
-                            </ion-row> -->
-
-
-
-
+                            </ion-row> 
+                            -->
                         </div>
     
                         <ng-template #elsetag>
@@ -118,28 +111,31 @@
                                 <ion-label (click)="sendValueMultiChoice(etest.ex4)">④ {{etest.ex4}}</ion-label>
                             </ion-row>
                         </ng-template>
-                    </ion-slide>
+                    
                     
                 <!-- </div> -->
-                </ion-slides>
+                
                 <!-- </div> -->
                     <!-- End scope -->
                         
                     <ion-row>
                         <ion-col> 
-                            <button *ngIf="clickedShowHideButtonSubmit" ion-button color="danger" color="danger" full (click)="prev_button()">Previous</button>
+                            <button (click)="prev_button()" color="danger" ion-button text-only [disabled]="i === 0">Previous</button>
                         </ion-col>
                         <ion-col>
-                            <button ion-button color="danger" color="danger" full (click)="next_button()">Next</button>
+                            <button [disabled]="!item_exam" *ngIf="i<item_exam.length - 1" ion-button text-only color="danger" (click)="next_button()">Next</button>
                         </ion-col>
                         <ion-col>                 
-                            <button *ngIf="clickedShowHideButtonSubmit" ion-button color="danger" full (click)="submitAnswer()">Submit</button>       <!-- type="submit"  | ng-hide="activeTab == 'info'" -->                             
+                            <button [disabled]="!item_exam" *ngIf="i === item_exam.length - 1" ion-button text-only color="danger" (click)="submitAnswer()">Submit</button>                   
                         </ion-col>
                     </ion-row>
-                </ion-grid>    
-            </ion-list>
+
+                    </ion-slide>        
+                </ion-slides> 
+            </ion-grid>    
+        </ion-list>
         </form>
-        </ion-card>
+     </ion-card>
                      
              
             <ion-list>                

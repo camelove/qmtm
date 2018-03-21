@@ -1,26 +1,7 @@
-<!--
-  Generated template for the Tab1Page page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<!-- <ion-header>
-
-  <ion-navbar>
-    <ion-buttons start>
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-    </ion-buttons>
-    <ion-title>Admin tab2</ion-title>
-  </ion-navbar>
-
-</ion-header> -->
-
-
-<ion-content>
+<ion-content overflow-scroll="true">
     <ion-card>
         <ion-list>
+
             <ion-grid>
                 <ion-row>
                     <ion-col class="colTitle">Test name</ion-col>
@@ -56,18 +37,22 @@
                 <ion-row  [hidden]="view.UserAnswer == view.Answer" >
                         
                         <ion-col col-1 style="background-image:url('../assets/imgs/X.gif');" class="question_number">{{view.QuestionNo}}</ion-col>
-                        <ion-col class="text_size">
-                          {{view.Question}} <BR>(alloting) {{view.Allotting}} score    
+                        <ion-col  class="text_size">
+                        
+                            
+                        <p [innerHTML]= "view.Question"> </p> <BR>(alloting) {{view.Allotting}} score
                         </ion-col>
                     </ion-row>
                 <ion-row>
                     <ion-col col-1></ion-col> 
-                    <ion-col class="text_size"  >                    
-                        {{view.Ex1}}<br>
-                        {{view.Ex2}}<br>
-                        {{view.Ex3}}<br>
-                        {{view.Ex4}}<br>
-                        {{view.Ex5}}<br>
+                    <ion-col class="text_size"  >   
+                      
+                         
+                            <p [innerHTML]= "view.Ex1"></p><br>
+                            <p [innerHTML]= "view.Ex2"></p><br>
+                            <p [innerHTML]= "view.Ex3"></p><br>
+                            <p [innerHTML]= "view.Ex4"></p><br>
+                            <p [innerHTML]= "view.Ex5"></p><br> 
                         <!-- ③ incorrect<br>
                         ④ incorrect<br>
                         ⑤ incorrect<br>                     -->
