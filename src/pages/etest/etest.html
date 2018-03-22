@@ -64,20 +64,20 @@
                     <ion-slide *ngFor="let etest of item_exam; let i = index;">
                         <ion-row>
                             <ion-col col-1 align="right">{{etest.page}}</ion-col>                                           
-                            <ion-label>{{etest.q}}<BR>(alloting) {{etest.allotting}} scores </ion-label>
+                            <ion-label><p [innerHTML]= "etest.q"></p> <BR>(alloting) {{etest.allotting}} scores </ion-label>
                         </ion-row> 
 
                         <div *ngIf="etest.id_qtype =='1' ; else elsetag">
                             <!-- *ngFor="let etest of item_exam; let i= index;" (ionChange) = "markedValueEx1OX(i)" -->    
                             <ion-list radio-group>
                                 <ion-item>
-                                  <ion-label>① {{etest.ex1}}</ion-label>
-                                  <ion-radio value="etest.ex1" (ionSelect)="markedValueAnswerOX(1)"></ion-radio>                  <!-- etest.ex1 -->
+                                  <ion-label>① <p [innerHTML]= "etest.ex1"></p></ion-label>
+                                  <ion-radio value="etest.ex1" (ionSelect)="markedValueAnswerOX(etest.ex1)"></ion-radio>                  <!-- etest.ex1 -->
                                 </ion-item>
                                 
                                 <ion-item>
-                                  <ion-label>② {{etest.ex2}}</ion-label>
-                                  <ion-radio value="etest.ex2" (ionSelect)="markedValueAnswerOX(2)"></ion-radio>                    <!-- etest.ex2 -->      
+                                  <ion-label>② <p [innerHTML]= "etest.ex2"></p> </ion-label>
+                                  <ion-radio value="etest.ex2" (ionSelect)="markedValueAnswerOX(etest.ex2)"></ion-radio>                    <!-- etest.ex2 -->      
                                 </ion-item>
                             </ion-list>
                             <!-- 
@@ -117,6 +117,8 @@
                 
                 <!-- </div> -->
                     <!-- End scope -->
+
+                    <!-- <span style="font-size: 1.2rem;">Selected answer: {{ item_exam | json }}</span> -->
                         
                     <ion-row>
                         <ion-col> 
@@ -179,10 +181,23 @@
                     </ion-row>     
 
                                    
+
                     
-                    <ion-row *ngFor="let etest of item_exam">  
+                    <ion-row *ngFor="let etest of item_exam,let i = index;">  
                         <ion-col class="colTitle">{{etest.page}}</ion-col>
-                        <ion-col class="colContent">①</ion-col>
+                        <ion-col class="colContent"    *ngIf="!(check_ox ==0&&check_ox==1)"  ></ion-col>
+                        <ion-col class="colContent"    *ngIf="(check_ox==0)&&(etest.page == (i+1))"  >{{etest.ex1}}</ion-col>
+                        <ion-col class="colContent"    *ngIf="(check_ox==1)&&(etest.page == (i+1))"  >{{etest.ex2}}</ion-col>
+                    
+                    <!-- 
+                        <ion-row *ngFor="let etest of item_exam,let i = index;">  
+                        <ion-col class="colTitle">{{etest.page}}</ion-col>
+                        <ion-col class="colContent"    *ngIf="!(check_ox ==0&&check_ox==1)"  ></ion-col>
+                        <ion-col class="colContent"    *ngIf="check_ox==0"  >{{etest.ex1}}</ion-col>
+                        <ion-col class="colContent"    *ngIf="check_ox ==1"  >{{etest.ex2}}</ion-col> 
+                    -->
+
+
                         <!--  
                         <ion-col class="colTitle">{{etest.page}}</ion-col>
                         <ion-col class="colConten      t">①</ion-col>
@@ -190,69 +205,7 @@
                         <ion-col class="colContent">①</ion-col> 
                         -->
                     </ion-row>    
-                   
-                    
-                     
-                    <!-- <ion-row>
-                        <ion-col class="colTitle">1</ion-col>           
-                        <ion-col class="colContent">①</ion-col>
-                        <ion-col class="colTitle">2</ion-col>
-                        <ion-col class="colContent">①</ion-col>
-                        <ion-col class="colTitle">3</ion-col>
-                        <ion-col class="colContent">①</ion-col>
-                    </ion-row> 
-
-                    
-                    <ion-row>
-                        <ion-col class="colTitle">4</ion-col>
-                        <ion-col class="colContent">①</ion-col>
-                        <ion-col class="colTitle">5</ion-col>
-                        <ion-col class="colContent">①</ion-col>
-                        <ion-col class="colTitle">6</ion-col>
-                        <ion-col class="colContent">①</ion-col>
-                    </ion-row>
-                      
-                    <ion-row>
-                        <ion-col class="colTitle">7</ion-col>
-                        <ion-col class="colContent"></ion-col>
-                        <ion-col class="colTitle">8</ion-col>
-                        <ion-col class="colContent"></ion-col>
-                        <ion-col class="colTitle">9</ion-col>
-                        <ion-col class="colContent"></ion-col>
-                    </ion-row> 
-                    
-                    <ion-row>
-                        <ion-col class="colTitle">10</ion-col>
-                        <ion-col class="colContent"></ion-col>
-                        <ion-col class="colTitle">11</ion-col>
-                        <ion-col class="colContent"></ion-col>
-                        <ion-col class="colTitle">12</ion-col>
-                        <ion-col class="colContent"></ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col class="colTitle">13</ion-col>
-                        <ion-col class="colContent"></ion-col>
-                        <ion-col class="colTitle">14</ion-col>
-                        <ion-col class="colContent"></ion-col>
-                        <ion-col class="colTitle">15</ion-col>
-                        <ion-col class="colContent"></ion-col>
-                    </ion-row> 
-                    <ion-row>
-                        <ion-col class="colTitle">16</ion-col>
-                        <ion-col class="colContent"></ion-col>
-                        <ion-col class="colTitle">17</ion-col>
-                        <ion-col class="colContent"></ion-col>
-                        <ion-col class="colTitle">18</ion-col>
-                        <ion-col class="colContent"></ion-col>
-                    </ion-row> 
-                    <ion-row>
-                        <ion-col class="colTitle">19</ion-col>
-                        <ion-col class="colContent"></ion-col>
-                        <ion-col class="colTitle">20</ion-col>
-                        <ion-col class="colContent"></ion-col>
-                        <ion-col class="colTitle"></ion-col>
-                        <ion-col class="colContent"></ion-col>
-                    </ion-row>      -->              
+                          
                 </ion-grid>
 
             </ion-list>

@@ -33,7 +33,7 @@
                     
                     <ion-col col-1 style="background-image:url('../assets/imgs/O.gif');" class="question_number">{{view.QuestionNo}}</ion-col>
                     <ion-col class="text_size">
-                      {{view.Question}} <BR>(alloting) {{view.Allotting}} score    
+                        <p [innerHTML]= "view.Question"> </p> <BR>(alloting) {{view.Allotting}} score    
                     </ion-col>
                 </ion-row>
                 <ion-row  [hidden]="view.UserAnswer == view.Answer" >

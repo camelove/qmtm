@@ -32,7 +32,7 @@ export class EtestPage {
   data = {"remain_time":"","title":"", "qcount":""};
 
   items = { "q":"", "allotting":"" };
-
+  public check_ox :any;
   exam:any; 
   viewexams:any;
   item_exam:any;
@@ -111,7 +111,10 @@ export class EtestPage {
    * click button and call prev_button() method on etest.html
    */
   public prev_button() {
-    this.slides.slidePrev();
+
+    this.slides.lockSwipes(false);
+    this.slides.slidePrev(500);
+    this.slides.lockSwipes(true);    
     // this.navCtrl.setRoot('PrevPage');
   }
 
@@ -121,14 +124,14 @@ export class EtestPage {
    */
   public next_button() {
 
-    /* * TODO Something, add more condition check parameter here */    
-    // this.loading.dismiss();
-    
-    this.clickedShowHideButtonSubmit = true;
+    /* * TODO Something, add more condition check parameter here */       
+    // this.clickedShowHideButtonSubmit = true;
 
     this.presentToast("You don't answer for this question..");    
-    this.slides.slideNext();    
-    
+    this.slides.lockSwipes(false);
+    this.slides.slideNext(500);
+    this.slides.lockSwipes(true);
+    // this.loading.dismiss();    
   }
 
   /*
@@ -185,10 +188,20 @@ export class EtestPage {
 
 
 
-  public markedValueAnswerOX(i:any) {      // event    
+  public markedValueAnswerOX(etest:any) {      // event    
     // console.log(ex1);
-    console.log("You selected OX, value is:  " + i);
-
+    let _result ;
+    
+    console.log("You selected OX, value is:  " + etest);
+    if( etest == 'O'){
+       this.check_ox = 0;
+       console.log("You checkok, value is:" + this.check_ox);
+    }
+   else{
+      this.check_ox = 1;
+      console.log("You checkok, value is:" + this.check_ox);
+    }
+   
   }
 
 
@@ -196,7 +209,7 @@ export class EtestPage {
 
 
 
-  
+
   public markedValueEx2OX(ex2) {
     
     console.log('ex1Selected', ex2);
