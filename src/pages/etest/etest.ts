@@ -37,6 +37,9 @@ export class EtestPage {
   viewexams:any;
   item_exam:any;
   loading: any;
+  num_page=0;
+  page :any;
+  Answer = new Array();
   
   public clickedShowHideButtonSubmit: boolean = false;
 
@@ -111,10 +114,12 @@ export class EtestPage {
    * click button and call prev_button() method on etest.html
    */
   public prev_button() {
-
+    this.num_page--;
+    this.presentToast("Trang so: "+this.num_page);
     this.slides.lockSwipes(false);
     this.slides.slidePrev(500);
     this.slides.lockSwipes(true);    
+    this.page = this.num_page.toString();
     // this.navCtrl.setRoot('PrevPage');
   }
 
@@ -126,11 +131,13 @@ export class EtestPage {
 
     /* * TODO Something, add more condition check parameter here */       
     // this.clickedShowHideButtonSubmit = true;
-
+    this.num_page++;
+    this.presentToast("Trang so: "+this.num_page);
     this.presentToast("You don't answer for this question..");    
     this.slides.lockSwipes(false);
     this.slides.slideNext(500);
     this.slides.lockSwipes(true);
+    this.page = this.num_page.toString();
     // this.loading.dismiss();    
   }
 
@@ -188,18 +195,20 @@ export class EtestPage {
 
 
 
-  public markedValueAnswerOX(etest:any) {      // event    
+  public markedValueAnswerOX(etest:any,numpage:any) {      // event    
     // console.log(ex1);
     let _result ;
-    
+    console.log("your page: "+this.num_page);
     console.log("You selected OX, value is:  " + etest);
-    if( etest == 'O'){
+    if( etest == 'O') {
        this.check_ox = 0;
        console.log("You checkok, value is:" + this.check_ox);
+       this.Answer[numpage] = 'O';
     }
-   else{
+   else {
       this.check_ox = 1;
       console.log("You checkok, value is:" + this.check_ox);
+      this.Answer[numpage] = 'X';
     }
    
   }

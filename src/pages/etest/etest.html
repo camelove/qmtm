@@ -7,241 +7,241 @@
 
 <ion-header>
 
-        <!-- 
-        <ion-navbar>
-          <ion-title>etest</ion-title>
-        </ion-navbar> 
-        -->
-      
-      </ion-header>
+    <!-- 
+    <ion-navbar>
+      <ion-title>etest</ion-title>
+    </ion-navbar> 
+    -->
+  
+  </ion-header>
 
-      <ion-content>          
-        <!-- Button(Refresh, Close) display -->
-        <div style="float: left; margin-left: 10px; margin-top: 5px;">
-            <ion-img src="../assets/imgs/logo_bg2.gif" width="80" height="30"></ion-img>
-        </div>
-        <div style="float: right; margin-right: 10px;">
-            <button ion-button small type="submit" onclick="refresh_onclick()" text-uppercase>refresh</button><button ion-button small type="submit" onclick="refresh_onclick()" text-uppercase>close</button>
-        </div>
-        <!-- Test info display -->    
-        
-        <ion-card>
-            <ion-list>
-                <ion-grid class="text_size">
-                        <ion-row>
-                            <ion-col>
-                                <ion-icon name="arrow-dropright"></ion-icon> Test name : {{exam.Test_name}}        <!-- title  --> 
-                            </ion-col>
-                        </ion-row>     
-                  
-
-                    <ion-row>
-                        <ion-col><ion-icon name="arrow-dropright"></ion-icon> Remain question : 4 question / total {{data.qcount}} questions</ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col><ion-icon name="arrow-dropright"></ion-icon> Remain time : {{data.remain_time}} </ion-col>   <!-- 25 minutes / total 50 minutes -->
-                    </ion-row>
-                </ion-grid>
-                
-            </ion-list>
-        </ion-card>  
-        
-
+  <ion-content>          
+    <!-- Button(Refresh, Close) display -->
+    <div style="float: left; margin-left: 10px; margin-top: 5px;">
+        <ion-img src="../assets/imgs/logo_bg2.gif" width="80" height="30"></ion-img>
+    </div>
+    <div style="float: right; margin-right: 10px;">
+        <button ion-button small type="submit" onclick="refresh_onclick()" text-uppercase>refresh</button><button ion-button small type="submit" onclick="refresh_onclick()" text-uppercase>close</button>
+    </div>
+    <!-- Test info display -->    
     
-        <ion-card>
-            <!-- Question info -->
-            <form>
-            <ion-list>
-                <ion-grid>                    
+    <ion-card>
+        <ion-list>
+            <ion-grid class="text_size">
                     <ion-row>
-                        <ion-col class="title_text">> Question Sheet</ion-col>
-                    </ion-row>
-    
-                <!-- Start scope -->     
-                <!-- <div *ngFor="let etest of item_exam"> -->
-                <ion-slides pager loop slidesPerView="1"> 
-                <!-- <div *ngFor="let etest of item_exam"> -->
-                    <ion-slide *ngFor="let etest of item_exam; let i = index;">
-                        <ion-row>
-                            <ion-col col-1 align="right">{{etest.page}}</ion-col>                                           
-                            <ion-label><p [innerHTML]= "etest.q"></p> <BR>(alloting) {{etest.allotting}} scores </ion-label>
-                        </ion-row> 
-
-                        <div *ngIf="etest.id_qtype =='1' ; else elsetag">
-                            <!-- *ngFor="let etest of item_exam; let i= index;" (ionChange) = "markedValueEx1OX(i)" -->    
-                            <ion-list radio-group>
-                                <ion-item>
-                                  <ion-label>① <p [innerHTML]= "etest.ex1"></p></ion-label>
-                                  <ion-radio value="etest.ex1" (ionSelect)="markedValueAnswerOX(etest.ex1)"></ion-radio>                  <!-- etest.ex1 -->
-                                </ion-item>
-                                
-                                <ion-item>
-                                  <ion-label>② <p [innerHTML]= "etest.ex2"></p> </ion-label>
-                                  <ion-radio value="etest.ex2" (ionSelect)="markedValueAnswerOX(etest.ex2)"></ion-radio>                    <!-- etest.ex2 -->      
-                                </ion-item>
-                            </ion-list>
-                            <!-- 
-                            <ion-row>
-                                <ion-col col-1></ion-col>
-                                <ion-label (click)="sendValueEx1OX(etest.ex1)">① {{etest.ex1}}</ion-label>
-                                <ion-radio></ion-radio>                            
-                            </ion-row>
-                            <ion-row>
-                                <ion-col col-1></ion-col>
-                                <ion-label (click)="sendValueEx1OX(etest.ex2)">② {{etest.ex2}}</ion-label>  
-                            </ion-row> 
-                            -->
-                        </div>
-    
-                        <ng-template #elsetag>
-                            <ion-row>
-                                <ion-col col-1></ion-col>
-                                <ion-label (click)="sendValueMultiChoice(etest.ex1)">① {{etest.ex1}}</ion-label>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col col-1></ion-col>
-                                <ion-label (click)="sendValueMultiChoice(etest.ex2)">② {{etest.ex2}}</ion-label>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col col-1></ion-col>
-                                <ion-label (click)="sendValueMultiChoice(etest.ex3)">③ {{etest.ex3}}</ion-label>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col col-1></ion-col>
-                                <ion-label (click)="sendValueMultiChoice(etest.ex4)">④ {{etest.ex4}}</ion-label>
-                            </ion-row>
-                        </ng-template>
-                    
-                    
-                <!-- </div> -->
-                
-                <!-- </div> -->
-                    <!-- End scope -->
-
-                    <!-- <span style="font-size: 1.2rem;">Selected answer: {{ item_exam | json }}</span> -->
-                        
-                    <ion-row>
-                        <ion-col> 
-                            <button (click)="prev_button()" color="danger" ion-button text-only [disabled]="i === 0">Previous</button>
-                        </ion-col>
                         <ion-col>
-                            <button [disabled]="!item_exam" *ngIf="i<item_exam.length - 1" ion-button text-only color="danger" (click)="next_button()">Next</button>
+                            <ion-icon name="arrow-dropright"></ion-icon> Test name : {{exam.Test_name}}        <!-- title  --> 
                         </ion-col>
-                        <ion-col>                 
-                            <button [disabled]="!item_exam" *ngIf="i === item_exam.length - 1" ion-button text-only color="danger" (click)="submitAnswer()">Submit</button>                   
-                        </ion-col>
-                    </ion-row>
-
-                    </ion-slide>        
-                </ion-slides> 
-            </ion-grid>    
-        </ion-list>
-        </form>
-     </ion-card>
-                     
-             
-            <ion-list>                
-          
-              <!--  
-              <ion-item>
-                <ion-label>1</ion-label>
-                <ion-checkbox [(ngModel)]="test"></ion-checkbox>
-              </ion-item>
-            -->  
-
-              <!-- Mau  
-              <div>
-                <div float-left class="my-checkbox">
-                  <ion-label>1</ion-label>
-                  <ion-checkbox name="receive_calls"></ion-checkbox>
-                </div>
-                <div float-right class="my-checkbox">
-                  <ion-label text-uppercase>Text Messages</ion-label>
-                  <ion-checkbox name="receive_messages"></ion-checkbox>
-                </div>
-              </div>
-            -->
-            
-              <!-- <ion-item>
-                <ion-label>Sausage</ion-label>
-                <ion-checkbox [(ngModel)]="sausage" disabled="true"></ion-checkbox>
-              </ion-item>
-            
-              <ion-item>
-                <ion-label>Mushrooms</ion-label>
-                <ion-checkbox [(ngModel)]="mushrooms"></ion-checkbox>
-              </ion-item> -->      
-            </ion-list>
-      
-        <ion-card>
-            <ion-list>
-                <ion-grid>
-                    <ion-row>
-                        <ion-col class="title_text">> Paper Sheet</ion-col>
                     </ion-row>     
+              
 
-                                   
-
-                    
-                    <ion-row *ngFor="let etest of item_exam,let i = index;">  
-                        <ion-col class="colTitle">{{etest.page}}</ion-col>
-                        <ion-col class="colContent"    *ngIf="!(check_ox ==0&&check_ox==1)"  ></ion-col>
-                        <ion-col class="colContent"    *ngIf="(check_ox==0)&&(etest.page == (i+1))"  >{{etest.ex1}}</ion-col>
-                        <ion-col class="colContent"    *ngIf="(check_ox==1)&&(etest.page == (i+1))"  >{{etest.ex2}}</ion-col>
-                    
-                    <!-- 
-                        <ion-row *ngFor="let etest of item_exam,let i = index;">  
-                        <ion-col class="colTitle">{{etest.page}}</ion-col>
-                        <ion-col class="colContent"    *ngIf="!(check_ox ==0&&check_ox==1)"  ></ion-col>
-                        <ion-col class="colContent"    *ngIf="check_ox==0"  >{{etest.ex1}}</ion-col>
-                        <ion-col class="colContent"    *ngIf="check_ox ==1"  >{{etest.ex2}}</ion-col> 
-                    -->
-
-
-                        <!--  
-                        <ion-col class="colTitle">{{etest.page}}</ion-col>
-                        <ion-col class="colConten      t">①</ion-col>
-                        <ion-col class="colTitle">{{etest.page}}</ion-col>
-                        <ion-col class="colContent">①</ion-col> 
-                        -->
-                    </ion-row>    
-                          
-                </ion-grid>
-
-            </ion-list>
-        </ion-card>   
+                <ion-row>
+                    <ion-col><ion-icon name="arrow-dropright"></ion-icon> Remain question : 4 question / total {{data.qcount}} questions</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col><ion-icon name="arrow-dropright"></ion-icon> Remain time : {{data.remain_time}} </ion-col>   <!-- 25 minutes / total 50 minutes -->
+                </ion-row>
+            </ion-grid>
             
-      <!--
-      // CSS:
-      ion-grid > ion-item.item > div.item-inner > div.input-wrapper > ion-label {
-              margin-top: 0px;
-              margin-right: 0px;
-              margin-bottom: 0px;
-              margin-left: 0px;
-          }
-          
-          ion-label > ion-row > ion-col {
-              padding-top: 4px;
-              padding-right: 5px;
-              padding-bottom: 0px;
-              padding-left: 5px;
-          }
-      // HTML      
-      <h3>Ion-Item</h3>
-      <ion-grid>
-          <ion-item *ngFor="let portray of itemsToShow" class="ItemSpace" style="padding:0 !important;">
-              <div class="row" style="padding:0;">
-                  <div class="col-40">
-                      <img src="{{portray.image}}" height="100px" width="127px">
-                  </div>
-                  <div class="col-60" style="padding: 10px;">
-                      <label text-wrap>{{portray.name}}</label>
-                      <p>{{portray.description}}</p>
-                  </div>
-              </div>	
+        </ion-list>
+    </ion-card>  
+    
+
+
+    <ion-card>
+        <!-- Question info -->
+        <form>
+        <ion-list>
+            <ion-grid>                    
+                <ion-row>
+                    <ion-col class="title_text">> Question Sheet</ion-col>
+                </ion-row>
+
+            <!-- Start scope -->     
+            <!-- <div *ngFor="let etest of item_exam"> -->
+            <ion-slides pager loop slidesPerView="1"> 
+            <!-- <div *ngFor="let etest of item_exam"> -->
+                <ion-slide *ngFor="let etest of item_exam; let i = index;">
+                    <ion-row>
+                        <ion-col col-1 align="right">{{etest.page}}</ion-col>
+                        <ion-label><p [innerHTML]= "etest.q"></p> <BR>(alloting) {{etest.allotting}} scores </ion-label>
+                    </ion-row> 
+
+                    <div *ngIf="etest.id_qtype =='1' ; else elsetag">
+                        <!-- *ngFor="let etest of item_exam; let i= index;" (ionChange) = "markedValueEx1OX(i)" -->
+                        <ion-list radio-group>
+                            <ion-item no-lines no-padding>
+                              <ion-label>① <p [innerHTML]= "etest.ex1"></p></ion-label>
+                              <ion-radio value="etest.ex1" (ionSelect)="markedValueAnswerOX(etest.ex1,etest.page)"></ion-radio>                  <!-- etest.ex1 -->
+                            </ion-item>
+                            
+                            <ion-item no-lines no-padding>
+                              <ion-label>② <p [innerHTML]= "etest.ex2"></p> </ion-label>
+                              <ion-radio value="etest.ex2" (ionSelect)="markedValueAnswerOX(etest.ex2,etest.page)"></ion-radio>                    <!-- etest.ex2 -->      
+                            </ion-item>
+                        </ion-list>
+                        <!-- 
+                        <ion-row>
+                            <ion-col col-1></ion-col>
+                            <ion-label (click)="sendValueEx1OX(etest.ex1)">① {{etest.ex1}}</ion-label>
+                            <ion-radio></ion-radio>                            
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-1></ion-col>
+                            <ion-label (click)="sendValueEx1OX(etest.ex2)">② {{etest.ex2}}</ion-label>  
+                        </ion-row> 
+                        -->
+                    </div>
+
+                    <ng-template #elsetag>
+                        <ion-row>
+                            <ion-col col-1></ion-col>
+                            <ion-label (click)="sendValueMultiChoice(etest.ex1)">① {{etest.ex1}}</ion-label>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-1></ion-col>
+                            <ion-label (click)="sendValueMultiChoice(etest.ex2)">② {{etest.ex2}}</ion-label>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-1></ion-col>
+                            <ion-label (click)="sendValueMultiChoice(etest.ex3)">③ {{etest.ex3}}</ion-label>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-1></ion-col>
+                            <ion-label (click)="sendValueMultiChoice(etest.ex4)">④ {{etest.ex4}}</ion-label>
+                        </ion-row>
+                    </ng-template>
+                
+                
+            <!-- </div> -->
+            
+            <!-- </div> -->
+                <!-- End scope -->
+
+                <!-- <span style="font-size: 1.2rem;">Selected answer: {{ item_exam | json }}</span> -->
+                    
+                <ion-row>
+                    <ion-col> 
+                        <button (click)="prev_button()" color="danger" ion-button text-only [disabled]="i === 0">Previous</button>
+                    </ion-col>
+                    <ion-col>
+                        <button [disabled]="!item_exam" *ngIf="i<item_exam.length - 1" ion-button text-only color="danger" (click)="next_button()">Next</button>
+                    </ion-col>
+                    <ion-col>                 
+                        <button [disabled]="!item_exam" *ngIf="i === item_exam.length - 1" ion-button text-only color="danger" (click)="submitAnswer()">Submit</button>                   
+                    </ion-col>
+                </ion-row>
+
+                </ion-slide>        
+            </ion-slides> 
+        </ion-grid>    
+    </ion-list>
+    </form>
+ </ion-card>
+                 
+         
+        <ion-list>                
+      
+          <!--  
+          <ion-item>
+            <ion-label>1</ion-label>
+            <ion-checkbox [(ngModel)]="test"></ion-checkbox>
           </ion-item>
-      </ion-grid>
-      -->
+        -->  
+
+          <!-- Mau  
+          <div>
+            <div float-left class="my-checkbox">
+              <ion-label>1</ion-label>
+              <ion-checkbox name="receive_calls"></ion-checkbox>
+            </div>
+            <div float-right class="my-checkbox">
+              <ion-label text-uppercase>Text Messages</ion-label>
+              <ion-checkbox name="receive_messages"></ion-checkbox>
+            </div>
+          </div>
+        -->
+        
+          <!-- <ion-item>
+            <ion-label>Sausage</ion-label>
+            <ion-checkbox [(ngModel)]="sausage" disabled="true"></ion-checkbox>
+          </ion-item>
+        
+          <ion-item>
+            <ion-label>Mushrooms</ion-label>
+            <ion-checkbox [(ngModel)]="mushrooms"></ion-checkbox>
+          </ion-item> -->      
+        </ion-list>
+  
+    <ion-card>
+        <ion-list>
+            <ion-grid>
+                <ion-row>
+                    <ion-col class="title_text">> Paper Sheet</ion-col>
+                </ion-row>     
+
+                               
+
+                
+                <ion-row *ngFor="let etest of item_exam,let i = index;">  
+                    <ion-col class="colTitle">{{etest.page}}</ion-col>
+                    <ion-col class="colContent"    *ngIf="!(check_ox ==0&&check_ox==1)"  ></ion-col>
+                    <ion-col class="colContent"    *ngIf="(check_ox==0)"  >{{Answer[i+1]}}</ion-col>
+                    <ion-col class="colContent"    *ngIf="(check_ox==1)"  >{{Answer[i+1]}}</ion-col>
+                
+                <!-- 
+                    <ion-row *ngFor="let etest of item_exam,let i = index;">  
+                    <ion-col class="colTitle">{{etest.page}}</ion-col>
+                    <ion-col class="colContent"    *ngIf="!(check_ox ==0&&check_ox==1)"  ></ion-col>
+                    <ion-col class="colContent"    *ngIf="check_ox==0"  >{{etest.ex1}}</ion-col>
+                    <ion-col class="colContent"    *ngIf="check_ox ==1"  >{{etest.ex2}}</ion-col> 
+                -->
+
+
+                    <!--  
+                    <ion-col class="colTitle">{{etest.page}}</ion-col>
+                    <ion-col class="colConten      t">①</ion-col>
+                    <ion-col class="colTitle">{{etest.page}}</ion-col>
+                    <ion-col class="colContent">①</ion-col> 
+                    -->
+                </ion-row>    
+                      
+            </ion-grid>
+
+        </ion-list>
+    </ion-card>   
+        
+  <!--
+  // CSS:
+  ion-grid > ion-item.item > div.item-inner > div.input-wrapper > ion-label {
+          margin-top: 0px;
+          margin-right: 0px;
+          margin-bottom: 0px;
+          margin-left: 0px;
+      }
       
-    </ion-content>
-      
+      ion-label > ion-row > ion-col {
+          padding-top: 4px;
+          padding-right: 5px;
+          padding-bottom: 0px;
+          padding-left: 5px;
+      }
+  // HTML      
+  <h3>Ion-Item</h3>
+  <ion-grid>
+      <ion-item *ngFor="let portray of itemsToShow" class="ItemSpace" style="padding:0 !important;">
+          <div class="row" style="padding:0;">
+              <div class="col-40">
+                  <img src="{{portray.image}}" height="100px" width="127px">
+              </div>
+              <div class="col-60" style="padding: 10px;">
+                  <label text-wrap>{{portray.name}}</label>
+                  <p>{{portray.description}}</p>
+              </div>
+          </div>	
+      </ion-item>
+  </ion-grid>
+  -->
+  
+</ion-content>
+  
