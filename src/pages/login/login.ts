@@ -6,6 +6,9 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
+import {LocalStorage, SessionStorage} from "angular-localstorage";
+import { isCheckedProperty } from 'ionic-angular/util/util';
+
 /**
  * Generated class for the LoginPage page.
  *
@@ -22,14 +25,14 @@ export class LoginPage {
 
   loginData = { "userID":"", "password":"" };
   films: Observable<any>;
- 
+  //event:boolean;
   loading: any;
   resposeData:any;
   // rmchecked: any;
+  eventclick: boolean =false;
   checked:boolean = true;
   user: any;
-  pass: any;
-
+ pass: any;
   items:Array<{title: string, note: string}>;
   
   constructor(public navCtrl: NavController, 
@@ -39,23 +42,38 @@ export class LoginPage {
               private alertCtrl: AlertController,
               public formbuilder: FormBuilder,
               private toastCtrl: ToastController,
-              public httpClient: HttpClient) {                   
+              public httpClient: HttpClient,
+
+            ) {    
+            this.loginData.password = localStorage.getItem("pass");
+
+            this.loginData.userID = localStorage.getItem("userID");
+         
+            if (this.eventclick == false){
+              localStorage.setItem ( "userID","");
+              localStorage.setItem ( "pass","");
+              
+            }
+              
               }
 
   public ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
+    console.log(this.eventclick);
+    
   }
 
   public doLogin() {
-    
     var re = new RegExp("\\s");
     this.user = this.loginData.userID;
     this.pass = this.loginData.password;
-    
-    if((this.user.search(re)!=-1)||(this.pass.search(re)!=-1)) {
-      this.presentToast("UserID or Password had space character, Please give again !");
-    }
-    else if(this.loginData.userID && this.loginData.password)
+   // var data = this.loginData;
+   
+
+    if((this.user.search(re)!=-1)||(this.pass.search(re)!=-1)){
+      this.presentToast("username or password had space character,Please give again");
+     }
+   else if(this.loginData.userID && this.loginData.password)
     {
 
       this.showLoader();
@@ -68,26 +86,29 @@ export class LoginPage {
       this.loading.dismiss();
       var json;
       json =result;
-    
-      json.forEach(element => {
-      if((element.Username !="") && (element.Status=="ok")) {
+      
+      json.forEach(element => 
+        {
+        if((element.Username !="") && (element.Status=="ok"))
+        {
           this.navCtrl.setRoot(MenuPage);
-      }
-      else {
+        }
+        else {
           this.presentToast("Please give valid userID and password");
-      }
+        }
       });
  
       }, (err) => {
-      /* 
+        /* 
         Connection failed message, please check your internet..
         Create more method to check connection internet
-      */
-      this.loading.dismiss();
-      this.presentToast(err);
-      this.presentToast("Please check your internet, 3g, 4g ...");
+        */
+        this.loading.dismiss();
+        this.presentToast(err);
+        this.presentToast("Please check your internet, 3g, 4g ...");
       });   
-    }    
+    }
+    
     else {
       this.presentToast("Please give userID and password");
     }
@@ -119,11 +140,18 @@ export class LoginPage {
   /*
   * Check remember user when login    
   */
-  checkRememberMe(rmChecked):void  {
-    var isChecked = rmChecked.currentTarget.checked;
-    console.log(rmChecked.currentTarget);
-    console.log(this.checked);
-    console.log("Debug on checkRememberMer() method...");
+  checkRememberMe(e:any)  {
+    console.log(e);
+    console.log(e.checked);
+    this.eventclick = e.checked;
+
+
+   localStorage.setItem ( "userID",this.loginData.userID);
+   localStorage.setItem ( "pass",this.loginData.password);
+
+
+
+
   }
 
 }
