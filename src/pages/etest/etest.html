@@ -183,11 +183,20 @@
                                
 
                 
-                <ion-row *ngFor="let etest of item_exam,let i = index;">  
-                    <ion-col class="colTitle">{{etest.page}}</ion-col>
-                    <ion-col class="colContent"    *ngIf="!(check_ox ==0&&check_ox==1)"  ></ion-col>
-                    <ion-col class="colContent"    *ngIf="(check_ox==0)"  >{{Answer[i+1]}}</ion-col>
-                    <ion-col class="colContent"    *ngIf="(check_ox==1)"  >{{Answer[i+1]}}</ion-col>
+                <ion-row *ngFor="let etest of number_array;let i = index;">  
+                    <ion-col class="colTitle" *ngIf="i %3==0">{{number_array[i]}}</ion-col>               
+                    <ion-col class="colContent"    *ngIf="(check_ox==0) &&(i %3==0)"  >{{Answer[i+1]}}</ion-col>
+                    <ion-col class="colContent"    *ngIf="(check_ox==1) &&(i %3==0)"  >{{Answer[i+1]}}</ion-col>
+
+                    <ion-col class="colTitle" *ngIf="i %3==0">{{number_array[i+1]}}  </ion-col>
+                    <ion-col class="colContent"    *ngIf="(check_ox==0) &&(i %3==0)"  > {{Answer[i+2]}}</ion-col>
+                    <ion-col class="colContent"    *ngIf="(check_ox==1) &&(i %3==0)"  >{{Answer[i+2]}}</ion-col>
+
+                    <ion-col class="colTitle" *ngIf="i %3==0">{{number_array[i+2]}}  </ion-col>
+         
+                    <ion-col class="colContent"    *ngIf="(check_ox==0) &&(i %3==0)"  > {{Answer[i+3]}}</ion-col>
+                    <ion-col class="colContent"    *ngIf="(check_ox==1) &&(i %3==0)"  >{{Answer[i+3]}}</ion-col>
+                 
                 
                 <!-- 
                     <ion-row *ngFor="let etest of item_exam,let i = index;">  

@@ -30,7 +30,7 @@ export class EtestPage {
   view_exam = { "userid":"", "id_exam":"" };
   
   data = {"remain_time":"","title":"", "qcount":""};
-
+  number_array = new Array();
   items = { "q":"", "allotting":"" };
   public check_ox :any;
   exam:any; 
@@ -72,7 +72,10 @@ export class EtestPage {
 
     
     this.item_exam = this.viewexams.Items;
-
+    
+    for(var i= 0; i<this.item_exam.length;i++){
+      this.number_array[i]=i+1;
+    }
  
     }) 
 
