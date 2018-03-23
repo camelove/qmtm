@@ -153,8 +153,6 @@ export class EtestPage {
     this.presentToast("You have clicked submit answer !!");
     console.log("You have clicked submit answer ! ");
 
-
-
     let alert = this.alertCtrl.create({
       title: 'Confirm Submit Test',
       message: 'Are you sure submit your test?',
@@ -214,11 +212,6 @@ export class EtestPage {
       this.Answer[numpage] = etest.ex4;
     }
   }
-
-
-
-
-
 
   public markedValueAnswerOX(etest:any,numpage:any) {      // event    
     // console.log(ex1);

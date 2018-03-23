@@ -22,13 +22,12 @@
     <ion-card>
         <ion-list>
             <ion-grid class="text_size">
-                    <ion-row>
-                        <ion-col>
-                            <ion-icon name="arrow-dropright"></ion-icon> Test name : {{exam.Test_name}}        <!-- title  --> 
-                        </ion-col>
-                    </ion-row>     
+                <ion-row>
+                    <ion-col>
+                        <ion-icon name="arrow-dropright"></ion-icon> Test name : {{exam.Test_name}}        <!-- title  --> 
+                    </ion-col>
+                </ion-row>     
               
-
                 <ion-row>
                     <ion-col><ion-icon name="arrow-dropright"></ion-icon> Remain question : 4 question / total {{data.qcount}} questions</ion-col>
                 </ion-row>
@@ -39,8 +38,6 @@
             
         </ion-list>
     </ion-card>  
-    
-
 
     <ion-card>
         <!-- Question info -->
@@ -122,9 +119,6 @@
                 <ion-row>
                     <ion-col class="title_text">> Paper Sheet</ion-col>
                 </ion-row>     
-
-                               
-
                 
                 <ion-row *ngFor="let etest of number_array;let i = index;">  
                     <ion-col class="colTitle" *ngIf="i %3==0">{{number_array[i]}}</ion-col>    
@@ -154,23 +148,7 @@
                     <ion-col class="colContent"    *ngIf="(check_ox==11) &&(i %3==0)"  >{{Answer[i+3]}}</ion-col>
                     <ion-col class="colContent"    *ngIf="(check_ox==12) &&(i %3==0)"  >{{Answer[i+3]}}</ion-col>
                     <ion-col class="colContent"    *ngIf="(check_ox==13) &&(i %3==0)"  >{{Answer[i+3]}}</ion-col>
-                 
-                
-                <!-- 
-                    <ion-row *ngFor="let etest of item_exam,let i = index;">  
-                    <ion-col class="colTitle">{{etest.page}}</ion-col>
-                    <ion-col class="colContent"    *ngIf="!(check_ox ==0&&check_ox==1)"  ></ion-col>
-                    <ion-col class="colContent"    *ngIf="check_ox==0"  >{{etest.ex1}}</ion-col>
-                    <ion-col class="colContent"    *ngIf="check_ox ==1"  >{{etest.ex2}}</ion-col> 
-                -->
-
-
-                    <!--  
-                    <ion-col class="colTitle">{{etest.page}}</ion-col>
-                    <ion-col class="colConten      t">①</ion-col>
-                    <ion-col class="colTitle">{{etest.page}}</ion-col>
-                    <ion-col class="colContent">①</ion-col> 
-                    -->
+                                 
                 </ion-row>    
                       
             </ion-grid>
