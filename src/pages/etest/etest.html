@@ -58,6 +58,7 @@
                         <ion-label><p [innerHTML]= "etest.q"></p> <BR>(alloting) {{etest.allotting}} scores </ion-label>
                     </ion-row> 
 
+                    <!-- set value of id_qtype = 2 if you want to 2 slides show on 1 page -->
                     <div *ngIf="etest.id_qtype =='1' ; else elsetag">
                         <!-- *ngFor="let etest of item_exam; let i= index;" (ionChange) = "markedValueEx1OX(i)" -->
                         <ion-list radio-group>
@@ -75,22 +76,24 @@
                     </div>
 
                     <ng-template #elsetag>
-                        <ion-row>
-                            <ion-col col-1></ion-col>
-                            <ion-label (click)="sendValueMultiChoice(etest.ex1)">① {{etest.ex1}}</ion-label>
-                        </ion-row>
-                        <ion-row>
-                            <ion-col col-1></ion-col>
-                            <ion-label (click)="sendValueMultiChoice(etest.ex2)">② {{etest.ex2}}</ion-label>
-                        </ion-row>
-                        <ion-row>
-                            <ion-col col-1></ion-col>
-                            <ion-label (click)="sendValueMultiChoice(etest.ex3)">③ {{etest.ex3}}</ion-label>
-                        </ion-row>
-                        <ion-row>
-                            <ion-col col-1></ion-col>
-                            <ion-label (click)="sendValueMultiChoice(etest.ex4)">④ {{etest.ex4}}</ion-label>
-                        </ion-row>
+                        <ion-list radio-group>
+                            <ion-item no-lines no-padding>
+                                <ion-label>① <p [innerHTML]="etest.ex1"></p></ion-label>
+                                <ion-radio value="etest.ex1" (ionSelect)="markedValueAnswerMultiChoice(etest.ex1,etest)"></ion-radio>
+                            </ion-item>
+                            <ion-item no-lines no-padding>
+                                <ion-label>② <p [innerHTML]="etest.ex2"></p></ion-label>
+                                <ion-radio value="etest.ex2" (ionSelect)="markedValueAnswerMultiChoice(etest.ex2,etest)"></ion-radio>
+                            </ion-item>
+                            <ion-item no-lines no-padding>
+                                <ion-label>③ <p [innerHTML]="etest.ex3"></p></ion-label>
+                                <ion-radio value="etest.ex3" (ionSelect)="markedValueAnswerMultiChoice(etest.ex3,etest)"></ion-radio>
+                            </ion-item>
+                            <ion-item no-lines no-padding>                                
+                                <ion-label>④ <p [innerHTML]="etest.ex4"></p></ion-label>
+                                <ion-radio value="etest.ex4" (ionSelect)="markedValueAnswerMultiChoice(etest.ex4,etest)"></ion-radio>
+                            </ion-item>
+                        </ion-list>
                     </ng-template>
                     
                 <ion-row>
@@ -124,18 +127,33 @@
 
                 
                 <ion-row *ngFor="let etest of number_array;let i = index;">  
-                    <ion-col class="colTitle" *ngIf="i %3==0">{{number_array[i]}}</ion-col>               
+                    <ion-col class="colTitle" *ngIf="i %3==0">{{number_array[i]}}</ion-col>    
+
                     <ion-col class="colContent"    *ngIf="(check_ox==0) &&(i %3==0)"  >{{Answer[i+1]}}</ion-col>
                     <ion-col class="colContent"    *ngIf="(check_ox==1) &&(i %3==0)"  >{{Answer[i+1]}}</ion-col>
+                    
+                    <ion-col class="colContent"    *ngIf="(check_ox== 10) &&(i %3==0)"  >{{Answer[i+1]}}</ion-col>
+                    <ion-col class="colContent"    *ngIf="(check_ox==11) &&(i %3==0)"  >{{Answer[i+1]}}</ion-col>
+                    <ion-col class="colContent"    *ngIf="(check_ox==12) &&(i %3==0)"  >{{Answer[i+1]}}</ion-col>
+                    <ion-col class="colContent"    *ngIf="(check_ox==13) &&(i %3==0)"  >{{Answer[i+1]}}</ion-col>
+
 
                     <ion-col class="colTitle" *ngIf="i %3==0">{{number_array[i+1]}}  </ion-col>
                     <ion-col class="colContent"    *ngIf="(check_ox==0) &&(i %3==0)"  > {{Answer[i+2]}}</ion-col>
                     <ion-col class="colContent"    *ngIf="(check_ox==1) &&(i %3==0)"  >{{Answer[i+2]}}</ion-col>
+                    <ion-col class="colContent"    *ngIf="(check_ox==10) &&(i %3==0)"  >{{Answer[i+2]}}</ion-col>
+                    <ion-col class="colContent"    *ngIf="(check_ox==11) &&(i %3==0)"  >{{Answer[i+2]}}</ion-col>
+                    <ion-col class="colContent"    *ngIf="(check_ox==12) &&(i %3==0)"  >{{Answer[i+2]}}</ion-col>
+                    <ion-col class="colContent"    *ngIf="(check_ox==13) &&(i %3==0)"  >{{Answer[i+2]}}</ion-col>
 
                     <ion-col class="colTitle" *ngIf="i %3==0">{{number_array[i+2]}}  </ion-col>
          
                     <ion-col class="colContent"    *ngIf="(check_ox==0) &&(i %3==0)"  > {{Answer[i+3]}}</ion-col>
                     <ion-col class="colContent"    *ngIf="(check_ox==1) &&(i %3==0)"  >{{Answer[i+3]}}</ion-col>
+                    <ion-col class="colContent"    *ngIf="(check_ox==10) &&(i %3==0)"  >{{Answer[i+3]}}</ion-col>
+                    <ion-col class="colContent"    *ngIf="(check_ox==11) &&(i %3==0)"  >{{Answer[i+3]}}</ion-col>
+                    <ion-col class="colContent"    *ngIf="(check_ox==12) &&(i %3==0)"  >{{Answer[i+3]}}</ion-col>
+                    <ion-col class="colContent"    *ngIf="(check_ox==13) &&(i %3==0)"  >{{Answer[i+3]}}</ion-col>
                  
                 
                 <!-- 

@@ -189,8 +189,30 @@ export class EtestPage {
     
   }
 
-  public sendValueMultiChoice() {
+  public markedValueAnswerMultiChoice(ex:any,etest:any) {
     console.log("Ban vua chon cau tra loi multi choice !!");
+    var numpage = etest.page;
+    if(ex ==etest.ex1) {
+       this.check_ox = 10; 
+       console.log("You checkok, value is:" + this.check_ox);
+      
+       this.Answer[numpage] = etest.ex1;
+    }
+    else if(ex == etest.ex2) {
+       this.check_ox = 11;
+       console.log("You checkok, value is:" + this.check_ox);
+       this.Answer[numpage] = etest.ex2;
+    }
+    else if(ex ==etest.ex3) {
+      this.check_ox = 12;
+      console.log("You checkok, value is:" + this.check_ox);
+      this.Answer[numpage] = etest.ex3;
+    }
+    else {
+      this.check_ox = 13;
+      console.log("You checkok, value is:" + this.check_ox);
+      this.Answer[numpage] = etest.ex4;
+    }
   }
 
 
@@ -200,7 +222,7 @@ export class EtestPage {
 
   public markedValueAnswerOX(etest:any,numpage:any) {      // event    
     // console.log(ex1);
-    let _result ;
+    // let _result ;
     console.log("your page: "+this.num_page);
     console.log("You selected OX, value is:  " + etest);
     if( etest == 'O') {
@@ -216,34 +238,6 @@ export class EtestPage {
    
   }
 
-
-
-
-
-
-
-  public markedValueEx2OX(ex2) {
-    
-    console.log('ex1Selected', ex2);
-    console.log("Ban vua chon cau tra loi OX !!");
-  }
-
-  public markedValueEx3OX(ex3) {
-    
-    console.log('ex1Selected', ex3);
-    console.log("Ban vua chon cau tra loi OX !!");
-  }
-
-  public markedValueEx4OX(ex4) {
-    
-    console.log('ex1Selected', ex4);
-    console.log("Ban vua chon cau tra loi OX !!");
-  }
-  public markedValueEx5OX(ex5) {
-    
-    console.log('ex1Selected', ex5);
-    console.log("Ban vua chon cau tra loi OX !!");
-  }
   /*
   * Show and check all condition: 
   * [1]check if not answered quetion and click 'next' button, 
