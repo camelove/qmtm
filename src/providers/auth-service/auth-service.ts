@@ -20,6 +20,7 @@ let scoreListURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/score/myscore.jsp
 let scoreDetailURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/score/scoreinfo.jsp';
 let viewTestURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/score/qa.jsp';
 let viewStaticURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/score/multistat.jsp';
+let submitAnswerURL = "testURL";
 
 export class User {
   userID: string;
@@ -37,6 +38,7 @@ export class AuthServiceProvider {
   // List global variable and object
   currentUser: User;
   login_url:any;
+  submit_answers_url:any;
   examlisturl:any;
   examdetailurl:any;
   scorelist_url:any;
@@ -66,6 +68,26 @@ export class AuthServiceProvider {
       headers.append('content-type','application/json');
         //let options = new RequestOptions({ headers:headers});
         this.http.get(this.login_url).map(res => res.json()).subscribe(data => {
+          console.log(data);     
+          console.log(data.headers);
+          resolve(data);      
+        });
+    });
+  }
+
+  public submitAnswerTest(credentials) {
+
+    this.currentUser = credentials;
+    this.submit_answers_url = submitAnswerURL+'?'+'userid='+credentials.userID +'&'+'password='+credentials.password;
+
+    return new Promise((resolve, reject) => {  
+      let headers = new Headers();
+      headers.append('Access-Control-Allow-Origin' , '*');
+      headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
+      headers.append('Accept','application/json');
+      headers.append('content-type','application/json');
+        //let options = new RequestOptions({ headers:headers});
+        this.http.get(this.submit_answers_url).map(res => res.json()).subscribe(data => {
           console.log(data);     
           console.log(data.headers);
           resolve(data);      

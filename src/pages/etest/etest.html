@@ -32,7 +32,9 @@
                     <ion-col><ion-icon name="arrow-dropright"></ion-icon> Remain question : 4 question / total {{data.qcount}} questions</ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col><ion-icon name="arrow-dropright"></ion-icon> Remain time : {{data.remain_time}} </ion-col>   <!-- 25 minutes / total 50 minutes -->
+                    <ion-col>
+                        <ion-icon name="arrow-dropright"></ion-icon> Remain time : {{data.remain_time}} 
+                    </ion-col>   <!-- 25 minutes / total 50 minutes -->
                 </ion-row>
             </ion-grid>
             
@@ -155,6 +157,40 @@
 
         </ion-list>
     </ion-card>   
+
+
+
+
+
+
+
+
+    <!-- <div>
+        <ion-item>
+          <h1 text-center>{{displayTime}}</h1>
+        </ion-item>
+        <ion-fab bottom right *ngIf="runTimer && hasStarted && !hasFinished">
+          <button ion-fab (click)="pauseTimer()">
+        <ion-icon name="pause"></ion-icon>
+        </button>
+        </ion-fab>
+        <ion-fab bottom right *ngIf="!runTimer && hasStarted && !hasFinished">
+          <button ion-fab (click)="resumeTimer()">
+           <ion-icon name="play"></ion-icon>
+           </button>
+        </ion-fab>
+        <ion-fab bottom right *ngIf="!hasStarted">
+          <button ion-fab (click)="startTimer()" item-right>
+           <ion-icon name="play"></ion-icon>
+           </button>
+        </ion-fab>
+        <ion-fab bottom left *ngIf="!runTimer && (hasStarted || hasFinished) || hasFinished">
+          <button ion-fab color="danger" (click)="initTimer()" item-left>
+           <ion-icon name="refresh"></ion-icon>
+          </button>
+        </ion-fab>
+       </div> -->
+       
   
 </ion-content>
   

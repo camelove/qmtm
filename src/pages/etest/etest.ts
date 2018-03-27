@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, Input } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading, ToastController, App } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { Observable } from 'rxjs/Observable';
@@ -8,6 +8,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { Slides } from 'ionic-angular';
+import {TimerObservable} from "rxjs/observable/TimerObservable";
 
 /**
  * Generated class for the EtestPage page.
@@ -40,8 +41,15 @@ export class EtestPage {
   num_page=0;
   page :any;
   Answer = new Array();
-  
-  public clickedShowHideButtonSubmit: boolean = false;
+
+  /* define parameter for timer */
+ timeInSeconds: number; 
+ time: number;
+ remainingTime: number;
+ runTimer: boolean;
+ hasStarted: boolean;
+ hasFinished: boolean;
+ displayTime: string;
 
   constructor(public navCtrl: NavController, 
               private app: App, 
@@ -82,19 +90,73 @@ export class EtestPage {
   }
 
   public ionViewDidLoad(credentials) {
-
-    // check if already authenticated
-    /* 
-    this.auth.isAuthenticated(credentials).then((res) => {
-      console.log("Already authenticated !!");
-      // this.auth.authenLogin(this.userID);
-    }, (res) => {
-        console.log("not already authenticated..");
-        this.app.getRootNav().setRoot("LoginPage");
-    }) 
-    */
     console.log('ionViewDidLoad EtestPage');
   }
+
+
+  /* Initialize and setup the time for question */
+  ngOnInit() {
+    this.initTimer();
+  }
+  
+  initTimer() {
+     // Pomodoro is usually for 25 minutes
+    if (!this.timeInSeconds) { 
+      this.timeInSeconds = 1500; 
+    }
+  
+    this.time = this.timeInSeconds;
+    this.runTimer = false;
+    this.hasStarted = false;
+    this.hasFinished = false;
+    this.remainingTime = this.timeInSeconds;
+    
+    this.displayTime = this.getSecondsAsDigitalClock(this.remainingTime);
+  }
+  
+  startTimer() {
+     this.runTimer = true;
+    this.hasStarted = true;
+    this.timerTick();
+  }
+  
+  pauseTimer() {
+    this.runTimer = false;
+  }
+  
+  resumeTimer() {
+    this.startTimer();
+  }
+  
+  timerTick() {
+    setTimeout(() => {
+  
+      if (!this.runTimer) { return; }
+      this.remainingTime--;
+      this.displayTime = this.getSecondsAsDigitalClock(this.remainingTime);
+      if (this.remainingTime > 0) {
+        this.timerTick();
+      }
+      else {
+        this.hasFinished = true;
+      }
+    }, 1000);
+  }
+  
+  getSecondsAsDigitalClock(inputSeconds: number) {
+    var sec_num = parseInt(inputSeconds.toString(), 10); // don't forget the second param
+    var hours = Math.floor(sec_num / 3600);
+    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    var seconds = sec_num - (hours * 3600) - (minutes * 60);
+    var hoursString = '';
+    var minutesString = '';
+    var secondsString = '';
+    hoursString = (hours < 10) ? "0" + hours : hours.toString();
+    minutesString = (minutes < 10) ? "0" + minutes : minutes.toString();
+    secondsString = (seconds < 10) ? "0" + seconds : seconds.toString();
+    return hoursString + ':' + minutesString + ':' + secondsString;
+  }
+
 
   /**
    * refresh_onclick() method
@@ -132,8 +194,7 @@ export class EtestPage {
    */
   public next_button() {
 
-    /* * TODO Something, add more condition check parameter here */       
-    // this.clickedShowHideButtonSubmit = true;
+    /* * TODO Something, add more condition check parameter here */           
     this.num_page++;
     this.presentToast("Trang so: "+this.num_page);
     this.presentToast("You don't answer for this question..");    
