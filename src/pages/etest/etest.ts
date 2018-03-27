@@ -10,6 +10,7 @@ import { CKEditorModule } from 'ng2-ckeditor';
 import { Slides } from 'ionic-angular';
 import {TimerObservable} from "rxjs/observable/TimerObservable";
 
+
 /**
  * Generated class for the EtestPage page.
  *
@@ -33,15 +34,15 @@ export class EtestPage {
   data = {"remain_time":"","title":"", "qcount":""};
   number_array = new Array();
   items = { "q":"", "allotting":"" };
-  public check_ox :any;
+ 
   exam:any; 
   viewexams:any;
   item_exam:any;
   loading: any;
-  num_page=0;
+  num_page=1;
   page :any;
   Answer = new Array();
-
+  is_answer = new Array(); // define answer question;
   /* define parameter for timer */
  timeInSeconds: number; 
  time: number;
@@ -50,7 +51,9 @@ export class EtestPage {
  hasStarted: boolean;
  hasFinished: boolean;
  displayTime: string;
+ remain_question: any;
 
+ total_question :any;
   constructor(public navCtrl: NavController, 
               private app: App, 
               public navParams: NavParams, 
@@ -80,7 +83,8 @@ export class EtestPage {
 
     
     this.item_exam = this.viewexams.Items;
-    
+    this.total_question = this.data.qcount;
+    this.remain_question = this.total_question;
     for(var i= 0; i<this.item_exam.length;i++){
       this.number_array[i]=i+1;
     }
@@ -97,6 +101,7 @@ export class EtestPage {
   /* Initialize and setup the time for question */
   ngOnInit() {
     this.initTimer();
+    this.startTimer();
   }
   
   initTimer() {
@@ -165,7 +170,17 @@ export class EtestPage {
   public refresh_onclick() {
     this.navCtrl.setRoot('RefreshPage');
   }
+public check_remainquestion(){
+  var question_answered = 0;
+  for(var i = 0 ; i<= this.item_exam.length;i++){
+    if(this.is_answer[i]==true){
+     question_answered++;
 
+    }
+}
+
+ this.remain_question = this.total_question - question_answered;
+}
   /**
    * view_question method
    * click button and call view_question() method on etest.html
@@ -173,18 +188,40 @@ export class EtestPage {
   public view_question() {
     this.navCtrl.setRoot('ViewQuestion');
   }
-
+  presentAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'You have not answer question'+this.num_page,
+     
+      buttons: ['OK']
+    });
+    alert.present();
+    
+  }
   /**
    * prev_button() method
    * click button and call prev_button() method on etest.html
    */
   public prev_button() {
+    if(this.is_answer[this.num_page] !=true){
+      this.presentAlert();
+ 
+    }
     this.num_page--;
     this.presentToast("Trang so: "+this.num_page);
+    console.log("trang so:" + this.num_page);
+    console.log("data:" +this.Answer[this.num_page]);
+    
+    
     this.slides.lockSwipes(false);
     this.slides.slidePrev(500);
-    this.slides.lockSwipes(true);    
+    this.slides.lockSwipes(true); 
+        
+   
     this.page = this.num_page.toString();
+  
+    this.check_remainquestion();
+    
+    
     // this.navCtrl.setRoot('PrevPage');
   }
 
@@ -193,15 +230,27 @@ export class EtestPage {
    * click button and call next_button() method on etest.html
    */
   public next_button() {
-
-    /* * TODO Something, add more condition check parameter here */           
+    if(this.is_answer[this.num_page] !=true){
+      this.presentAlert();
+ 
+    }
     this.num_page++;
     this.presentToast("Trang so: "+this.num_page);
-    this.presentToast("You don't answer for this question..");    
+    this.presentToast("You don't answer for this question.."); 
+    console.log("trang so:" + this.num_page);
+    console.log("data:" +this.Answer[this.num_page]);
+   
+    /* * TODO Something, add more condition check parameter here */          
+     
+   
     this.slides.lockSwipes(false);
     this.slides.slideNext(500);
-    this.slides.lockSwipes(true);
+    this.slides.lockSwipes(true); 
+     
+  
     this.page = this.num_page.toString();
+    this.check_remainquestion();
+  
     // this.loading.dismiss();    
   }
 
@@ -248,47 +297,29 @@ export class EtestPage {
     
   }
 
-  public markedValueAnswerMultiChoice(ex:any,etest:any) {
+  public markedValueAnswerMultiChoice(ex:any) {
     console.log("Ban vua chon cau tra loi multi choice !!");
-    var numpage = etest.page;
-    if(ex ==etest.ex1) {
-       this.check_ox = 10; 
-       console.log("You checkok, value is:" + this.check_ox);
-      
-       this.Answer[numpage] = etest.ex1;
-    }
-    else if(ex == etest.ex2) {
-       this.check_ox = 11;
-       console.log("You checkok, value is:" + this.check_ox);
-       this.Answer[numpage] = etest.ex2;
-    }
-    else if(ex ==etest.ex3) {
-      this.check_ox = 12;
-      console.log("You checkok, value is:" + this.check_ox);
-      this.Answer[numpage] = etest.ex3;
-    }
-    else {
-      this.check_ox = 13;
-      console.log("You checkok, value is:" + this.check_ox);
-      this.Answer[numpage] = etest.ex4;
-    }
+   
+       
+       console.log("You checkok, value is:" + ex);
+      //this.question_answered ++;
+      //console.log("You answerd : "+this.question_answered); 
+      this.is_answer[this.num_page] =true;
+       this.Answer[this.num_page] = ex;
+    
+
   }
 
-  public markedValueAnswerOX(etest:any,numpage:any) {      // event    
+  public markedValueAnswerOX(ex:any) {      // event    
     // console.log(ex1);
     // let _result ;
     console.log("your page: "+this.num_page);
-    console.log("You selected OX, value is:  " + etest);
-    if( etest == 'O') {
-       this.check_ox = 0;
-       console.log("You checkok, value is:" + this.check_ox);
-       this.Answer[numpage] = 'O';
-    }
-   else {
-      this.check_ox = 1;
-      console.log("You checkok, value is:" + this.check_ox);
-      this.Answer[numpage] = 'X';
-    }
+    console.log("You selected OX, value is:  " + ex);
+    //this.question_answered ++;
+    //console.log("You answerd : "+this.question_answered); 
+    this.is_answer[this.num_page] =true;
+       this.Answer[this.num_page] = ex;
+   
    
   }
 
