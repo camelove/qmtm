@@ -61,7 +61,8 @@
       <hr>
       <ion-item>          
         <ion-label stacked>Test guide</ion-label>
-        <ion-label>{{viewexam.Test_guide}}</ion-label>
+        <ion-label *ngIf="viewexam.Test_guide">{{viewexam.Test_guide}}</ion-label>
+        <ion-label *ngIf=" !viewexam.Test_guide">NONE</ion-label>
       </ion-item>
     </div>
    </ion-list>

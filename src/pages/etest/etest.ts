@@ -52,7 +52,7 @@ export class EtestPage {
  hasFinished: boolean;
  displayTime: string;
  remain_question: any;
-
+question_count:any;
  total_question :any;
   constructor(public navCtrl: NavController, 
               private app: App, 
@@ -80,12 +80,12 @@ export class EtestPage {
     this.data.remain_time= view_result.remain_time;
     this.data.title = view_result.title;
     this.data.qcount = view_result.qcount;
-
+    this.question_count = parseInt( this.data.qcount);
     
     this.item_exam = this.viewexams.Items;
     this.total_question = this.data.qcount;
     this.remain_question = this.total_question;
-    for(var i= 0; i<this.item_exam.length;i++){
+    for(var i= 0; i<this.question_count;i++){
       this.number_array[i]=i+1;
     }
  
@@ -93,21 +93,22 @@ export class EtestPage {
 
   }
 
-  public ionViewDidLoad(credentials) {
+  public  ionViewDidEnter(credentials) {
+    this.initTimer();
+    this.startTimer();
     console.log('ionViewDidLoad EtestPage');
   }
 
 
   /* Initialize and setup the time for question */
   ngOnInit() {
-    this.initTimer();
-    this.startTimer();
+    
   }
   
   initTimer() {
      // Pomodoro is usually for 25 minutes
     if (!this.timeInSeconds) { 
-      this.timeInSeconds = 1500; 
+      this.timeInSeconds =   parseFloat( this.data.remain_time); 
     }
   
     this.time = this.timeInSeconds;
@@ -120,7 +121,7 @@ export class EtestPage {
   }
   
   startTimer() {
-     this.runTimer = true;
+    this.runTimer = true;
     this.hasStarted = true;
     this.timerTick();
   }
@@ -172,7 +173,7 @@ export class EtestPage {
   }
 public check_remainquestion(){
   var question_answered = 0;
-  for(var i = 0 ; i<= this.item_exam.length;i++){
+  for(var i = 0 ; i<= this.question_count;i++){
     if(this.is_answer[i]==true){
      question_answered++;
 
