@@ -24,7 +24,7 @@
           <ion-grid class="text_size">
               <ion-row>
                   <ion-col>
-                      <ion-icon name="arrow-dropright"></ion-icon> Test name : {{exam.Test_name}}        <!-- title  --> 
+                      <ion-icon name="arrow-dropright"></ion-icon> Test name : {{exam.Test_name}}        
                   </ion-col>
               </ion-row>     
             
@@ -34,7 +34,7 @@
               <ion-row>
                   <ion-col>
                       <ion-icon name="arrow-dropright"></ion-icon> Remain time : {{displayTime}}          <!-- data.remain_time -->
-                  </ion-col>   <!-- 25 minutes / total 50 minutes -->
+                  </ion-col>
               </ion-row>
           </ion-grid>
           
@@ -42,54 +42,57 @@
   </ion-card>  
 
   <ion-card>
+  <div >
       <!-- Question info -->
       <form>
-      <ion-list>
+      <ion-list>        <!-- class="card_description" -->
           <ion-grid>
               <ion-row>
                   <ion-col class="title_text">> Question Sheet</ion-col>
               </ion-row>
           
-          <ion-slides >             
+          <ion-slides>             
               <ion-slide *ngFor="let etest of item_exam; let i = index;">
-                  <ion-row>
-                      <ion-col col-1 align="right">{{etest.page}}</ion-col>
-                      <ion-label><p [innerHTML]= "etest.q"></p> <BR>(alloting) {{etest.allotting}} scores </ion-label>
-                  </ion-row> 
-
+                    <div class="row_ans">
+                        <!-- <ion-item text-wrap> -->
+                            <ion-label>{{etest.page}}. <div class="mark_answer" [innerHTML]= "etest.q"></div></ion-label>
+                            <ion-label><div class="score_ans">(alloting) {{etest.allotting}} scores </div></ion-label>
+                        <!-- </ion-item> -->
+                    </div>
+                
                   <!-- set value of id_qtype = 2 if you want to 2 slides show on 1 page -->
                   <div *ngIf="etest.id_qtype =='1' ; else elsetag">
                       <!-- *ngFor="let etest of item_exam; let i= index;" (ionChange) = "markedValueEx1OX(i)" -->
+                     
                       <ion-list radio-group>
-                          <ion-item no-lines no-padding>
-                            <ion-label>① <p [innerHTML]= "etest.ex1"></p></ion-label>
-                            <ion-radio value="etest.ex1" (ionSelect)="markedValueAnswerOX(etest.ex1)"></ion-radio>                  <!-- etest.ex1 -->
+                          <ion-item no-lines no-padding class="mark_answer_inside">
+                                <ion-label>① <div class="mark_answer" [innerHTML]= "etest.ex1"></div></ion-label>
+                                <ion-radio value="etest.ex1" (ionSelect)="markedValueAnswerOX(etest.ex1)"></ion-radio>                            
                           </ion-item>
                           
                           <ion-item no-lines no-padding>
-                            <ion-label>② <p [innerHTML]= "etest.ex2"></p> </ion-label>
-                            <ion-radio value="etest.ex2" (ionSelect)="markedValueAnswerOX(etest.ex2)"></ion-radio>                    <!-- etest.ex2 -->      
+                            <ion-label>② <div class="mark_answer" [innerHTML]= "etest.ex2"></div> </ion-label>
+                            <ion-radio value="etest.ex2" (ionSelect)="markedValueAnswerOX(etest.ex2)"></ion-radio>
                           </ion-item>
                       </ion-list>
-                      
                   </div>
 
                   <ng-template #elsetag>
                       <ion-list radio-group>
                           <ion-item no-lines no-padding>
-                              <ion-label>① <p [innerHTML]="etest.ex1"></p></ion-label>
+                              <ion-label>① <div class="mark_answer" [innerHTML]="etest.ex1"></div></ion-label>
                               <ion-radio value="etest.ex1" (ionSelect)="markedValueAnswerMultiChoice(etest.ex1)"></ion-radio>
                           </ion-item>
                           <ion-item no-lines no-padding>
-                              <ion-label>② <p [innerHTML]="etest.ex2"></p></ion-label>
+                              <ion-label>② <div class="mark_answer" [innerHTML]="etest.ex2"></div></ion-label>
                               <ion-radio value="etest.ex2" (ionSelect)="markedValueAnswerMultiChoice(etest.ex2)"></ion-radio>
                           </ion-item>
                           <ion-item no-lines no-padding>
-                              <ion-label>③ <p [innerHTML]="etest.ex3"></p></ion-label>
+                              <ion-label>③ <div class="mark_answer" [innerHTML]="etest.ex3"></div></ion-label>
                               <ion-radio value="etest.ex3" (ionSelect)="markedValueAnswerMultiChoice(etest.ex3)"></ion-radio>
                           </ion-item>
                           <ion-item no-lines no-padding>                                
-                              <ion-label>④ <p [innerHTML]="etest.ex4"></p></ion-label>
+                              <ion-label>④ <div class="mark_answer" [innerHTML]="etest.ex4"></div></ion-label>
                               <ion-radio value="etest.ex4" (ionSelect)="markedValueAnswerMultiChoice(etest.ex4)"></ion-radio>
                           </ion-item>
                       </ion-list>
@@ -109,9 +112,11 @@
 
               </ion-slide>        
           </ion-slides> 
-      </ion-grid>    
+      </ion-grid>
   </ion-list>
   </form>
+
+</div>
 </ion-card>
 
 

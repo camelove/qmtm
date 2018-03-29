@@ -44,16 +44,16 @@ export class EtestPage {
   Answer = new Array();
   is_answer = new Array(); // define answer question;
   /* define parameter for timer */
- timeInSeconds: number; 
- time: number;
- remainingTime: number;
- runTimer: boolean;
- hasStarted: boolean;
- hasFinished: boolean;
- displayTime: string;
- remain_question: any;
-question_count:any;
- total_question :any;
+  timeInSeconds: number; 
+  time: number;
+  remainingTime: number;
+  runTimer: boolean;
+  hasStarted: boolean;
+  hasFinished: boolean;
+  displayTime: string;
+  remain_question: any;
+  question_count:any;
+  total_question :any;
   constructor(public navCtrl: NavController, 
               private app: App, 
               public navParams: NavParams, 
@@ -106,9 +106,9 @@ question_count:any;
   }
   
   initTimer() {
-     // Pomodoro is usually for 25 minutes
+     // Initialization is usually for 25 minutes
     if (!this.timeInSeconds) { 
-      this.timeInSeconds =   parseFloat( this.data.remain_time); 
+      this.timeInSeconds = parseFloat( this.data.remain_time); 
     }
   
     this.time = this.timeInSeconds;
@@ -126,13 +126,15 @@ question_count:any;
     this.timerTick();
   }
   
+  /* 
   pauseTimer() {
     this.runTimer = false;
   }
   
   resumeTimer() {
     this.startTimer();
-  }
+  } 
+  */
   
   timerTick() {
     setTimeout(() => {
@@ -150,7 +152,7 @@ question_count:any;
   }
   
   getSecondsAsDigitalClock(inputSeconds: number) {
-    var sec_num = parseInt(inputSeconds.toString(), 10); // don't forget the second param
+    var sec_num = parseInt(inputSeconds.toString(), 10);
     var hours = Math.floor(sec_num / 3600);
     var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
     var seconds = sec_num - (hours * 3600) - (minutes * 60);
@@ -171,17 +173,18 @@ question_count:any;
   public refresh_onclick() {
     this.navCtrl.setRoot('RefreshPage');
   }
-public check_remainquestion(){
+  public check_remainquestion() {
   var question_answered = 0;
-  for(var i = 0 ; i<= this.question_count;i++){
+  for(var i = 0 ; i<= this.question_count;i++) {
     if(this.is_answer[i]==true){
      question_answered++;
 
     }
-}
+  }
 
- this.remain_question = this.total_question - question_answered;
-}
+  this.remain_question = this.total_question - question_answered;
+  }
+
   /**
    * view_question method
    * click button and call view_question() method on etest.html
@@ -198,15 +201,16 @@ public check_remainquestion(){
     alert.present();
     
   }
+
   /**
    * prev_button() method
    * click button and call prev_button() method on etest.html
    */
   public prev_button() {
-    if(this.is_answer[this.num_page] !=true){
-      this.presentAlert();
- 
+    if(this.is_answer[this.num_page] !=true) {
+      this.presentAlert(); 
     }
+
     this.num_page--;
     this.presentToast("Trang so: "+this.num_page);
     console.log("trang so:" + this.num_page);
@@ -220,9 +224,7 @@ public check_remainquestion(){
    
     this.page = this.num_page.toString();
   
-    this.check_remainquestion();
-    
-    
+    this.check_remainquestion();    
     // this.navCtrl.setRoot('PrevPage');
   }
 
@@ -231,7 +233,7 @@ public check_remainquestion(){
    * click button and call next_button() method on etest.html
    */
   public next_button() {
-    if(this.is_answer[this.num_page] !=true){
+    if(this.is_answer[this.num_page] !=true) {
       this.presentAlert();
  
     }
@@ -241,14 +243,12 @@ public check_remainquestion(){
     console.log("trang so:" + this.num_page);
     console.log("data:" +this.Answer[this.num_page]);
    
-    /* * TODO Something, add more condition check parameter here */          
-     
-   
+    /* TODO Something, add more condition check parameter here */          
+        
     this.slides.lockSwipes(false);
     this.slides.slideNext(500);
     this.slides.lockSwipes(true); 
      
-  
     this.page = this.num_page.toString();
     this.check_remainquestion();
   
@@ -259,7 +259,7 @@ public check_remainquestion(){
   * submitAnswer()method
   * click button and send all answers to server
   */
-  public submitAnswer() {    
+  public submitAnswer() {
     
     this.presentToast("You have clicked submit answer !!");
     console.log("You have clicked submit answer ! ");
@@ -299,19 +299,16 @@ public check_remainquestion(){
   }
 
   public markedValueAnswerMultiChoice(ex:any) {
-    console.log("Ban vua chon cau tra loi multi choice !!");
-   
+    console.log("Ban vua chon cau tra loi multi choice !!");   
        
-       console.log("You checkok, value is:" + ex);
-      //this.question_answered ++;
-      //console.log("You answerd : "+this.question_answered); 
-      this.is_answer[this.num_page] =true;
-       this.Answer[this.num_page] = ex;
-    
-
+    console.log("You checkok, value is:" + ex);
+    //this.question_answered ++;
+    //console.log("You answerd : "+this.question_answered); 
+    this.is_answer[this.num_page] =true;
+    this.Answer[this.num_page] = ex;
   }
 
-  public markedValueAnswerOX(ex:any) {      // event    
+  public markedValueAnswerOX(ex:any) {
     // console.log(ex1);
     // let _result ;
     console.log("your page: "+this.num_page);
@@ -319,9 +316,7 @@ public check_remainquestion(){
     //this.question_answered ++;
     //console.log("You answerd : "+this.question_answered); 
     this.is_answer[this.num_page] =true;
-       this.Answer[this.num_page] = ex;
-   
-   
+    this.Answer[this.num_page] = ex;   
   }
 
   /*

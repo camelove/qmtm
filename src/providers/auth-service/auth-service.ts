@@ -20,6 +20,7 @@ let scoreListURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/score/myscore.jsp
 let scoreDetailURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/score/scoreinfo.jsp';
 let viewTestURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/score/qa.jsp';
 let viewStaticURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/score/multistat.jsp';
+let saveAnswerURL = "saveAnsURL";
 let submitAnswerURL = "testURL";
 
 export class User {
