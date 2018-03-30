@@ -278,6 +278,8 @@ export class EtestPage {
         {
           text: 'Submit',
           handler: () => {
+            this.navCtrl.setRoot('FinalResultPage');
+            // this.navCtrl.setPages('FinalResultPage');
             console.log('Submit clicked');
           }
         }

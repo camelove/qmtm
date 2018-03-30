@@ -1,0 +1,65 @@
+<!--
+  Generated template for the FinalResultPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>final-result</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+    <ion-card>
+        <ion-list>
+            <ion-grid class="global_content">
+             <div class="inside_row">
+                <ion-row>Result your test exam</ion-row>
+              </div>       
+                <br>
+                
+                
+                <ion-row>
+                    <ion-col>
+                        <ion-icon name="arrow-dropright"></ion-icon>  Score: <div class="score_stl">40.0</div>
+                    </ion-col>
+                </ion-row>     
+              
+                <ion-row>
+                    <ion-col>
+                        <ion-icon name="arrow-dropright"></ion-icon>  Total Score: <div class="total_score_stl">100.0 </div>
+                    </ion-col> 
+                </ion-row>
+                <ion-row>
+                    <ion-col>
+                        <ion-icon name="arrow-dropright"></ion-icon>  This score is temporary and maybe changed by the result of the short-answer question and the revised mark.
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col>
+                        <ion-icon name="arrow-dropright"></ion-icon>  You are submitted successfully !
+                    </ion-col>
+                </ion-row>
+                
+                <ion-row>
+                    <ion-col>
+                        <ion-icon name="arrow-dropright">  Thank you so much !!</ion-icon>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col> 
+                        <button (click)="finish_button()" color="danger" ion-button>Finish</button>
+                    </ion-col>
+                </ion-row>
+              
+            </ion-grid>
+            
+        </ion-list>
+    </ion-card>  
+</ion-content>

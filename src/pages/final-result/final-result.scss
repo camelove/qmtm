@@ -1,0 +1,37 @@
+page-final-result {
+
+    .inside_row {
+        font-size: 14pt;
+        color: #2aaf67;        
+        font-style: italic;
+        // vertical-align: middle;
+        position: relative;
+        text-align: center;
+        
+    }
+    .global_content {
+        font-size: 10pt;
+    }
+    .score_stl {
+        color: red;
+        font-size: 18pt;
+        clear: both;
+        display: inline-block;
+        // overflow: hidden;
+        white-space: nowrap;
+    }
+    .total_score_stl {
+        // color: red;
+        font-size: 14pt;
+        clear: both;
+        display: inline-block;
+        // overflow: hidden;
+        white-space: nowrap;
+    }
+
+    ion-card {
+        background: #000;
+        position: relative;
+        // text-align: center;
+    }
+}
