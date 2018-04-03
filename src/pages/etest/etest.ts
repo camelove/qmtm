@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { Slides } from 'ionic-angular';
 import {TimerObservable} from "rxjs/observable/TimerObservable";
+import { Http } from '@angular/http';
 
 
 /**
@@ -31,10 +32,10 @@ export class EtestPage {
 
   view_exam = { "userid":"", "id_exam":"" };
   
-  data = {"remain_time":"","title":"", "qcount":""};
+  data = {"remain_time":"","title":"", "qcount":"","yn_open_score_direct":""};
   number_array = new Array();
   items = { "q":"", "allotting":"" };
- 
+  save_data = { "answers":"","userid":"", "id_exam":"","remain_time":"","yn_open_score_direct":""};
   exam:any; 
   viewexams:any;
   item_exam:any;
@@ -46,7 +47,7 @@ export class EtestPage {
   /* define parameter for timer */
   timeInSeconds: number; 
   time: number;
-  remainingTime: number;
+  remainingTime: any;
   runTimer: boolean;
   hasStarted: boolean;
   hasFinished: boolean;
@@ -54,13 +55,16 @@ export class EtestPage {
   remain_question: any;
   question_count:any;
   total_question :any;
+ 
+ 
+
   constructor(public navCtrl: NavController, 
               private app: App, 
               public navParams: NavParams, 
               public loadingCtrl: LoadingController, 
               private alertCtrl: AlertController,
               private toastCtrl: ToastController,
-              private auth:AuthServiceProvider) {
+              public auth:AuthServiceProvider,public http:Http) {
 
     let info = this.auth.getUserInfo();
     this.exam = this.navParams.get('exam');
@@ -81,11 +85,12 @@ export class EtestPage {
     this.data.title = view_result.title;
     this.data.qcount = view_result.qcount;
     this.question_count = parseInt( this.data.qcount);
-    
+    this.save_data.yn_open_score_direct = view_result.yn_open_score_direct;
     this.item_exam = this.viewexams.Items;
     this.total_question = this.data.qcount;
     this.remain_question = this.total_question;
     for(var i= 0; i<this.question_count;i++){
+      this.Answer[i]=null;
       this.number_array[i]=i+1;
     }
  
@@ -96,13 +101,14 @@ export class EtestPage {
   public  ionViewDidEnter(credentials) {
     this.initTimer();
     this.startTimer();
+    
     console.log('ionViewDidLoad EtestPage');
   }
-
+ 
 
   /* Initialize and setup the time for question */
   ngOnInit() {
-    
+   
   }
   
   initTimer() {
@@ -124,6 +130,7 @@ export class EtestPage {
     this.runTimer = true;
     this.hasStarted = true;
     this.timerTick();
+  
   }
   
   /* 
@@ -144,6 +151,7 @@ export class EtestPage {
       this.displayTime = this.getSecondsAsDigitalClock(this.remainingTime);
       if (this.remainingTime > 0) {
         this.timerTick();
+        this.check_time();
       }
       else {
         this.hasFinished = true;
@@ -170,6 +178,22 @@ export class EtestPage {
    * refresh_onclick() method
    * click button and call refresh_onclick() method on etest.html
    */
+check_time(){
+  if(parseInt(this.remainingTime) == 3300){
+    let alert = this.alertCtrl.create({
+      title: 'Your time exist is five minutes,',
+     
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+    
+
+}
+
+
+
+
   public refresh_onclick() {
     this.navCtrl.setRoot('RefreshPage');
   }
@@ -201,7 +225,16 @@ export class EtestPage {
     alert.present();
     
   }
+//Submit answer to Serve
 
+save_ans( ){
+   
+this.save_data.answers = this.Answer.join("{:}");
+this.save_data.id_exam = this.view_exam.id_exam;
+this.save_data.userid = this.view_exam.userid;
+this.save_data.remain_time = this.remainingTime; 
+this.auth.save_ans(this.save_data);
+}
   /**
    * prev_button() method
    * click button and call prev_button() method on etest.html
@@ -214,7 +247,7 @@ export class EtestPage {
     this.num_page--;
     this.presentToast("Trang so: "+this.num_page);
     console.log("trang so:" + this.num_page);
-    console.log("data:" +this.Answer[this.num_page]);
+    console.log("data:" +this.Answer[this.num_page-1]);
     
     
     this.slides.lockSwipes(false);
@@ -224,7 +257,8 @@ export class EtestPage {
    
     this.page = this.num_page.toString();
   
-    this.check_remainquestion();    
+    this.check_remainquestion();   
+    this.save_ans();
     // this.navCtrl.setRoot('PrevPage');
   }
 
@@ -241,7 +275,7 @@ export class EtestPage {
     this.presentToast("Trang so: "+this.num_page);
     this.presentToast("You don't answer for this question.."); 
     console.log("trang so:" + this.num_page);
-    console.log("data:" +this.Answer[this.num_page]);
+    console.log("data:" +this.Answer[this.num_page-1]);
    
     /* TODO Something, add more condition check parameter here */          
         
@@ -251,14 +285,28 @@ export class EtestPage {
      
     this.page = this.num_page.toString();
     this.check_remainquestion();
-  
+    this.save_ans();
     // this.loading.dismiss();    
   }
+
+  ///Submit  all answer to serve and 
+  submit_ans(){
+  this.save_data.answers = this.Answer.join("{:}");
+  this.save_data.id_exam = this.view_exam.id_exam;
+  this.save_data.userid = this.view_exam.userid;
+  this.save_data.remain_time = this.remainingTime; 
+
+    this.auth.Submit_ans(this.save_data);
+
+}
+
+
 
   /*
   * submitAnswer()method
   * click button and send all answers to server
   */
+
   public submitAnswer() {
     
     this.presentToast("You have clicked submit answer !!");
@@ -278,14 +326,16 @@ export class EtestPage {
         {
           text: 'Submit',
           handler: () => {
-            this.navCtrl.setRoot('FinalResultPage');
-            // this.navCtrl.setPages('FinalResultPage');
             console.log('Submit clicked');
           }
         }
       ]
     });
     alert.present();
+
+
+
+
   } 
   
   /**
@@ -300,17 +350,17 @@ export class EtestPage {
     
   }
 
-  public markedValueAnswerMultiChoice(ex:any) {
+  public markedValueAnswerMultiChoice(ex:any,ans:any) {
     console.log("Ban vua chon cau tra loi multi choice !!");   
        
     console.log("You checkok, value is:" + ex);
     //this.question_answered ++;
     //console.log("You answerd : "+this.question_answered); 
     this.is_answer[this.num_page] =true;
-    this.Answer[this.num_page] = ex;
+    this.Answer[this.num_page-1] = ans;
   }
 
-  public markedValueAnswerOX(ex:any) {
+  public markedValueAnswerOX(ex:any,ans:any) {
     // console.log(ex1);
     // let _result ;
     console.log("your page: "+this.num_page);
@@ -318,7 +368,7 @@ export class EtestPage {
     //this.question_answered ++;
     //console.log("You answerd : "+this.question_answered); 
     this.is_answer[this.num_page] =true;
-    this.Answer[this.num_page] = ex;   
+    this.Answer[this.num_page-1] = ans;   
   }
 
   /*

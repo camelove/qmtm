@@ -149,5 +149,22 @@ page-etest {
         display: inline;        
         white-space: normal;
     }
+
+    .rounded {
+        height: 100%;
+        width: 300px; 
+        // position: relative;
+        border: 2px solid #cdcdcd;
+        border-color: rgba(0,0,0,.14);
+        background-color: AliceBlue ;   ;
+        font-size: 14px;
+    }
+
+    // #container {
+        
+    //     width: 300px; 
+    //     margin-left:auto; 
+    //     margin-right: auto; 
+    // }
     
 }

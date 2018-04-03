@@ -11,17 +11,16 @@ import 'rxjs/add/operator/map';
   and Angular DI.
 */
 
-let loginURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/user_check.jsp';
-let examListURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/exam/mytest.jsp';
-let examDetailURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/exam/etest.jsp';
-let examPaperURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/paper/etest.jsp';
-let saveAnswerAndLogURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/paper/saveans.jsp';
-let scoreListURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/score/myscore.jsp';
-let scoreDetailURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/score/scoreinfo.jsp';
-let viewTestURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/score/qa.jsp';
-let viewStaticURL = 'http://192.168.100.8:8080/QMTM_DEMO/mobile/score/multistat.jsp';
-let saveAnswerURL = "saveAnsURL";
-let submitAnswerURL = "testURL";
+let loginURL = 'http://localhost:8080/QMTM_DEMO/mobile/user_check.jsp';
+let examListURL = 'http://localhost:8080/QMTM_DEMO/mobile/exam/mytest.jsp';
+let examDetailURL = 'http://localhost:8080/QMTM_DEMO/mobile/exam/etest.jsp';
+let examPaperURL = 'http://localhost:8080/QMTM_DEMO/mobile/paper/etest.jsp';
+let saveAnswerURL = 'http://localhost:8080/QMTM_DEMO/mobile/paper/saveans.jsp';
+let scoreListURL = 'http://localhost:8080/QMTM_DEMO/mobile/score/myscore.jsp';
+let scoreDetailURL = 'http://localhost:8080/QMTM_DEMO/mobile/score/scoreinfo.jsp';
+let viewTestURL = 'http://localhost:8080/QMTM_DEMO/mobile/score/qa.jsp';
+let viewStaticURL = 'http://localhost:8080/QMTM_DEMO/mobile/score/multistat.jsp';
+let submitURL = 'http://localhost:8080/QMTM_DEMO/mobile/paper/submitResult.jsp';
 
 export class User {
   userID: string;
@@ -39,7 +38,6 @@ export class AuthServiceProvider {
   // List global variable and object
   currentUser: User;
   login_url:any;
-  submit_answers_url:any;
   examlisturl:any;
   examdetailurl:any;
   scorelist_url:any;
@@ -76,26 +74,6 @@ export class AuthServiceProvider {
     });
   }
 
-  public submitAnswerTest(credentials) {
-
-    this.currentUser = credentials;
-    this.submit_answers_url = submitAnswerURL+'?'+'userid='+credentials.userID +'&'+'password='+credentials.password;
-
-    return new Promise((resolve, reject) => {  
-      let headers = new Headers();
-      headers.append('Access-Control-Allow-Origin' , '*');
-      headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
-      headers.append('Accept','application/json');
-      headers.append('content-type','application/json');
-        //let options = new RequestOptions({ headers:headers});
-        this.http.get(this.submit_answers_url).map(res => res.json()).subscribe(data => {
-          console.log(data);     
-          console.log(data.headers);
-          resolve(data);      
-        });
-    });
-  }
-
 
   /*
   * Method logout() to user log out
@@ -115,22 +93,7 @@ export class AuthServiceProvider {
   */
   public isAuthenticated(credentials) {
 
-    /* console.log("APP started");
-    // Listen to authNotifier
-    this.auth.
-      // filter on null so our app will wait for a real response
-      .filter(res => res !== null)
-      .subscribe(status => {
-        console.log("APP AuthNotifier said: ",status);
-        if(!status){ // when not auth'd
-          console.log("APP Logging out!");
-          this.auth.logout().subscribe(res => { // logout and then redirect to login
-            console.log("Logged out.",res);
-            this.nav.setRoot('LoginPage');
-          });
-        }
-      }); 
-      */
+   
   }
   
   /*
@@ -169,7 +132,7 @@ export class AuthServiceProvider {
   */
   public exam_detail(credentials) {
     
-    this.examdetailurl = examDetailURL+'?'+'userid='+credentials.userID +'&'+"id_exam="+credentials.id_exam;
+    this.examdetailurl = examDetailURL+'?'+'userid='+credentials.userid +'&'+"id_exam="+credentials.id_exam;
 
     return new Promise((resolve, reject) => {  
     let headers = new Headers();
@@ -254,9 +217,58 @@ export class AuthServiceProvider {
   * URL: http://192.168.100.9:8080/QMTM_DEMO/mobile/paper/etest.jsp
   * parameter: saveAnswerAndLogURL
   */
-  public save_answer_and_log() {
+ save_ans(credentials ){
+  
+  let headers = new Headers(
+    {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    });
+    let body = 'userid=' + credentials.userid + '&id_exam=' + credentials.id_exam+"&answers="+credentials.answers+"&remain_time="+credentials.remain_time;
+    
+  return new Promise((resolve, reject) => {
+    this.http.post(saveAnswerURL, 
+      body, { headers: headers })
+    .toPromise()
+    .then((response) =>
+    {
+      console.log('API Response : ', response.json());
+      resolve(response.json());
+    })
+   
+  });
 
   }
+
+  Submit_ans(credentials ){
+  
+    let headers = new Headers(
+      {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      });
+      let body = 'userid=' + credentials.userid + '&id_exam=' + credentials.id_exam+"&answers="+credentials.answers+"&yn_open_score_direct"+credentials.yn_open_score_direct+"&remain_time="+credentials.remain_time;
+      
+    return new Promise((resolve, reject) => {
+      this.http.post(submitURL, 
+        body, { headers: headers })
+      .toPromise()
+      .then((response) =>
+      {
+        console.log('API Response : ', response.json());
+        resolve(response.json());
+      })
+     
+    });
+  
+    }
+
+
+
+
+
+
+
+
+
 
   /*
   * Method view_score() to show view score
