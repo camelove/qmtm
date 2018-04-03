@@ -44,7 +44,6 @@ export class EtestPage {
   page :any;
   Answer = new Array();
   is_answer = new Array(); // define answer question;
-
   /* define parameter for timer */
   timeInSeconds: number; 
   time: number;
@@ -56,11 +55,14 @@ export class EtestPage {
   remain_question: any;
   question_count:any;
   total_question :any;
- 
-  /* define object of short-answer and essay type question */
-  short_ans:string = "string of short-answer";
-  essay:string = "String of essay"; 
+  str_answer:any;
+ has_answer:any;
+ checkedRadio = true;
 
+   /* define object of short-answer and essay type question */
+   short_ans:string = "string of short-answer";
+   essay:string = "String of essay"; 
+   
   constructor(public navCtrl: NavController, 
               private app: App, 
               public navParams: NavParams, 
@@ -92,22 +94,31 @@ export class EtestPage {
     this.item_exam = this.viewexams.Items;
     this.total_question = this.data.qcount;
     this.remain_question = this.total_question;
-    for(var i= 0; i<this.question_count;i++){
+    this.has_answer = view_result.hasAnswer;
+    this.str_answer = view_result.answers;
+    for(var i= 0; i<this.question_count;i++) {
       this.Answer[i]=null;
       this.number_array[i]=i+1;
     }
- 
-    }) 
+    // init array answer if hasanswer == true
+    if(this.has_answer == true) {
 
+      this.Answer = this.str_answer.split("{:}",this.data.qcount);
+        for(var j =0;j<this.question_count;j++) {
+            if(this.Answer[j]!="") {
+                this.is_answer[j]=true;
+            }
+        }
+    }
+    }) 
   }
 
-  public  ionViewDidEnter(credentials) {
+  public ionViewDidEnter(credentials) {
     this.initTimer();
     this.startTimer();
     
     console.log('ionViewDidLoad EtestPage');
   }
- 
 
   /* Initialize and setup the time for question */
   ngOnInit() {
@@ -202,7 +213,7 @@ check_time(){
   }
   public check_remainquestion() {
   var question_answered = 0;
-  for(var i = 0 ; i<= this.question_count;i++) {
+  for(var i = 0 ; i< this.question_count;i++) {
     if(this.is_answer[i]==true){
      question_answered++;
 
@@ -243,7 +254,7 @@ this.auth.save_ans(this.save_data);
    * click button and call prev_button() method on etest.html
    */
   public prev_button() {
-    if(this.is_answer[this.num_page] !=true) {
+    if(this.is_answer[this.num_page-1] !=true) {
       this.presentAlert(); 
     }
 
@@ -270,7 +281,7 @@ this.auth.save_ans(this.save_data);
    * click button and call next_button() method on etest.html
    */
   public next_button() {
-    if(this.is_answer[this.num_page] !=true) {
+    if(this.is_answer[this.num_page-1] !=true) {
       this.presentAlert();
  
     }
@@ -342,6 +353,14 @@ this.auth.save_ans(this.save_data);
 
   } 
   
+
+
+
+
+
+
+
+
   /**
    * review_answer() method
    * click button and call review_andswer() method on etest.html
@@ -360,7 +379,7 @@ this.auth.save_ans(this.save_data);
     console.log("You checkok, value is:" + ex);
     //this.question_answered ++;
     //console.log("You answerd : "+this.question_answered); 
-    this.is_answer[this.num_page] =true;
+    this.is_answer[this.num_page-1] =true;
     this.Answer[this.num_page-1] = ans;
   }
 
@@ -370,9 +389,11 @@ this.auth.save_ans(this.save_data);
     console.log("You checkok, value is:" + ex);
     //this.question_answered ++;
     //console.log("You answerd : "+this.question_answered); 
-    this.is_answer[this.num_page] =true;
+    this.is_answer[this.num_page-1] =true;
     this.Answer[this.num_page-1] = ans;
   }
+
+
 
   public markedValueAnswerOX(ex:any,ans:any) {
     // console.log(ex1);
@@ -381,7 +402,7 @@ this.auth.save_ans(this.save_data);
     console.log("You selected OX, value is:  " + ex);
     //this.question_answered ++;
     //console.log("You answerd : "+this.question_answered); 
-    this.is_answer[this.num_page] =true;
+    this.is_answer[this.num_page-1] =true;
     this.Answer[this.num_page-1] = ans;   
   }
 
@@ -391,6 +412,22 @@ this.auth.save_ans(this.save_data);
   * [2]check remain time, 
   * [3]check  
   */
+// check answer is checked or not checked
+
+check_button( ans:any){
+
+  let _return = false;
+  if(this.Answer[this.num_page-1] == ans ){
+    _return = true;
+  }
+return _return;
+
+
+}
+
+
+
+
   showLoader() {
     this.loading = this.loadingCtrl.create({
       content: 'Processing data...'
