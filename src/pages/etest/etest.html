@@ -60,43 +60,74 @@
                             <!-- </ion-item> -->
                         </div>
                     
-                      <!-- set value of id_qtype = 2 if you want to 2 slides show on 1 page -->
-                      <div *ngIf="etest.id_qtype =='1' ; else elsetag">
-                          <!-- *ngFor="let etest of item_exam; let i= index;" (ionChange) = "markedValueEx1OX(i)" -->
-                         
-                          <ion-list radio-group>
-                              <ion-item no-lines no-padding class="mark_answer_inside">
-                                    <ion-label>① <div class="mark_answer" [innerHTML]= "etest.ex1"></div></ion-label>
-                                    <ion-radio value="etest.ex1" (ionSelect)="markedValueAnswerOX(etest.ex1,'1')"></ion-radio>                            
-                              </ion-item>
-                              
-                              <ion-item no-lines no-padding>
-                                <ion-label>② <div class="mark_answer" [innerHTML]= "etest.ex2"></div> </ion-label>
-                                <ion-radio value="etest.ex2" (ionSelect)="markedValueAnswerOX(etest.ex2,'2')"></ion-radio>
-                              </ion-item>
-                          </ion-list>
-                      </div>
-    
-                      <ng-template #elsetag>
-                          <ion-list radio-group>
-                              <ion-item no-lines no-padding>
-                                  <ion-label>① <div class="mark_answer" [innerHTML]="etest.ex1"></div></ion-label>
-                                  <ion-radio value="etest.ex1" (ionSelect)="markedValueAnswerMultiChoice(etest.ex1,'1')"></ion-radio>
-                              </ion-item>
-                              <ion-item no-lines no-padding>
-                                  <ion-label>② <div class="mark_answer" [innerHTML]="etest.ex2"></div></ion-label>
-                                  <ion-radio value="etest.ex2" (ionSelect)="markedValueAnswerMultiChoice(etest.ex2,'2')"></ion-radio>
-                              </ion-item>
-                              <ion-item no-lines no-padding>
-                                  <ion-label>③ <div class="mark_answer" [innerHTML]="etest.ex3"></div></ion-label>
-                                  <ion-radio value="etest.ex3" (ionSelect)="markedValueAnswerMultiChoice(etest.ex3,'3')"></ion-radio>
-                              </ion-item>
-                              <ion-item no-lines no-padding>                                
-                                  <ion-label>④ <div class="mark_answer" [innerHTML]="etest.ex4"></div></ion-label>
-                                  <ion-radio value="etest.ex4" (ionSelect)="markedValueAnswerMultiChoice(etest.ex4,'4')"></ion-radio>
-                              </ion-item>
-                          </ion-list>
-                      </ng-template>
+                        <div [(ngSwitch)]="etest.id_qtype">                      
+                                <!-- OX Type -->
+                                <ion-list radio-group *ngSwitchCase="'1'">
+                                    <ion-item no-lines no-padding class="mark_answer_inside">
+                                          <ion-label>① <div class="mark_answer" [innerHTML]= "etest.ex1"></div></ion-label>
+                                          <ion-radio value="etest.ex1" (ionSelect)="markedValueAnswerOX(etest.ex1,'1')"></ion-radio>     
+                                    </ion-item>
+                                    
+                                    <ion-item no-lines no-padding>
+                                      <ion-label>② <div class="mark_answer" [innerHTML]= "etest.ex2"></div> </ion-label>
+                                      <ion-radio value="etest.ex2" (ionSelect)="markedValueAnswerOX(etest.ex2,'2')"></ion-radio>
+                                    </ion-item>
+                                </ion-list>
+                                <!-- Choice Type -->  
+                                <ion-list radio-group *ngSwitchCase="'2'">
+                                      <ion-item no-lines no-padding>
+                                          <ion-label>① <div class="mark_answer" [innerHTML]="etest.ex1"></div></ion-label>
+                                          <ion-radio value="etest.ex1" (ionSelect)="markedValueAnswerChoice(etest.ex1,'1')"></ion-radio>
+                                      </ion-item>
+                                      <ion-item no-lines no-padding>
+                                          <ion-label>② <div class="mark_answer" [innerHTML]="etest.ex2"></div></ion-label>
+                                          <ion-radio value="etest.ex2" (ionSelect)="markedValueAnswerChoice(etest.ex2,'2')"></ion-radio>
+                                      </ion-item>
+                                      <ion-item no-lines no-padding>
+                                          <ion-label>③ <div class="mark_answer" [innerHTML]="etest.ex3"></div></ion-label>
+                                          <ion-radio value="etest.ex3" (ionSelect)="markedValueAnswerChoice(etest.ex3,'3')"></ion-radio>
+                                      </ion-item>
+                                      <ion-item no-lines no-padding>
+                                          <ion-label>④ <div class="mark_answer" [innerHTML]="etest.ex4"></div></ion-label>
+                                          <ion-radio value="etest.ex4" (ionSelect)="markedValueAnswerChoice(etest.ex4,'4')"></ion-radio>
+                                      </ion-item>
+                                  </ion-list>
+                                  <!-- MultilChoice Type -->
+                                  <ion-list radio-group *ngSwitchCase="'3'">
+                                      <ion-item no-lines no-padding>
+                                          <ion-label>① <div class="mark_answer" [innerHTML]="etest.ex1"></div></ion-label>
+                                          <ion-radio value="etest.ex1" (ionSelect)="markedValueAnswerMultiChoice(etest.ex1,'1')"></ion-radio>
+                                      </ion-item>
+                                      <ion-item no-lines no-padding>
+                                         <ion-label>② <div class="mark_answer" [innerHTML]="etest.ex2"></div></ion-label>
+                                          <ion-radio value="etest.ex2" (ionSelect)="markedValueAnswerMultiChoice(etest.ex2,'2')"></ion-radio>
+                                      </ion-item>
+                                      <ion-item no-lines no-padding>
+                                          <ion-label>③ <div class="mark_answer" [innerHTML]="etest.ex3"></div></ion-label>
+                                          <ion-radio value="etest.ex3" (ionSelect)="markedValueAnswerMultiChoice(etest.ex3,'3')"></ion-radio>
+                                      </ion-item>
+                                      <ion-item no-lines no-padding>
+                                          <ion-label>④ <div class="mark_answer" [innerHTML]="etest.ex4"></div></ion-label>
+                                          <ion-radio value="etest.ex4" (ionSelect)="markedValueAnswerMultiChoice(etest.ex4,'4')"></ion-radio>
+                                      </ion-item>
+                                      <ion-item no-lines no-padding>
+                                          <ion-label>⑤ <div class="mark_answer" [innerHTML]="etest.ex5"></div></ion-label>
+                                          <ion-radio value="etest.ex5" (ionSelect)="markedValueAnswerMultiChoice(etest.ex5,'5')"></ion-radio>
+                                      </ion-item>
+                                  </ion-list>
+                                  <!-- Short-Answer Type -->                                  
+                                  <ion-list radio-group *ngSwitchCase="'4'">
+                                      <ion-item>
+                                          <ion-input class="rounded" type="text" value=""></ion-input>
+                                      </ion-item>
+                                  </ion-list>          
+                                  <!-- Essay Type -->                        
+                                  <ion-list radio-group *ngSwitchCase="'5'">
+                                      <ion-item>
+                                          <ion-textarea  name="comment" placeholder="Put any comment..."></ion-textarea>  <!-- [(ngModel)]="" -->
+                                      </ion-item>
+                                  </ion-list>
+                            </div>
                       
                   <ion-row>
                       <ion-col> 

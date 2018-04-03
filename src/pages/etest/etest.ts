@@ -326,6 +326,7 @@ this.auth.save_ans(this.save_data);
         {
           text: 'Submit',
           handler: () => {
+            this.navCtrl.setRoot('FinalResultPage');
             console.log('Submit clicked');
           }
         }
@@ -351,6 +352,16 @@ this.auth.save_ans(this.save_data);
   }
 
   public markedValueAnswerMultiChoice(ex:any,ans:any) {
+    console.log("Ban vua chon cau tra loi multi choice !!");   
+       
+    console.log("You checkok, value is:" + ex);
+    //this.question_answered ++;
+    //console.log("You answerd : "+this.question_answered); 
+    this.is_answer[this.num_page] =true;
+    this.Answer[this.num_page-1] = ans;
+  }
+
+  public markedValueAnswerChoice(ex:any,ans:any) {
     console.log("Ban vua chon cau tra loi multi choice !!");   
        
     console.log("You checkok, value is:" + ex);
