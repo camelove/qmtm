@@ -96,36 +96,41 @@
                                   <ion-list radio-group *ngSwitchCase="'3'">
                                       <ion-item no-lines no-padding>
                                           <ion-label>① <div class="mark_answer" [innerHTML]="etest.ex1"></div></ion-label>
-                                          <ion-radio value="etest.ex1" (ionSelect)="markedValueAnswerMultiChoice(etest.ex1,'1')"></ion-radio>
+                                          <ion-checkbox value="etest.ex1" (ionSelect)="markedValueAnswerMultiChoice(etest.ex1,'1')"></ion-checkbox>
                                       </ion-item>
                                       <ion-item no-lines no-padding>
                                          <ion-label>② <div class="mark_answer" [innerHTML]="etest.ex2"></div></ion-label>
-                                          <ion-radio value="etest.ex2" (ionSelect)="markedValueAnswerMultiChoice(etest.ex2,'2')"></ion-radio>
+                                          <ion-checkbox value="etest.ex2" (ionSelect)="markedValueAnswerMultiChoice(etest.ex2,'2')"></ion-checkbox>
                                       </ion-item>
                                       <ion-item no-lines no-padding>
                                           <ion-label>③ <div class="mark_answer" [innerHTML]="etest.ex3"></div></ion-label>
-                                          <ion-radio value="etest.ex3" (ionSelect)="markedValueAnswerMultiChoice(etest.ex3,'3')"></ion-radio>
+                                          <ion-checkbox value="etest.ex3" (ionSelect)="markedValueAnswerMultiChoice(etest.ex3,'3')"></ion-checkbox>
                                       </ion-item>
                                       <ion-item no-lines no-padding>
                                           <ion-label>④ <div class="mark_answer" [innerHTML]="etest.ex4"></div></ion-label>
-                                          <ion-radio value="etest.ex4" (ionSelect)="markedValueAnswerMultiChoice(etest.ex4,'4')"></ion-radio>
+                                          <ion-checkbox value="etest.ex4" (ionSelect)="markedValueAnswerMultiChoice(etest.ex4,'4')"></ion-checkbox>
                                       </ion-item>
                                       <ion-item no-lines no-padding>
                                           <ion-label>⑤ <div class="mark_answer" [innerHTML]="etest.ex5"></div></ion-label>
-                                          <ion-radio value="etest.ex5" (ionSelect)="markedValueAnswerMultiChoice(etest.ex5,'5')"></ion-radio>
+                                          <ion-checkbox value="etest.ex5" (ionSelect)="markedValueAnswerMultiChoice(etest.ex5,'5')"></ion-checkbox>
                                       </ion-item>
                                   </ion-list>
                                   <!-- Short-Answer Type -->                                  
-                                  <ion-list radio-group *ngSwitchCase="'4'">
-                                      <ion-item>
-                                          <ion-input class="rounded" type="text" value=""></ion-input>
-                                      </ion-item>
+                                  <ion-list *ngSwitchCase="'4'">
+                                        <div class="shortans-box">  
+                                            <ion-item class="ion-item-textbox">
+                                                <ion-input [(ngModel)]="short_ans" name="short_ans" type="text" value="" ></ion-input>       <!--  -->
+                                            </ion-item>
+                                        </div>
                                   </ion-list>          
                                   <!-- Essay Type -->                        
-                                  <ion-list radio-group *ngSwitchCase="'5'">
-                                      <ion-item>
-                                          <ion-textarea  name="comment" placeholder="Put any comment..."></ion-textarea>  <!-- [(ngModel)]="" -->
-                                      </ion-item>
+                                  <ion-list *ngSwitchCase="'5'">
+                                      <div class="essay-box">
+                                        <ion-item class="ion-item-textarea">
+                                            <ion-textarea type="text" rows="5" maxLength="500" [(ngModel)]="essay" name="essay"></ion-textarea>
+                                            <!-- formControlName="shortAnswers" -->
+                                        </ion-item>
+                                       </div>
                                   </ion-list>
                             </div>
                       

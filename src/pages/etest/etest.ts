@@ -44,6 +44,7 @@ export class EtestPage {
   page :any;
   Answer = new Array();
   is_answer = new Array(); // define answer question;
+
   /* define parameter for timer */
   timeInSeconds: number; 
   time: number;
@@ -56,7 +57,9 @@ export class EtestPage {
   question_count:any;
   total_question :any;
  
- 
+  /* define object of short-answer and essay type question */
+  short_ans:string = "string of short-answer";
+  essay:string = "String of essay"; 
 
   constructor(public navCtrl: NavController, 
               private app: App, 
