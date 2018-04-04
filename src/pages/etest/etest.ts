@@ -56,11 +56,15 @@ export class EtestPage {
   question_count:any;
   total_question :any;
   str_answer:any;
- has_answer:any;
- checkedRadio = true;
+  has_answer:any;
+  arr_mutilchoice = new Array();
+  ans_mutilchoice:any;
+  count=0;
+  check_mul = {result1:false, result2:false,  result3:false,result4:false,result5:false}
+  
 
    /* define object of short-answer and essay type question */
-   short_ans:string = "string of short-answer";
+   short_ans:String ;
    essay:string = "String of essay"; 
    
   constructor(public navCtrl: NavController, 
@@ -101,23 +105,31 @@ export class EtestPage {
       this.number_array[i]=i+1;
     }
     // init array answer if hasanswer == true
-    if(this.has_answer == true) {
+    if((this.has_answer == true)&&(this.str_answer!="")) {
 
       this.Answer = this.str_answer.split("{:}",this.data.qcount);
         for(var j =0;j<this.question_count;j++) {
             if(this.Answer[j]!="") {
                 this.is_answer[j]=true;
             }
+          //this.multil_Str = this.Answer[j];
+             if( this.Answer[j].includes("{|}")){
+               this.arr_mutilchoice= this.Answer[j].split("{|}");               
+             }
         }
     }
+    // check mutil ans;
+    this.short_ans = this.Answer[0];
+    this.check_multi();
     }) 
   }
 
   public ionViewDidEnter(credentials) {
     this.initTimer();
     this.startTimer();
-    
+    this.slides.lockSwipes(true);
     console.log('ionViewDidLoad EtestPage');
+    //checkmutil choice
   }
 
   /* Initialize and setup the time for question */
@@ -187,26 +199,19 @@ export class EtestPage {
     return hoursString + ':' + minutesString + ':' + secondsString;
   }
 
-
   /**
    * refresh_onclick() method
    * click button and call refresh_onclick() method on etest.html
    */
-check_time(){
-  if(parseInt(this.remainingTime) == 3300){
-    let alert = this.alertCtrl.create({
-      title: 'Your time exist is five minutes,',
-     
-      buttons: ['OK']
-    });
-    alert.present();
+  check_time(){
+    if(parseInt(this.remainingTime) == 300){
+      let alert = this.alertCtrl.create({
+        title: 'Your time exist is five minutes,',      
+        buttons: ['OK']
+      });
+      alert.present();
+    }      
   }
-    
-
-}
-
-
-
 
   public refresh_onclick() {
     this.navCtrl.setRoot('RefreshPage');
@@ -241,13 +246,12 @@ check_time(){
   }
 //Submit answer to Serve
 
-save_ans( ){
-   
-this.save_data.answers = this.Answer.join("{:}");
-this.save_data.id_exam = this.view_exam.id_exam;
-this.save_data.userid = this.view_exam.userid;
-this.save_data.remain_time = this.remainingTime; 
-this.auth.save_ans(this.save_data);
+save_ans() {   
+  this.save_data.answers = this.Answer.join("{:}");
+  this.save_data.id_exam = this.view_exam.id_exam;
+  this.save_data.userid = this.view_exam.userid;
+  this.save_data.remain_time = this.remainingTime; 
+  this.auth.save_ans(this.save_data);
 }
   /**
    * prev_button() method
@@ -259,15 +263,14 @@ this.auth.save_ans(this.save_data);
     }
 
     this.num_page--;
+    this.short_ans = this.Answer[this.num_page-1]; //view shortanswer  if is hasanswer=true
     this.presentToast("Trang so: "+this.num_page);
     console.log("trang so:" + this.num_page);
     console.log("data:" +this.Answer[this.num_page-1]);
     
-    
     this.slides.lockSwipes(false);
     this.slides.slidePrev(500);
-    this.slides.lockSwipes(true); 
-        
+    this.slides.lockSwipes(true);         
    
     this.page = this.num_page.toString();
   
@@ -282,15 +285,16 @@ this.auth.save_ans(this.save_data);
    */
   public next_button() {
     if(this.is_answer[this.num_page-1] !=true) {
-      this.presentAlert();
- 
+      this.presentAlert(); 
     }
+    
     this.num_page++;
+    this.short_ans = this.Answer[this.num_page-1];//view shortanswer if is hasanswer=true
     this.presentToast("Trang so: "+this.num_page);
     this.presentToast("You don't answer for this question.."); 
     console.log("trang so:" + this.num_page);
     console.log("data:" +this.Answer[this.num_page-1]);
-   
+    
     /* TODO Something, add more condition check parameter here */          
         
     this.slides.lockSwipes(false);
@@ -304,23 +308,19 @@ this.auth.save_ans(this.save_data);
   }
 
   ///Submit  all answer to serve and 
-  submit_ans(){
-  this.save_data.answers = this.Answer.join("{:}");
-  this.save_data.id_exam = this.view_exam.id_exam;
-  this.save_data.userid = this.view_exam.userid;
-  this.save_data.remain_time = this.remainingTime; 
+  submit_ans() {
+    this.save_data.answers = this.Answer.join("{:}");
+    this.save_data.id_exam = this.view_exam.id_exam;
+    this.save_data.userid = this.view_exam.userid;
+    this.save_data.remain_time = this.remainingTime; 
 
     this.auth.Submit_ans(this.save_data);
-
-}
-
-
+  }
 
   /*
   * submitAnswer()method
   * click button and send all answers to server
   */
-
   public submitAnswer() {
     
     this.presentToast("You have clicked submit answer !!");
@@ -330,14 +330,14 @@ this.auth.save_ans(this.save_data);
       title: 'Confirm Submit Test',
       message: 'Are you sure submit your test?',
       buttons: [
-        {
+      {
           text: 'Cancel',
           role: 'cancel',
           handler: () => {
             console.log('Cancel clicked');
           }
-        },
-        {
+      },
+      {
           text: 'Submit',
           handler: () => {
             this.navCtrl.setRoot('FinalResultPage');
@@ -347,19 +347,8 @@ this.auth.save_ans(this.save_data);
       ]
     });
     alert.present();
-
-
-
-
+     this.submit_ans();
   } 
-  
-
-
-
-
-
-
-
 
   /**
    * review_answer() method
@@ -372,15 +361,42 @@ this.auth.save_ans(this.save_data);
   public AnsCheck() {
     
   }
-
+  
+  // on click multil choice
   public markedValueAnswerMultiChoice(ex:any,ans:any) {
     console.log("Ban vua chon cau tra loi multi choice !!");   
        
     console.log("You checkok, value is:" + ex);
+
+    this.arr_mutilchoice[this.count] = ans;
+    this.count++;
+    this.ans_mutilchoice = this.arr_mutilchoice.join("{|}");
+
     //this.question_answered ++;
     //console.log("You answerd : "+this.question_answered); 
     this.is_answer[this.num_page-1] =true;
-    this.Answer[this.num_page-1] = ans;
+    this.Answer[this.num_page-1] = this.ans_mutilchoice;
+  }
+
+  //check mutil question is answered;
+  check_multi() {
+    for (var i =0;i<5;i++) {
+      if (this.arr_mutilchoice[i]==1) {
+        this.check_mul.result1 = true;
+      }
+      if (this.arr_mutilchoice[i]==2) {
+        this.check_mul.result2 = true;
+      }
+      if (this.arr_mutilchoice[i]==3) {
+        this.check_mul.result3 = true;
+      }
+      if (this.arr_mutilchoice[i]==4) {
+        this.check_mul.result4 = true;
+      }
+      if (this.arr_mutilchoice[i]==5) {
+        this.check_mul.result5 = true;
+      }
+    }
   }
 
   public markedValueAnswerChoice(ex:any,ans:any) {
@@ -393,8 +409,6 @@ this.auth.save_ans(this.save_data);
     this.Answer[this.num_page-1] = ans;
   }
 
-
-
   public markedValueAnswerOX(ex:any,ans:any) {
     // console.log(ex1);
     // let _result ;
@@ -406,27 +420,29 @@ this.auth.save_ans(this.save_data);
     this.Answer[this.num_page-1] = ans;   
   }
 
+  // question short_answer
+  markShortAns() {
+    console.log("your page: "+this.num_page);
+    //this.question_answered ++;
+    //console.log("You answerd : "+this.question_answered); 
+    this.is_answer[this.num_page-1] =true;
+    this.Answer[this.num_page-1] = this.short_ans;   
+  }
+
   /*
   * Show and check all condition: 
   * [1]check if not answered quetion and click 'next' button, 
   * [2]check remain time, 
-  * [3]check  
+  * [3]check answer is checked or not checked 
   */
-// check answer is checked or not checked
+  check_button(ans:any) {
 
-check_button( ans:any){
-
-  let _return = false;
-  if(this.Answer[this.num_page-1] == ans ){
-    _return = true;
+    let _return = false;
+    if(this.Answer[this.num_page-1] == ans) {
+      _return = true;
+    }
+    return _return;
   }
-return _return;
-
-
-}
-
-
-
 
   showLoader() {
     this.loading = this.loadingCtrl.create({
@@ -450,7 +466,5 @@ return _return;
 
     toast.present();
   }
-
-
 }
 

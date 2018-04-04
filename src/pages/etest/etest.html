@@ -70,7 +70,7 @@
                                     
                                     <ion-item no-lines no-padding>
                                       <ion-label>② <div class="mark_answer" [innerHTML]= "etest.ex2"></div> </ion-label>
-                                      <ion-radio  [checked]="Answer[num_page-1] == '2' "   (ionSelect)="markedValueAnswerOX(etest.ex2,'2')"></ion-radio>
+                                      <ion-radio  [checked]="Answer[num_page-1] == '2' " (ionSelect)="markedValueAnswerOX(etest.ex2,'2')"></ion-radio>
                                     </ion-item>
                                 </ion-list>
                                 <!-- Choice Type -->  
@@ -96,30 +96,30 @@
                                 <ion-list radio-group *ngSwitchCase="'3'">
                                       <ion-item no-lines no-padding>
                                           <ion-label>① <div class="mark_answer" [innerHTML]="etest.ex1"></div></ion-label>
-                                          <ion-checkbox value="etest.ex1" (ionSelect)="markedValueAnswerMultiChoice(etest.ex1,'1')"></ion-checkbox>
+                                          <ion-checkbox  [checked]= "check_mul.result1" value="etest.ex1" (ionChange)="markedValueAnswerMultiChoice(etest.ex1,'1')"></ion-checkbox>
                                       </ion-item>
                                       <ion-item no-lines no-padding>
                                          <ion-label>② <div class="mark_answer" [innerHTML]="etest.ex2"></div></ion-label>
-                                          <ion-checkbox value="etest.ex2" (ionSelect)="markedValueAnswerMultiChoice(etest.ex2,'2')"></ion-checkbox>
+                                          <ion-checkbox [checked]= "check_mul.result2" (ionChange)="markedValueAnswerMultiChoice(etest.ex2,'2')"></ion-checkbox>
                                       </ion-item>
                                       <ion-item no-lines no-padding>
                                           <ion-label>③ <div class="mark_answer" [innerHTML]="etest.ex3"></div></ion-label>
-                                          <ion-checkbox value="etest.ex3" (ionSelect)="markedValueAnswerMultiChoice(etest.ex3,'3')"></ion-checkbox>
+                                          <ion-checkbox  [checked]= "check_mul.result3" (ionChange)="markedValueAnswerMultiChoice(etest.ex3,'3')"></ion-checkbox>
                                       </ion-item>
                                       <ion-item no-lines no-padding>
                                           <ion-label>④ <div class="mark_answer" [innerHTML]="etest.ex4"></div></ion-label>
-                                          <ion-checkbox value="etest.ex4" (ionSelect)="markedValueAnswerMultiChoice(etest.ex4,'4')"></ion-checkbox>
+                                          <ion-checkbox  [checked]= "check_mul.result4" (ionChange)="markedValueAnswerMultiChoice(etest.ex4,'4')"></ion-checkbox>
                                       </ion-item>
                                       <ion-item no-lines no-padding>
                                           <ion-label>⑤ <div class="mark_answer" [innerHTML]="etest.ex5"></div></ion-label>
-                                          <ion-checkbox value="etest.ex5" (ionSelect)="markedValueAnswerMultiChoice(etest.ex5,'5')"></ion-checkbox>
+                                          <ion-checkbox  [checked]= "check_mul.result5" (ionChange)="markedValueAnswerMultiChoice(etest.ex5,'5')"></ion-checkbox>
                                       </ion-item>
                                   </ion-list>
                                   <!-- Short-Answer Type -->                                  
                                   <ion-list *ngSwitchCase="'4'">
                                         <div class="shortans-box">  
                                             <ion-item class="ion-item-textbox">
-                                                <ion-input [(ngModel)]="short_ans" name="short_ans" type="text" value="" ></ion-input>       <!--  -->
+                                                <ion-input type="text" [(ngModel)]="short_ans" name="short_ans" ng-model-onblur (change)="markShortAns()" ></ion-input>
                                             </ion-item>
                                         </div>
                                   </ion-list>          
@@ -166,21 +166,15 @@
                   <ion-row *ngFor="let etest of number_array;let i = index;">  
                       <ion-col class="colTitle" *ngIf="i %3==0">{{number_array[i]}}</ion-col>    
     
-                      <ion-col class="colContent"    *ngIf="(i %3==0)"  >{{Answer[i]}}</ion-col>
+                      <ion-col class="colContent" *ngIf="(i %3==0)">{{Answer[i]}}</ion-col>
                    
-    
-    
                       <ion-col class="colTitle" *ngIf="i %3==0">{{number_array[i+1]}}  </ion-col>
-                      <ion-col class="colContent"    *ngIf="(i %3==0)"  > {{Answer[i+1]}}</ion-col>
+                      <ion-col class="colContent" *ngIf="(i %3==0)"> {{Answer[i+1]}}</ion-col>
           
-    
                       <ion-col class="colTitle" *ngIf="i %3==0">{{number_array[i+2]}}  </ion-col>
            
-                      <ion-col class="colContent"    *ngIf="(i %3==0)"  > {{Answer[i+2]}}</ion-col>
-                    
-                                   
-                  </ion-row>    
-                        
+                      <ion-col class="colContent" *ngIf="(i %3==0)"> {{Answer[i+2]}}</ion-col>                                   
+                  </ion-row>                
               </ion-grid>
     
           </ion-list>

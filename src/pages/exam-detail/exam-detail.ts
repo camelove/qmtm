@@ -24,6 +24,8 @@ export class ExamDetailPage {
   exam:any;
   exam_detail:any;
   viewexams:any;  
+  status_source:any;
+  check_status:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,private auth:AuthServiceProvider) {
     let info = this.auth.getUserInfo();
@@ -34,10 +36,21 @@ export class ExamDetailPage {
     this.view_exam.id_exam =  json.Test_code;
     this.view_exam.userid = info.userID;
     this.auth.exam_detail(this.view_exam).then((result) => {
+      var view_result;
+       view_result = result;
+     this.status_source = view_result[0].Test_submit;
+     if(this.status_source == 'Start to test'){
+      this.check_status =false;
+    }
+    else{
+     this.check_status =true;
+    }
+
       this.viewexams =  Object.keys(result).map(function(key, index) {
         return result[key]
-      });
+      });   
     });
+   
   }
 
   ionViewDidLoad() {

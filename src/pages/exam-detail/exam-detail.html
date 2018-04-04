@@ -6,65 +6,77 @@
 -->
 <ion-header>
 
-  <ion-navbar color="primary"  >
-    <ion-buttons start>
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-    </ion-buttons>
-    <ion-title>EXAM DETAIL</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-<ion-content>    
-  <ion-card> 
-   <ion-list >  
-      <ion-list-header color="light">
-        Check out the list of online test and be able to take test.          
-      </ion-list-header>
-      <div *ngFor="let viewexam of viewexams">
-      <ion-item>  
-        <ion-label stacked>Test name</ion-label>  
-        <ion-label>{{viewexam.Test_name}}</ion-label>  
-      </ion-item>
-      <hr>
-      <ion-item>  
-        <ion-label stacked>Test type</ion-label>  
-        <!--<ion-label>Test at the anytime</ion-label>-->
-        <ion-label>{{viewexam.Test_type}}</ion-label>
-      </ion-item>
-      <hr>
-      <ion-item>  
-        <ion-label stacked>Enter time</ion-label>  
-        <ion-label>{{viewexam.End_time}}</ion-label>
-      </ion-item>
-      <hr>
-      <ion-item>  
-        <ion-label stacked>Test time</ion-label>  
-        <ion-label>{{exam.Start_time}}  ~ {{exam.End_time}}</ion-label>
-      </ion-item>
-      <hr>
-      <ion-item>  
-        <ion-label stacked>Submitted</ion-label>  
-        <!--<ion-label>Completed</ion-label>-->
-        <!--<ion-label>Incompleted</ion-label>-->
-        <ion-label>{{viewexam.Test_submit}}</ion-label>
-      </ion-item>
-      <hr>
-      <button ion-button full large color="secondary" (click)="goEtestPage(exam)">Start to test</button>
-      <!--<ion-item>  
-        <ion-label stacked>Test status</ion-label>  
-        <ion-label>The test is completed</ion-label>
-        <ion-label>The test is over</ion-label>
-      </ion-item>-->      
-      <hr>
-      <ion-item>          
-        <ion-label stacked>Test guide</ion-label>
-        <ion-label *ngIf="viewexam.Test_guide">{{viewexam.Test_guide}}</ion-label>
-        <ion-label *ngIf=" !viewexam.Test_guide">NONE</ion-label>
-      </ion-item>
-    </div>
-   </ion-list>
-  </ion-card>
-</ion-content>
+    <ion-navbar color="primary"  >
+      <ion-buttons start>
+        <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title>EXAM DETAIL</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  <ion-content>    
+    <ion-card> 
+     <ion-list >  
+        <ion-list-header color="light">
+          Check out the list of online test and be able to take test.          
+        </ion-list-header>
+        <div *ngFor="let viewexam of viewexams">
+        <ion-item>  
+          <ion-label stacked>Test name</ion-label>  
+          <ion-label>{{viewexam.Test_name}}</ion-label>  
+        </ion-item>
+        <hr>
+        <ion-item>  
+          <ion-label stacked>Test type</ion-label>  
+          <!--<ion-label>Test at the anytime</ion-label>-->
+          <ion-label>{{viewexam.Test_type}}</ion-label>
+        </ion-item>
+        <hr>
+        <ion-item>  
+          <ion-label stacked>Enter time</ion-label>  
+          <ion-label>{{viewexam.End_time}}</ion-label>
+        </ion-item>
+        <hr>
+        <ion-item>  
+          <ion-label stacked>Test time</ion-label>  
+          <ion-label>{{exam.Start_time}}  ~ {{exam.End_time}}</ion-label>
+        </ion-item>
+        <hr>
+        <ion-item>  
+          <ion-label stacked>Submitted</ion-label>  
+          <!--<ion-label>Completed</ion-label>-->
+          <!--<ion-label>Incompleted</ion-label>-->
+          <ion-label>{{viewexam.Test_submit}}</ion-label>
+        </ion-item>
+       <hr>
+        <button [disabled]="check_status" ion-button full large color="secondary" (click)="goEtestPage(exam)">Start to test</button>
+             
+        <hr> 
+  
+        
+          <!-- <div *ngIf="viewexam.submitted == 'complete' ; else notsubmitted">
+            <hr>
+            <button ion-button full large color="secondary" (click)="goEtestPage(exam)">Start to test</button>    
+            <hr>
+          </div>
+  
+          <ng-template #notsubmitted>
+              <hr>
+              <button [disabled] full large color="secondary" (click)="goEtestPage(exam)">Start to test</button>
+             <hr>
+          </ng-template> -->
+        
+  
+  
+        <ion-item>          
+          <ion-label stacked>Test guide</ion-label>
+          <ion-label *ngIf="viewexam.Test_guide">{{viewexam.Test_guide}}</ion-label>
+          <ion-label *ngIf="!viewexam.Test_guide">NONE</ion-label>
+        </ion-item>
+      </div>
+     </ion-list>
+    </ion-card>
+  </ion-content>
