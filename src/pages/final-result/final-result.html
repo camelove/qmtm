@@ -21,20 +21,33 @@
              <div class="inside_row">
                 <ion-row>Result your test exam</ion-row>
               </div>       
-                <br>
+                <br>                
                 
-                
+
                 <ion-row>
                     <ion-col>
-                        <ion-icon name="arrow-dropright"></ion-icon>  Score: <div class="score_stl">40.0</div>
+                        <ion-icon name="arrow-dropright"></ion-icon>  Test name: {{exam.Test_name}}
                     </ion-col>
-                </ion-row>     
+                </ion-row> 
+
+                <ion-row>
+                    <ion-col>
+                        <ion-icon name="arrow-dropright"></ion-icon>  Score: <div class="score_stl">40.0</div>              <!-- end_score -->
+                    </ion-col>
+                </ion-row>
               
                 <ion-row>
                     <ion-col>
-                        <ion-icon name="arrow-dropright"></ion-icon>  Total Score: <div class="total_score_stl">100.0 </div>
+                        <ion-icon name="arrow-dropright"></ion-icon>  Total score: <div class="total_score_stl">{{allotting}}</div>
                     </ion-col> 
                 </ion-row>
+
+                <ion-row>
+                    <ion-col>
+                        <ion-icon name="arrow-dropright"></ion-icon>  Total question: <div class="total_score_stl">{{data.qcount}}</div>         <!--  20.0 -->  
+                    </ion-col> 
+                </ion-row>
+
                 <ion-row>
                     <ion-col>
                         <ion-icon name="arrow-dropright"></ion-icon>  This score is temporary and maybe changed by the result of the short-answer question and the revised mark.
@@ -48,7 +61,7 @@
                 
                 <ion-row>
                     <ion-col>
-                        <ion-icon name="arrow-dropright">  Thank you so much !!</ion-icon>
+                        <ion-icon name="arrow-dropright"></ion-icon> Thank you so much !!
                     </ion-col>
                 </ion-row>
 

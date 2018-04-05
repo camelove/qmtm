@@ -8,9 +8,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { Slides } from 'ionic-angular';
-import {TimerObservable} from "rxjs/observable/TimerObservable";
+import { TimerObservable } from "rxjs/observable/TimerObservable";
 import { Http } from '@angular/http';
-
+import { FinalResultPage } from '../final-result/final-result';
 
 /**
  * Generated class for the EtestPage page.
@@ -73,7 +73,8 @@ export class EtestPage {
               public loadingCtrl: LoadingController, 
               private alertCtrl: AlertController,
               private toastCtrl: ToastController,
-              public auth:AuthServiceProvider,public http:Http) {
+              public auth: AuthServiceProvider,
+              public http: Http) {
 
     let info = this.auth.getUserInfo();
     this.exam = this.navParams.get('exam');
@@ -321,7 +322,7 @@ save_ans() {
   * submitAnswer()method
   * click button and send all answers to server
   */
-  public submitAnswer() {
+  public submitAnswer(exam) {
     
     this.presentToast("You have clicked submit answer !!");
     console.log("You have clicked submit answer ! ");
@@ -340,14 +341,15 @@ save_ans() {
       {
           text: 'Submit',
           handler: () => {
-            this.navCtrl.setRoot('FinalResultPage');
+            this.navCtrl.push(FinalResultPage,{exam:exam});
+            // this.navCtrl.setRoot('FinalResultPage');
             console.log('Submit clicked');
           }
         }
       ]
     });
     alert.present();
-     this.submit_ans();
+    this.submit_ans();
   } 
 
   /**
@@ -422,9 +424,7 @@ save_ans() {
 
   // question short_answer
   markShortAns() {
-    console.log("your page: "+this.num_page);
-    //this.question_answered ++;
-    //console.log("You answerd : "+this.question_answered); 
+    console.log("your page: "+this.num_page); 
     this.is_answer[this.num_page-1] =true;
     this.Answer[this.num_page-1] = this.short_ans;   
   }

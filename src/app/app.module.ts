@@ -12,6 +12,7 @@ import { ScoreDetailPage} from '../pages/score-detail/score-detail';
 
 import { ExamDetailPage}  from '../pages/exam-detail/exam-detail';
 import { EtestPage } from '../pages/etest/etest';
+import { FinalResultPage } from '../pages/final-result/final-result';
 import { AdminTabsPage } from '../pages/admin-tabs/admin-tabs';
 import { MultistatPage } from '../pages/multistat/multistat';
 import { MenuPage }   from '../pages/menu/menu';
@@ -34,6 +35,7 @@ import { RichTextComponent } from '../components/rich-text/rich-text';
     EtestPage,
     AdminTabsPage,
     MultistatPage,
+    FinalResultPage,
     MenuPage,
     // CKEditorModule,
     // RichTextComponent
@@ -55,6 +57,7 @@ import { RichTextComponent } from '../components/rich-text/rich-text';
     ScoreDetailPage,
     ExamDetailPage,
     EtestPage,
+    FinalResultPage,
     AdminTabsPage,
     MultistatPage,
     MenuPage

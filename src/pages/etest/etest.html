@@ -142,7 +142,7 @@
                           <button [disabled]="!item_exam" *ngIf="i<item_exam.length - 1" ion-button text-only color="danger" (click)="next_button()">Next</button>
                       </ion-col>
                       <ion-col>                 
-                          <button [disabled]="!item_exam" *ngIf="i === item_exam.length - 1" ion-button text-only color="danger" (click)="submitAnswer()">Submit</button>                   
+                          <button [disabled]="!item_exam" *ngIf="i === item_exam.length - 1" ion-button text-only color="danger" (click)="submitAnswer(exam)">Submit</button>                   
                       </ion-col>
                   </ion-row>
     

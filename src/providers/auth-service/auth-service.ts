@@ -43,6 +43,7 @@ export class AuthServiceProvider {
   scorelist_url:any;
   scoredetail_url:any;
   exampaperurl:any;
+  submittedresulturl:any;
   viewscore_url:any;
   viewstatic_url:any;
 
@@ -197,12 +198,29 @@ export class AuthServiceProvider {
   */
   public paper_etest(credentials) {
 
-    this.exampaperurl = examPaperURL+'?'+'userid='+credentials.userid+'&'+'id_exam='+credentials.id_exam;;
+    this.exampaperurl = examPaperURL+'?'+'userid='+credentials.userid+'&'+'id_exam='+credentials.id_exam;
     return new Promise((resolve, reject) => {  
       let headers = new Headers();
       headers.append('content-type','application/json');
   
       this.http.get(this.exampaperurl).map(res => res.json()).subscribe(data => {
+        console.log(data);     
+        console.log(data.headers);
+        resolve(data);
+      
+      });
+    });     
+
+  }
+
+  public submitted_result(credentials) {
+
+    this.submittedresulturl = submitURL+'?'+'userid='+credentials.userid+'&'+'id_exam='+credentials.id_exam;
+    return new Promise((resolve, reject) => {  
+      let headers = new Headers();
+      headers.append('content-type','application/json');
+  
+      this.http.get(this.submittedresulturl).map(res => res.json()).subscribe(data => {
         console.log(data);     
         console.log(data.headers);
         resolve(data);
@@ -239,10 +257,9 @@ export class AuthServiceProvider {
 
   }
 
-  Submit_ans(credentials ){
+  Submit_ans(credentials ) {
   
-    let headers = new Headers(
-      {
+    let headers = new Headers({
         'Content-Type': 'application/x-www-form-urlencoded'
       });
       let body = 'userid=' + credentials.userid + '&id_exam=' + credentials.id_exam+"&answers="+credentials.answers+"&yn_open_score_direct"+credentials.yn_open_score_direct+"&remain_time="+credentials.remain_time;
@@ -251,24 +268,14 @@ export class AuthServiceProvider {
       this.http.post(submitURL, 
         body, { headers: headers })
       .toPromise()
-      .then((response) =>
-      {
-        console.log('API Response : ', response.json());
-        resolve(response.json());
-      })
+        .then((response) =>
+        {
+          console.log('API Response : ', response.json());
+          resolve(response.json());
+        })
      
-    });
-  
+        });  
     }
-
-
-
-
-
-
-
-
-
 
   /*
   * Method view_score() to show view score
