@@ -30,31 +30,23 @@ export class FinalResultPage {
 
   view_exam = { "userid":"", "id_exam":"" };
   
-  data = {"remain_time":"","title":"", "qcount":"","yn_open_score_direct":""};
+  data = {"remain_time":"","title":"", "qcount":"","yn_open_score_direct":"", "allotting":""};
   
   items = { "q":"", "allotting":"" };  
+  
   exam:any; 
   viewexams:any;
   item_exam:any;
-  loading: any;
-  num_page=1;
-  page :any;
-  Answer = new Array();
-  is_answer = new Array(); // define answer question;
-
-  remain_question: any;
+  
   question_count:any;
   total_question :any;
-  str_answer:any;
-  has_answer:any;
   count=0;
-
+  
   constructor(public navCtrl: NavController, 
               public auth: AuthServiceProvider,
               public navParams: NavParams) {
-
-       
-  let info = this.auth.getUserInfo();
+        
+    let info = this.auth.getUserInfo();
     this.exam = this.navParams.get('exam');
  
     var json;
@@ -62,25 +54,20 @@ export class FinalResultPage {
    
     this.view_exam.id_exam =  json.Test_code;
     this.view_exam.userid = info.userID;
-    this.auth.submitted_result(this.view_exam).then((result) => {
-       
-    var view_result;
-    view_result = result;
-    this.viewexams = view_result;
 
-    // get object properties
-    
-    this.data.title = view_result.title;
-    this.data.qcount = view_result.qcount;
-    this.question_count = parseInt( this.data.qcount);
-    
-    this.item_exam = this.viewexams.Items;
-    this.total_question = this.data.qcount;
-    this.remain_question = this.total_question;
-    this.has_answer = view_result.hasAnswer;
-    this.str_answer = view_result.answers;
-    })  
-    
+    this.auth.paper_etest(this.view_exam).then((result) => {       
+      var view_result;
+      view_result = result;
+      this.viewexams = view_result;
+
+      this.data.title = view_result.title;
+      this.data.allotting = view_result.allotting;
+      this.data.qcount = view_result.qcount;
+      this.question_count = parseInt( this.data.qcount);
+      
+      this.item_exam = this.viewexams.Items;
+      this.total_question = this.data.qcount;      
+    }) 
 
   }
 

@@ -12,6 +12,7 @@ import { TimerObservable } from "rxjs/observable/TimerObservable";
 import { Http } from '@angular/http';
 import { FinalResultPage } from '../final-result/final-result';
 
+
 /**
  * Generated class for the EtestPage page.
  *
@@ -56,11 +57,13 @@ export class EtestPage {
   question_count:any;
   total_question :any;
   str_answer:any;
-  has_answer:any;
-  arr_mutilchoice = new Array();
+   has_answer:any;
+  arr_mutilchoice =new Array;
+  arr_mutil_answerd = new Array;
   ans_mutilchoice:any;
   count=0;
-  check_mul = {result1:false, result2:false,  result3:false,result4:false,result5:false}
+  check_mul = [false,false,false,false,false];
+  ex_count:any;
   
 
    /* define object of short-answer and essay type question */
@@ -73,14 +76,19 @@ export class EtestPage {
               public loadingCtrl: LoadingController, 
               private alertCtrl: AlertController,
               private toastCtrl: ToastController,
-              public auth: AuthServiceProvider,
-              public http: Http) {
+              public auth:AuthServiceProvider,public http:Http) {
 
     let info = this.auth.getUserInfo();
     this.exam = this.navParams.get('exam');
  
     var json;
     json = this.exam;
+
+    //init array mutilchoice
+
+    for(var k = 0;k<5;k++){
+      this.arr_mutilchoice[k]=0;
+    }
    
     this.view_exam.id_exam =  json.Test_code;
     this.view_exam.userid = info.userID;
@@ -101,6 +109,7 @@ export class EtestPage {
     this.remain_question = this.total_question;
     this.has_answer = view_result.hasAnswer;
     this.str_answer = view_result.answers;
+    
     for(var i= 0; i<this.question_count;i++) {
       this.Answer[i]=null;
       this.number_array[i]=i+1;
@@ -115,11 +124,22 @@ export class EtestPage {
             }
           //this.multil_Str = this.Answer[j];
              if( this.Answer[j].includes("{|}")){
-               this.arr_mutilchoice= this.Answer[j].split("{|}");               
+               // check all choiced in mutil question
+               this.arr_mutil_answerd= this.Answer[j].split("{|}");
+               //init again arr_mutilchoice if answered
+               for(var k=0;k<5;k++){
+                 var index = this.arr_mutil_answerd[k];
+                 if(this.arr_mutil_answerd[k]!=null){
+                 this.arr_mutilchoice[index-1]= this.arr_mutil_answerd[k];
+                 }
+               }
              }
         }
     }
-    // check mutil ans;
+ 
+    
+
+ // check mutil ans;
     this.short_ans = this.Answer[0];
     this.check_multi();
     }) 
@@ -130,7 +150,11 @@ export class EtestPage {
     this.startTimer();
     this.slides.lockSwipes(true);
     console.log('ionViewDidLoad EtestPage');
-    //checkmutil choice
+
+//checkmutil choice
+
+     
+
   }
 
   /* Initialize and setup the time for question */
@@ -200,19 +224,26 @@ export class EtestPage {
     return hoursString + ':' + minutesString + ':' + secondsString;
   }
 
+
   /**
    * refresh_onclick() method
    * click button and call refresh_onclick() method on etest.html
    */
-  check_time(){
-    if(parseInt(this.remainingTime) == 300){
-      let alert = this.alertCtrl.create({
-        title: 'Your time exist is five minutes,',      
-        buttons: ['OK']
-      });
-      alert.present();
-    }      
+check_time(){
+  if(parseInt(this.remainingTime) == 300){
+    let alert = this.alertCtrl.create({
+      title: 'Your time exist is five minutes,',
+     
+      buttons: ['OK']
+    });
+    alert.present();
   }
+    
+
+}
+
+
+
 
   public refresh_onclick() {
     this.navCtrl.setRoot('RefreshPage');
@@ -247,12 +278,13 @@ export class EtestPage {
   }
 //Submit answer to Serve
 
-save_ans() {   
-  this.save_data.answers = this.Answer.join("{:}");
-  this.save_data.id_exam = this.view_exam.id_exam;
-  this.save_data.userid = this.view_exam.userid;
-  this.save_data.remain_time = this.remainingTime; 
-  this.auth.save_ans(this.save_data);
+save_ans( ){
+   
+this.save_data.answers = this.Answer.join("{:}");
+this.save_data.id_exam = this.view_exam.id_exam;
+this.save_data.userid = this.view_exam.userid;
+this.save_data.remain_time = this.remainingTime; 
+this.auth.save_ans(this.save_data);
 }
   /**
    * prev_button() method
@@ -269,9 +301,11 @@ save_ans() {
     console.log("trang so:" + this.num_page);
     console.log("data:" +this.Answer[this.num_page-1]);
     
+    
     this.slides.lockSwipes(false);
     this.slides.slidePrev(500);
-    this.slides.lockSwipes(true);         
+    this.slides.lockSwipes(true); 
+        
    
     this.page = this.num_page.toString();
   
@@ -286,7 +320,8 @@ save_ans() {
    */
   public next_button() {
     if(this.is_answer[this.num_page-1] !=true) {
-      this.presentAlert(); 
+      this.presentAlert();
+ 
     }
     
     this.num_page++;
@@ -309,19 +344,23 @@ save_ans() {
   }
 
   ///Submit  all answer to serve and 
-  submit_ans() {
-    this.save_data.answers = this.Answer.join("{:}");
-    this.save_data.id_exam = this.view_exam.id_exam;
-    this.save_data.userid = this.view_exam.userid;
-    this.save_data.remain_time = this.remainingTime; 
+  submit_ans(){
+  this.save_data.answers = this.Answer.join("{:}");
+  this.save_data.id_exam = this.view_exam.id_exam;
+  this.save_data.userid = this.view_exam.userid;
+  this.save_data.remain_time = this.remainingTime; 
 
     this.auth.Submit_ans(this.save_data);
-  }
+
+}
+
+
 
   /*
   * submitAnswer()method
   * click button and send all answers to server
   */
+
   public submitAnswer(exam) {
     
     this.presentToast("You have clicked submit answer !!");
@@ -331,17 +370,17 @@ save_ans() {
       title: 'Confirm Submit Test',
       message: 'Are you sure submit your test?',
       buttons: [
-      {
+        {
           text: 'Cancel',
           role: 'cancel',
           handler: () => {
             console.log('Cancel clicked');
           }
-      },
-      {
+        },
+        {
           text: 'Submit',
           handler: () => {
-            this.navCtrl.push(FinalResultPage,{exam:exam});
+			this.navCtrl.push(FinalResultPage,{exam:exam});  
             // this.navCtrl.setRoot('FinalResultPage');
             console.log('Submit clicked');
           }
@@ -349,8 +388,19 @@ save_ans() {
       ]
     });
     alert.present();
-    this.submit_ans();
+     this.submit_ans();
+
+
+
   } 
+  
+
+
+
+
+
+
+
 
   /**
    * review_answer() method
@@ -364,42 +414,73 @@ save_ans() {
     
   }
   
-  // on click multil choice
-  public markedValueAnswerMultiChoice(ex:any,ans:any) {
+  /// on click multil choice
+  public markedValueAnswerMultiChoice(etest:any,ans:any,check:any) {
     console.log("Ban vua chon cau tra loi multi choice !!");   
        
-    console.log("You checkok, value is:" + ex);
+    console.log("You checkok, value is:" + etest);
+  
+    this.ex_count = parseInt(etest.excount);
+    let index = parseInt(ans);
+    this.check_mul[index-1] = !check;
+  
+    if(!check == true){
+    this.arr_mutilchoice[ans-1] = ans;
+    var virtualarr= new Array;
+    for(var j=0;j<5;j++){
+      virtualarr[j]= this.arr_mutilchoice[j];
+    }
 
-    this.arr_mutilchoice[this.count] = ans;
-    this.count++;
-    this.ans_mutilchoice = this.arr_mutilchoice.join("{|}");
+    // virtualarr = this.arr_mutilchoice;
+    for (var i=4; i>=0; i--) {
+      if ((virtualarr[i] === 0)) {
+        virtualarr.splice(i, 1);
+          // break;       //<-- Uncomment  if only the first term has to be removed
+      }
+    }
+    this.ans_mutilchoice = virtualarr.join("{|}");
+
+    }
+
+    else {
+      this.arr_mutilchoice[ans-1] = 0;
+      for (i = this.ex_count-1; i>=0; i--) {
+        var virtualArr = new Array;
+        for(var e=0;e<5;e++){
+           virtualArr[e] = this.arr_mutilchoice[e];
+           }
+ 
+        // break;       //<-- Uncomment  if only the first term has to be removed
+         for (var k=4; k>=0; k--) {
+          if (virtualArr[k] === 0) {
+            virtualArr.splice(k, 1);
+                  // break;       //<-- Uncomment  if only the first term has to be removed
+          }
+            
+            this.ans_mutilchoice = virtualArr.join("{|}");
+        }
+    }
+    }
+
+   
+ 
 
     //this.question_answered ++;
     //console.log("You answerd : "+this.question_answered); 
     this.is_answer[this.num_page-1] =true;
     this.Answer[this.num_page-1] = this.ans_mutilchoice;
   }
-
-  //check mutil question is answered;
-  check_multi() {
-    for (var i =0;i<5;i++) {
-      if (this.arr_mutilchoice[i]==1) {
-        this.check_mul.result1 = true;
+//check mutil question is answered;
+  check_multi(){
+    for (var i =0;i<5;i++){
+      if (this.arr_mutilchoice[i]==i+1){
+        this.check_mul[i] = true;
       }
-      if (this.arr_mutilchoice[i]==2) {
-        this.check_mul.result2 = true;
-      }
-      if (this.arr_mutilchoice[i]==3) {
-        this.check_mul.result3 = true;
-      }
-      if (this.arr_mutilchoice[i]==4) {
-        this.check_mul.result4 = true;
-      }
-      if (this.arr_mutilchoice[i]==5) {
-        this.check_mul.result5 = true;
-      }
+     
     }
   }
+
+
 
   public markedValueAnswerChoice(ex:any,ans:any) {
     console.log("Ban vua chon cau tra loi multi choice !!");   
@@ -410,6 +491,8 @@ save_ans() {
     this.is_answer[this.num_page-1] =true;
     this.Answer[this.num_page-1] = ans;
   }
+
+
 
   public markedValueAnswerOX(ex:any,ans:any) {
     // console.log(ex1);
@@ -422,27 +505,53 @@ save_ans() {
     this.Answer[this.num_page-1] = ans;   
   }
 
-  // question short_answer
-  markShortAns() {
-    console.log("your page: "+this.num_page); 
-    this.is_answer[this.num_page-1] =true;
-    this.Answer[this.num_page-1] = this.short_ans;   
-  }
+// question short_answer
+
+markShortAns(){
+  console.log("your page: "+this.num_page);
+  //this.question_answered ++;
+  //console.log("You answerd : "+this.question_answered); 
+  this.is_answer[this.num_page-1] =true;
+  this.Answer[this.num_page-1] = this.short_ans;   
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   /*
   * Show and check all condition: 
   * [1]check if not answered quetion and click 'next' button, 
   * [2]check remain time, 
-  * [3]check answer is checked or not checked 
+  * [3]check  
   */
-  check_button(ans:any) {
+// check answer is checked or not checked
 
-    let _return = false;
-    if(this.Answer[this.num_page-1] == ans) {
-      _return = true;
-    }
-    return _return;
+check_button( ans:any){
+
+  let _return = false;
+  if(this.Answer[this.num_page-1] == ans ){
+    _return = true;
   }
+return _return;
+
+
+}
+
+
+
 
   showLoader() {
     this.loading = this.loadingCtrl.create({
@@ -466,5 +575,7 @@ save_ans() {
 
     toast.present();
   }
+
+
 }
 
