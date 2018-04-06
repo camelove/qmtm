@@ -215,7 +215,7 @@ export class AuthServiceProvider {
 
   public submitted_result(credentials) {
 
-    this.submittedresulturl = submitURL+'?'+'userid='+credentials.userid+'&'+'id_exam='+credentials.id_exam;
+    this.submittedresulturl = submitURL+'?'+'userid='+credentials.userid+'&'+'id_exam='+credentials.id_exam + '&yn_open_score_direct='+credentials.yn_open_score_direct+'&allotting=' + credentials.allotting+'&qcount='+credentials.qcount;
     return new Promise((resolve, reject) => {  
       let headers = new Headers();
       headers.append('content-type','application/json');
@@ -262,7 +262,7 @@ export class AuthServiceProvider {
     let headers = new Headers({
         'Content-Type': 'application/x-www-form-urlencoded'
       });
-      let body = 'userid=' + credentials.userid + '&id_exam=' + credentials.id_exam+"&answers="+credentials.answers+"&yn_open_score_direct"+credentials.yn_open_score_direct+"&remain_time="+credentials.remain_time;
+      let body = 'userid=' + credentials.userid + '&id_exam=' + credentials.id_exam+"&answers="+credentials.answers+"&yn_open_score_direct="+credentials.yn_open_score_direct+"&remain_time="+credentials.remain_time;
       
     return new Promise((resolve, reject) => {
       this.http.post(submitURL, 

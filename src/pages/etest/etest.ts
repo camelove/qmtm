@@ -12,7 +12,7 @@ import { TimerObservable } from "rxjs/observable/TimerObservable";
 import { Http } from '@angular/http';
 import { FinalResultPage } from '../final-result/final-result';
 
-
+import { Compiler } from '@angular/core';
 /**
  * Generated class for the EtestPage page.
  *
@@ -36,7 +36,7 @@ export class EtestPage {
   data = {"remain_time":"","title":"", "qcount":"","yn_open_score_direct":""};
   number_array = new Array();
   items = { "q":"", "allotting":"" };
-  save_data = { "answers":"","userid":"", "id_exam":"","remain_time":"","yn_open_score_direct":""};
+  save_data = { "answers":"","userid":"", "id_exam":"","remain_time":"","yn_open_score_direct":"","Test_name":"","alloting":"","qcount":""};
   exam:any; 
   viewexams:any;
   item_exam:any;
@@ -64,7 +64,8 @@ export class EtestPage {
   count=0;
   check_mul = [false,false,false,false,false];
   ex_count:any;
-  
+  limittime:any;
+  timeOutEsc : any;
 
    /* define object of short-answer and essay type question */
    short_ans:String ;
@@ -83,7 +84,7 @@ export class EtestPage {
  
     var json;
     json = this.exam;
-
+    this.save_data.Test_name = this.exam.Test_name;
     //init array mutilchoice
 
     for(var k = 0;k<5;k++){
@@ -97,19 +98,25 @@ export class EtestPage {
     var view_result;
     view_result = result;
     this.viewexams = view_result;
-
+    this.limittime = view_result.limittime;
     // get object properties
     this.data.remain_time= view_result.remain_time;
+    //check time to test
+    if(this.data.remain_time>this.limittime){
+      this.data.remain_time = this.limittime;
+    }
     this.data.title = view_result.title;
     this.data.qcount = view_result.qcount;
     this.question_count = parseInt( this.data.qcount);
     this.save_data.yn_open_score_direct = view_result.yn_open_score_direct;
+    this.save_data.alloting = view_result.allotting;
+    this.save_data.qcount =view_result.qcount;
     this.item_exam = this.viewexams.Items;
     this.total_question = this.data.qcount;
     this.remain_question = this.total_question;
     this.has_answer = view_result.hasAnswer;
     this.str_answer = view_result.answers;
-    
+   // this.initTimer();
     for(var i= 0; i<this.question_count;i++) {
       this.Answer[i]=null;
       this.number_array[i]=i+1;
@@ -133,7 +140,9 @@ export class EtestPage {
                  this.arr_mutilchoice[index-1]= this.arr_mutil_answerd[k];
                  }
                }
+
              }
+             
         }
     }
  
@@ -145,22 +154,31 @@ export class EtestPage {
     }) 
   }
 
-  public ionViewDidEnter(credentials) {
+  ionViewDidEnter () {
     this.initTimer();
     this.startTimer();
     this.slides.lockSwipes(true);
     console.log('ionViewDidLoad EtestPage');
+
+  //  ngOnInit() {
+  //   //this.initTimer();
+  //   this.startTimer();
+  //   this.slides.lockSwipes(true);
+  //   console.log('ionViewDidLoad EtestPage');
 
 //checkmutil choice
 
      
 
   }
+  // ionViewDidLeave() {
+  //      this.displayTime = this.remainingTime;
+  // }
 
   /* Initialize and setup the time for question */
-  ngOnInit() {
+  // ngOnInit() {
    
-  }
+  // }
   
   initTimer() {
      // Initialization is usually for 25 minutes
@@ -195,11 +213,13 @@ export class EtestPage {
   */
   
   timerTick() {
-    setTimeout(() => {
+    this.timeOutEsc = setTimeout(() => {
   
       if (!this.runTimer) { return; }
       this.remainingTime--;
+     
       this.displayTime = this.getSecondsAsDigitalClock(this.remainingTime);
+      
       if (this.remainingTime >= 0) {
         this.timerTick();
         this.check_time();
@@ -229,30 +249,38 @@ export class EtestPage {
    * refresh_onclick() method
    * click button and call refresh_onclick() method on etest.html
    */
-  check_time(){
-    if(parseInt(this.remainingTime) == 300) {
-      let alert = this.alertCtrl.create({
-        title: 'Your time exist is five minutes,',
-       
-        buttons: ['OK']
-      });
-      alert.present();
+check_time(){
+  if(parseInt(this.remainingTime) == 90){
+    let alert = this.alertCtrl.create({
+      title: 'Your time exist is two minutes,',
+     
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+    if(parseInt(this.remainingTime) == 0){
+      this.submit_ans();
+      this.navCtrl.setRoot(FinalResultPage,{exam:this.save_data});  
     }
-      if(parseInt(this.remainingTime) == 0){
-        this.save_ans();
-        this.navCtrl.push(FinalResultPage,{exam:this.exam});  
-      }
-  
-  }
-  
+
+}
+
+public refresh_onclick(refresher) {
+
+  console.log('Started', refresher);
+  setTimeout(() => {
+      console.log('Async operation has ended');
+      refresher.complete();
+  }, 2000);
+
+}
+
+public close_page() {
+
+}
 
 
-
-
-  public refresh_onclick() {
-    this.navCtrl.setRoot('RefreshPage');
-  }
-  public check_remainquestion() {
+public check_remainquestion() {
   var question_answered = 0;
   for(var i = 0 ; i< this.question_count;i++) {
     if(this.is_answer[i]==true){
@@ -268,10 +296,10 @@ export class EtestPage {
    * view_question method
    * click button and call view_question() method on etest.html
    */
-  public view_question() {
+public view_question() {
     this.navCtrl.setRoot('ViewQuestion');
-  }
-  presentAlert() {
+}
+presentAlert() {
     let alert = this.alertCtrl.create({
       title: 'You have not answer question'+this.num_page,
      
@@ -279,17 +307,17 @@ export class EtestPage {
     });
     alert.present();
     
-  }
-//Submit answer to Serve
-
-save_ans( ){
-   
-this.save_data.answers = this.Answer.join("{:}");
-this.save_data.id_exam = this.view_exam.id_exam;
-this.save_data.userid = this.view_exam.userid;
-this.save_data.remain_time = this.remainingTime; 
-this.auth.save_ans(this.save_data);
 }
+
+//Submit answer to Serve
+save_ans() {   
+  this.save_data.answers = this.Answer.join("{:}");
+  this.save_data.id_exam = this.view_exam.id_exam;
+  this.save_data.userid = this.view_exam.userid;
+  this.save_data.remain_time = this.remainingTime; 
+  this.auth.save_ans(this.save_data);
+}
+
   /**
    * prev_button() method
    * click button and call prev_button() method on etest.html
@@ -348,17 +376,14 @@ this.auth.save_ans(this.save_data);
   }
 
   ///Submit  all answer to serve and 
-  submit_ans(){
-  this.save_data.answers = this.Answer.join("{:}");
-  this.save_data.id_exam = this.view_exam.id_exam;
-  this.save_data.userid = this.view_exam.userid;
-  this.save_data.remain_time = this.remainingTime; 
+  submit_ans() {
+    this.save_data.answers = this.Answer.join("{:}");
+    this.save_data.id_exam = this.view_exam.id_exam;
+    this.save_data.userid = this.view_exam.userid;
+    this.save_data.remain_time = this.remainingTime; 
 
     this.auth.Submit_ans(this.save_data);
-
-}
-
-
+  }
 
   /*
   * submitAnswer()method
@@ -384,7 +409,7 @@ this.auth.save_ans(this.save_data);
         {
           text: 'Submit',
           handler: () => {
-			this.navCtrl.push(FinalResultPage,{exam:exam});  
+			this.navCtrl.setRoot(FinalResultPage,{exam:this.save_data});  
             // this.navCtrl.setRoot('FinalResultPage');
             console.log('Submit clicked');
           }
@@ -393,19 +418,8 @@ this.auth.save_ans(this.save_data);
     });
     alert.present();
      this.submit_ans();
-
-
-
   } 
   
-
-
-
-
-
-
-
-
   /**
    * review_answer() method
    * click button and call review_andswer() method on etest.html
@@ -466,15 +480,13 @@ this.auth.save_ans(this.save_data);
     }
     }
 
-   
- 
-
     //this.question_answered ++;
     //console.log("You answerd : "+this.question_answered); 
     this.is_answer[this.num_page-1] =true;
     this.Answer[this.num_page-1] = this.ans_mutilchoice;
   }
-//check mutil question is answered;
+  
+  //check mutil question is answered;
   check_multi(){
     for (var i =0;i<5;i++){
       if (this.arr_mutilchoice[i]==i+1){
@@ -483,8 +495,6 @@ this.auth.save_ans(this.save_data);
      
     }
   }
-
-
 
   public markedValueAnswerChoice(ex:any,ans:any) {
     console.log("Ban vua chon cau tra loi multi choice !!");   
@@ -495,8 +505,6 @@ this.auth.save_ans(this.save_data);
     this.is_answer[this.num_page-1] =true;
     this.Answer[this.num_page-1] = ans;
   }
-
-
 
   public markedValueAnswerOX(ex:any,ans:any) {
     // console.log(ex1);
@@ -517,45 +525,23 @@ markShortAns(){
   //console.log("You answerd : "+this.question_answered); 
   this.is_answer[this.num_page-1] =true;
   this.Answer[this.num_page-1] = this.short_ans;   
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   /*
   * Show and check all condition: 
   * [1]check if not answered quetion and click 'next' button, 
   * [2]check remain time, 
-  * [3]check  
-  */
-// check answer is checked or not checked
+  * [3]check answer is checked or not checked
+  */ 
 
-check_button( ans:any){
-
-  let _return = false;
-  if(this.Answer[this.num_page-1] == ans ){
-    _return = true;
+  check_button( ans:any ) {
+    let _return = false;
+    if(this.Answer[this.num_page-1] == ans ){
+      _return = true;
+    }
+    
+    return _return;
   }
-return _return;
-
-
-}
-
-
-
 
   showLoader() {
     this.loading = this.loadingCtrl.create({
@@ -580,6 +566,8 @@ return _return;
     toast.present();
   }
 
-
+  ngOnDestroy(){
+    clearInterval(this.timeOutEsc );
+  }
 }
 

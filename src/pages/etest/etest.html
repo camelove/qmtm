@@ -15,7 +15,17 @@
       <ion-img src="../assets/imgs/logo_bg2.gif" width="80" height="30"></ion-img>
   </div>
   <div style="float: right; margin-right: 10px;">
-      <button ion-button small type="submit" onclick="refresh_onclick()" text-uppercase>refresh</button><button ion-button small type="submit" onclick="refresh_onclick()" text-uppercase>close</button>
+        <ion-refresher (ionRefresh)="refresh_onclick($event)">
+            <ion-refresher-content
+                pullingIcon="arrow-dropdown"
+                pullingText="Pull down here."
+                refreshingSpinner="circles"
+                refreshingText="refreshing...">
+            </ion-refresher-content>
+        </ion-refresher>
+    
+      <!-- <button ion-button small type="submit" (click)="refresh_onclick()" text-uppercase>refresh</button> -->
+      <button ion-button small type="submit" (click)="close_page()" text-uppercase>close</button>
   </div>
   <!-- Test info display -->    
   

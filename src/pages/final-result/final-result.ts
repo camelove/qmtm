@@ -28,9 +28,9 @@ export class FinalResultPage {
 
   public userID:any;
 
-  view_exam = { "userid":"", "id_exam":"" };
+  view_exam = { "userid":"", "id_exam":"","yn_open_score_direct":"","allotting":"","qcount":"","Test_name":"" };
   
-  data = {"remain_time":"","title":"", "qcount":"","yn_open_score_direct":"", "allotting":""};
+  data = {"remain_time":"","title":"", "qcount":"", "allotting":"","My_score":"My_score"};
   
   items = { "q":"", "allotting":"" };  
   
@@ -52,17 +52,23 @@ export class FinalResultPage {
     var json;
     json = this.exam;
    
-    this.view_exam.id_exam =  json.Test_code;
+    this.view_exam.id_exam =  json.id_exam;
     this.view_exam.userid = info.userID;
-
-    this.auth.paper_etest(this.view_exam).then((result) => {       
+    this.view_exam.yn_open_score_direct = json.yn_open_score_direct;
+    this.view_exam.allotting = json.alloting;
+    this.view_exam.qcount = json.qcount;
+    this.view_exam.Test_name = json.Test_name;
+    this.auth.submitted_result(this.view_exam).then((result) => {       
       var view_result;
       view_result = result;
-      this.viewexams = view_result;
+    
 
+      this.viewexams = view_result;
+       
       this.data.title = view_result.title;
-      this.data.allotting = view_result.allotting;
-      this.data.qcount = view_result.qcount;
+      this.data.allotting = view_result.Allotting;
+      this.data.qcount = view_result.Question_count;
+      this.data.My_score = view_result.My_score;
       this.question_count = parseInt( this.data.qcount);
       
       this.item_exam = this.viewexams.Items;

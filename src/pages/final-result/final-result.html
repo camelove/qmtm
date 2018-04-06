@@ -6,62 +6,63 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>final-result</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-<ion-content>
-    <ion-card>
-        <ion-list>
-            <ion-grid class="global_content">
-                <div class="inside_row">
-                    <ion-row>Result your test exam</ion-row>
-                </div>                
-                <div class="wrapper">
-                <ion-row>
-                    <ion-col>
-                        <ion-icon name="arrow-dropright"></ion-icon>  Test name: {{exam.Test_name}}
-                    </ion-col>
-                </ion-row> 
-                <ion-row>
-                    <ion-col>
-                        <ion-icon name="arrow-dropright"></ion-icon>  Score: <div class="score_stl">40.0</div>              <!-- end_score -->
-                    </ion-col>
-                </ion-row>              
-                <ion-row>
-                    <ion-col>
-                        <ion-icon name="arrow-dropright"></ion-icon>  Total score: <div class="total_score_stl">{{data.allotting}}</div>     <!--  -->
-                    </ion-col> 
-                </ion-row>
-                <ion-row>
-                    <ion-col>
-                        <ion-icon name="arrow-dropright"></ion-icon>  Total question: <div class="total_score_stl">{{data.qcount}}</div>         <!--  20.0 -->  
-                    </ion-col> 
-                </ion-row>
-                <ion-row>
-                    <ion-col>
-                        <ion-icon name="arrow-dropright"></ion-icon>  This score is temporary and maybe changed by the result of the short-answer question and the revised mark.
-                    </ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col>
-                        <ion-icon name="arrow-dropright"></ion-icon>  You are submitted successfully !
-                    </ion-col>
-                </ion-row>                
-                <ion-row>
-                    <ion-col>
-                        <ion-icon name="arrow-dropright"></ion-icon> Thank you so much !!
-                    </ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col> 
-                        <button full (click)="finish_button()" color="danger" ion-button>Finish</button>
-                    </ion-col>
-                </ion-row>
-            </div>         
-            </ion-grid>            
-        </ion-list>
-    </ion-card>  
-</ion-content>
+    <ion-navbar>
+      <ion-title>final-result</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  <ion-content>
+      <ion-card>
+          <ion-list>
+              <ion-grid class="global_content">
+                  <div class="inside_row">
+                      <ion-row>Result your test exam</ion-row>
+                  </div>                
+                  <div class="wrapper">
+                  <ion-row>
+                      <ion-col>
+                          <ion-icon name="arrow-dropright"></ion-icon>  Test name: <h1>{{view_exam.Test_name}}</h1>
+                      </ion-col>
+                  </ion-row> 
+                  <ion-row>
+                      <ion-col>
+                          <ion-icon name="arrow-dropright"></ion-icon>  Score: <div class="score_stl">{{data.My_score}}</div>              <!-- end_score -->
+                      </ion-col>
+                  </ion-row>              
+                  <ion-row>
+                      <ion-col>
+                          <ion-icon name="arrow-dropright"></ion-icon>  Total score: <div class="total_score_stl">{{data.allotting}}</div>     <!--  -->
+                      </ion-col> 
+                  </ion-row>
+                  <ion-row>
+                      <ion-col>
+                          <ion-icon name="arrow-dropright"></ion-icon>  Total question: <div class="total_score_stl">{{data.qcount}}</div>         <!--  20.0 -->  
+                      </ion-col> 
+                  </ion-row>
+                  <ion-row>
+                      <ion-col>
+                          <ion-icon name="arrow-dropright"></ion-icon>  This score is temporary and maybe changed by the result of the short-answer question and the revised mark.
+                      </ion-col>
+                  </ion-row>
+                  <ion-row>
+                      <ion-col>
+                          <ion-icon name="arrow-dropright"></ion-icon>  You are submitted successfully !
+                      </ion-col>
+                  </ion-row>                
+                  <ion-row>
+                      <ion-col>
+                          <ion-icon name="arrow-dropright"></ion-icon> Thank you so much !!
+                      </ion-col>
+                  </ion-row>
+                  <ion-row>
+                      <ion-col> 
+                          <button full (click)="finish_button()" color="danger" ion-button>Finish</button>
+                      </ion-col>
+                  </ion-row>
+              </div>         
+              </ion-grid>            
+          </ion-list>
+      </ion-card>  
+  </ion-content>
+  
