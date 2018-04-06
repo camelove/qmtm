@@ -200,7 +200,7 @@ export class EtestPage {
       if (!this.runTimer) { return; }
       this.remainingTime--;
       this.displayTime = this.getSecondsAsDigitalClock(this.remainingTime);
-      if (this.remainingTime > 0) {
+      if (this.remainingTime >= 0) {
         this.timerTick();
         this.check_time();
       }
@@ -229,18 +229,22 @@ export class EtestPage {
    * refresh_onclick() method
    * click button and call refresh_onclick() method on etest.html
    */
-check_time(){
-  if(parseInt(this.remainingTime) == 300){
-    let alert = this.alertCtrl.create({
-      title: 'Your time exist is five minutes,',
-     
-      buttons: ['OK']
-    });
-    alert.present();
+  check_time(){
+    if(parseInt(this.remainingTime) == 300) {
+      let alert = this.alertCtrl.create({
+        title: 'Your time exist is five minutes,',
+       
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+      if(parseInt(this.remainingTime) == 0){
+        this.save_ans();
+        this.navCtrl.push(FinalResultPage,{exam:this.exam});  
+      }
+  
   }
-    
-
-}
+  
 
 
 
