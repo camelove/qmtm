@@ -7,227 +7,218 @@
 
 <ion-header>
   
-</ion-header>
-
-<ion-content>          
-  <!-- Button(Refresh, Close) display -->
-  <div style="float: left; margin-left: 10px; margin-top: 5px;">
-      <ion-img src="../assets/imgs/logo_bg2.gif" width="80" height="30"></ion-img>
-  </div>
-  <div style="float: right; margin-right: 10px;">
-        <ion-refresher (ionRefresh)="refresh_onclick($event)">
-            <ion-refresher-content
-                pullingIcon="arrow-dropdown"
-                pullingText="Pull down here."
-                refreshingSpinner="circles"
-                refreshingText="refreshing...">
-            </ion-refresher-content>
-        </ion-refresher>
+    </ion-header>
     
-      <!-- <button ion-button small type="submit" (click)="refresh_onclick()" text-uppercase>refresh</button> -->
-      <button ion-button small type="submit" (click)="close_page()" text-uppercase>close</button>
-  </div>
-  <!-- Test info display -->    
-  
-  <ion-card>
-      <ion-list>
-          <ion-grid class="text_size">
-              <ion-row>
-                  <ion-col>
-                      <ion-icon name="arrow-dropright"></ion-icon> Test name : {{exam.Test_name}}        
-                  </ion-col>
-              </ion-row>     
-            
-              <ion-row>
-                  <ion-col><ion-icon name="arrow-dropright"></ion-icon> Remain question : {{remain_question}} question/ total {{data.qcount}} questions</ion-col>
-              </ion-row>
-              <ion-row>
-                  <ion-col>
-                      <ion-icon name="arrow-dropright"></ion-icon> Remain time : {{displayTime}}          <!-- data.remain_time -->
-                  </ion-col>
-              </ion-row>
-          </ion-grid>
-          
-      </ion-list>
-  </ion-card>  
-
-  <ion-card>
-  <div >
-      <!-- Question info -->
-      <form>
-      <ion-list>        <!-- class="card_description" -->
-          <ion-grid>
-              <ion-row>
-                  <ion-col class="title_text">> Question Sheet</ion-col>
-              </ion-row>
-          
-          <ion-slides>             
-              <ion-slide *ngFor="let etest of item_exam; let i = index;">
-                    <div class="row_ans">
-                        <!-- <ion-item text-wrap> -->
-                            <ion-label>{{etest.page}}. <div class="mark_answer" [innerHTML]= "etest.q"></div></ion-label>
-                            <ion-label><div class="score_ans">(alloting) {{etest.allotting}} scores </div></ion-label>
-                        <!-- </ion-item> -->
-                    </div>
-                
-                    <div [(ngSwitch)]="etest.id_qtype">                      
-                            <!-- OX Type -->
-                            <ion-list radio-group *ngSwitchCase="'1'" >
-                                <ion-item no-lines no-padding class="mark_answer_inside">
-                                      <ion-label>① <div class="mark_answer" [innerHTML]= "etest.ex1"></div></ion-label>
-                                      <ion-radio [checked]="Answer[num_page-1]==1" (ionSelect)="markedValueAnswerOX(etest.ex1,'1')"></ion-radio>     
-                                </ion-item>
-                                
-                                <ion-item no-lines no-padding>
-                                  <ion-label>② <div class="mark_answer" [innerHTML]= "etest.ex2"></div> </ion-label>
-                                  <ion-radio  [checked]="Answer[num_page-1] == '2' "   (ionSelect)="markedValueAnswerOX(etest.ex2,'2')"></ion-radio>
-                                </ion-item>
-                            </ion-list>
-                            <!-- Choice Type -->  
-                            <ion-list radio-group *ngSwitchCase="'2'">
-                                <ion-item no-lines no-padding>
-                                    <ion-label>① <div class="mark_answer" [innerHTML]="etest.ex1"></div></ion-label>
-                                    <ion-radio [checked]="Answer[num_page-1]==1" (ionSelect)="markedValueAnswerChoice(etest.ex1,'1')"></ion-radio>
-                                </ion-item>
-                                <ion-item no-lines no-padding>
-                                    <ion-label>② <div class="mark_answer" [innerHTML]="etest.ex2"></div></ion-label>
-                                    <ion-radio [checked]="Answer[num_page-1]==2" (ionSelect)="markedValueAnswerChoice(etest.ex2,'2')"></ion-radio>
-                                </ion-item>
-                                <ion-item no-lines no-padding>
-                                    <ion-label>③ <div class="mark_answer" [innerHTML]="etest.ex3"></div></ion-label>
-                                    <ion-radio [checked]="Answer[num_page-1]==3" (ionSelect)="markedValueAnswerChoice(etest.ex3,'3')"></ion-radio>
-                                </ion-item>
-                                <ion-item no-lines no-padding>
-                                    <ion-label>④ <div class="mark_answer" [innerHTML]="etest.ex4"></div></ion-label>
-                                    <ion-radio [checked]="Answer[num_page-1]==4" (ionSelect)="markedValueAnswerChoice(etest.ex4,'4')"></ion-radio>
-                                </ion-item>
-                            </ion-list>
-                            <!-- MultilChoice Type -->
-                            <ion-list radio-group *ngSwitchCase="'3'">
-                                  <ion-item no-lines no-padding>
-                                      <ion-label>① <div class="mark_answer" [innerHTML]="etest.ex1"></div></ion-label>
-                                      <ion-checkbox  [checked]= "check_mul[0]"    value="etest.ex1" (ionChange)="markedValueAnswerMultiChoice(etest,'1',check_mul[0])"></ion-checkbox>
-                                  </ion-item>
-                                  <ion-item no-lines no-padding>
-                                     <ion-label>② <div class="mark_answer" [innerHTML]="etest.ex2"></div></ion-label>
-                                      <ion-checkbox [checked]= "check_mul[1]" (ionChange)="markedValueAnswerMultiChoice(etest,'2',check_mul[1])"></ion-checkbox>
-                                  </ion-item>
-                                  <ion-item no-lines no-padding>
-                                      <ion-label>③ <div class="mark_answer" [innerHTML]="etest.ex3"></div></ion-label>
-                                      <ion-checkbox  [checked]= "check_mul[2]" (ionChange)="markedValueAnswerMultiChoice(etest,'3',check_mul[2])"></ion-checkbox>
-                                  </ion-item>
-                                  <ion-item no-lines no-padding  *ngIf="etest.excount==4">
-                                      <ion-label>④ <div class="mark_answer" [innerHTML]="etest.ex4"></div></ion-label>
-                                      <ion-checkbox  [checked]= "check_mul[3]" (ionChange)="markedValueAnswerMultiChoice(etest,'4',check_mul[3])"></ion-checkbox>
-                                  </ion-item>
-                                  <ion-item no-lines no-padding  *ngIf="etest.excount==5">
-                                      <ion-label>⑤ <div class="mark_answer" [innerHTML]="etest.ex5"></div></ion-label>
-                                      <ion-checkbox  [checked]= "check_mul[4]" (ionChange)="markedValueAnswerMultiChoice(etest,'5',check_mul[4])"></ion-checkbox>
-                                  </ion-item>
-                              </ion-list>
-                              <!-- Short-Answer Type -->                                  
-                              <ion-list *ngSwitchCase="'4'">
-                                    <div class="shortans-box">  
-                                        <ion-item class="ion-item-textbox">
-                                            <ion-input type="text" [(ngModel)]="short_ans" name="short_ans"  ng-model-onblur (change)="markShortAns()" ></ion-input>
-                                        </ion-item>
-                                    </div>
-                              </ion-list>          
-                              <!-- Essay Type -->                        
-                              <ion-list *ngSwitchCase="'5'">
-                                  <div class="essay-box">
-                                    <ion-item class="ion-item-textarea">
-                                        <ion-textarea type="text" rows="5" maxLength="500" [(ngModel)]="essay" name="essay"></ion-textarea>
-                                        <!-- formControlName="shortAnswers" -->
-                                    </ion-item>
-                                   </div>
-                              </ion-list>
-                        </div>
-                  
-              <ion-row>
-                  <ion-col> 
-                      <button (click)="prev_button()" color="danger" ion-button text-only [disabled]="i === 0">Previous</button>
-                  </ion-col>
-                  <ion-col>
-                      <button [disabled]="!item_exam" *ngIf="i<item_exam.length - 1" ion-button text-only color="danger" (click)="next_button()">Next</button>
-                  </ion-col>
-                  <ion-col>                 
-                      <button [disabled]="!item_exam" *ngIf="i === item_exam.length - 1" ion-button text-only color="danger" (click)="submitAnswer(exam)">Submit</button>                   
-                  </ion-col>
-              </ion-row>
-
-              </ion-slide>        
-          </ion-slides> 
-      </ion-grid>
-  </ion-list>
-  </form>
-
-</div>
-</ion-card>
-
-
-  <ion-card>
-      <ion-list>
-          <ion-grid>
-              <ion-row>
-                  <ion-col class="title_text">> Paper Sheet</ion-col>
-              </ion-row>     
-              
-              <ion-row *ngFor="let etest of number_array;let i = index;">  
-                  <ion-col class="colTitle" *ngIf="i %3==0">{{number_array[i]}}</ion-col>    
-
-                  <ion-col class="colContent"    *ngIf="(i %3==0)"  >{{Answer[i]}}</ion-col>
-               
-
-
-                  <ion-col class="colTitle" *ngIf="i %3==0">{{number_array[i+1]}}  </ion-col>
-                  <ion-col class="colContent"    *ngIf="(i %3==0)"  > {{Answer[i+1]}}</ion-col>
+    <ion-content>          
+      <!-- Button(Refresh, Close) display -->
+      <div style="float: left; margin-left: 10px; margin-top: 5px;">
+          <ion-img src="../assets/imgs/logo_bg2.gif" width="80" height="30"></ion-img>
+      </div>
+      <div style="float: right; margin-right: 10px;">
+          <button ion-button small type="submit" onclick="refresh_onclick()" text-uppercase>refresh</button><button ion-button small type="submit" onclick="refresh_onclick()" text-uppercase>close</button>
+      </div>
+      <!-- Test info display -->    
       
-
-                  <ion-col class="colTitle" *ngIf="i %3==0">{{number_array[i+2]}}  </ion-col>
-       
-                  <ion-col class="colContent"    *ngIf="(i %3==0)"  > {{Answer[i+2]}}</ion-col>
+      <ion-card>
+          <ion-list>
+              <ion-grid class="text_size">
+                  <ion-row>
+                      <ion-col>
+                          <ion-icon name="arrow-dropright"></ion-icon> Test name : {{exam.Test_name}}        
+                      </ion-col>
+                  </ion-row>     
                 
-                               
-              </ion-row>    
+                  <ion-row>
+                      <ion-col><ion-icon name="arrow-dropright"></ion-icon> Remain question : {{remain_question}} question/ total {{data.qcount}} questions</ion-col>
+                  </ion-row>
+                  <ion-row>
+                      <ion-col>
+                          <ion-icon name="arrow-dropright"></ion-icon> Remain time : {{displayTime}}          <!-- data.remain_time -->
+                      </ion-col>
+                  </ion-row>
+              </ion-grid>
+              
+          </ion-list>
+      </ion-card>  
+    
+      <ion-card>
+      <div >
+          <!-- Question info -->
+          <form>
+          <ion-list>        <!-- class="card_description" -->
+              <ion-grid>
+                  <ion-row>
+                      <ion-col class="title_text">> Question Sheet</ion-col>
+                  </ion-row>
+              
+              <ion-slides>             
+                  <ion-slide *ngFor="let etest of item_exam; let i = index;">
+                        <div class="row_ans">
+                            <!-- <ion-item text-wrap> -->
+                                <ion-label>{{etest.page}}. <div class="mark_answer" [innerHTML]= "etest.q"></div></ion-label>
+                                <ion-label><div class="score_ans">(alloting) {{etest.allotting}} scores </div></ion-label>
+                            <!-- </ion-item> -->
+                        </div>
                     
+                        <div [(ngSwitch)]="etest.id_qtype">                      
+                                <!-- OX Type -->
+                                <ion-list radio-group *ngSwitchCase="'1'" >
+                                    <ion-item no-lines no-padding class="mark_answer_inside">
+                                          <ion-label>① <div class="mark_answer" [innerHTML]= "etest.ex1"></div></ion-label>
+                                          <ion-radio [checked]="Answer[num_page-1]==1" (ionSelect)="markedValueAnswerOX(etest.ex1,'1')"></ion-radio>     
+                                    </ion-item>
+                                    
+                                    <ion-item no-lines no-padding>
+                                      <ion-label>② <div class="mark_answer" [innerHTML]= "etest.ex2"></div> </ion-label>
+                                      <ion-radio  [checked]="Answer[num_page-1] == '2' "   (ionSelect)="markedValueAnswerOX(etest.ex2,'2')"></ion-radio>
+                                    </ion-item>
+                                </ion-list>
+                                <!-- Choice Type -->  
+                                <ion-list radio-group *ngSwitchCase="'2'">
+                                    <ion-item no-lines no-padding>
+                                        <ion-label>① <div class="mark_answer" [innerHTML]="etest.ex1"></div></ion-label>
+                                        <ion-radio [checked]="Answer[num_page-1]==1" (ionSelect)="markedValueAnswerChoice(etest.ex1,'1')"></ion-radio>
+                                    </ion-item>
+                                    <ion-item no-lines no-padding>
+                                        <ion-label>② <div class="mark_answer" [innerHTML]="etest.ex2"></div></ion-label>
+                                        <ion-radio [checked]="Answer[num_page-1]==2" (ionSelect)="markedValueAnswerChoice(etest.ex2,'2')"></ion-radio>
+                                    </ion-item>
+                                    <ion-item no-lines no-padding>
+                                        <ion-label>③ <div class="mark_answer" [innerHTML]="etest.ex3"></div></ion-label>
+                                        <ion-radio [checked]="Answer[num_page-1]==3" (ionSelect)="markedValueAnswerChoice(etest.ex3,'3')"></ion-radio>
+                                    </ion-item>
+                                    <ion-item no-lines no-padding>
+                                        <ion-label>④ <div class="mark_answer" [innerHTML]="etest.ex4"></div></ion-label>
+                                        <ion-radio [checked]="Answer[num_page-1]==4" (ionSelect)="markedValueAnswerChoice(etest.ex4,'4')"></ion-radio>
+                                    </ion-item>
+                                </ion-list>
+                                <!-- MultilChoice Type -->
+                                <ion-list radio-group *ngSwitchCase="'3'">
+                                      <ion-item no-lines no-padding>
+                                          <ion-label>① <div class="mark_answer" [innerHTML]="etest.ex1"></div></ion-label>
+                                          <ion-checkbox  [checked]= "check_mul[0]"    value="etest.ex1" (ionChange)="markedValueAnswerMultiChoice(etest,'1',check_mul[0])"></ion-checkbox>
+                                      </ion-item>
+                                      <ion-item no-lines no-padding>
+                                         <ion-label>② <div class="mark_answer" [innerHTML]="etest.ex2"></div></ion-label>
+                                          <ion-checkbox [checked]= "check_mul[1]" (ionChange)="markedValueAnswerMultiChoice(etest,'2',check_mul[1])"></ion-checkbox>
+                                      </ion-item>
+                                      <ion-item no-lines no-padding>
+                                          <ion-label>③ <div class="mark_answer" [innerHTML]="etest.ex3"></div></ion-label>
+                                          <ion-checkbox  [checked]= "check_mul[2]" (ionChange)="markedValueAnswerMultiChoice(etest,'3',check_mul[2])"></ion-checkbox>
+                                      </ion-item>
+                                      <ion-item no-lines no-padding  *ngIf="etest.excount==4">
+                                          <ion-label>④ <div class="mark_answer" [innerHTML]="etest.ex4"></div></ion-label>
+                                          <ion-checkbox  [checked]= "check_mul[3]" (ionChange)="markedValueAnswerMultiChoice(etest,'4',check_mul[3])"></ion-checkbox>
+                                      </ion-item>
+                                      <ion-item no-lines no-padding  *ngIf="etest.excount==5">
+                                          <ion-label>⑤ <div class="mark_answer" [innerHTML]="etest.ex5"></div></ion-label>
+                                          <ion-checkbox  [checked]= "check_mul[4]" (ionChange)="markedValueAnswerMultiChoice(etest,'5',check_mul[4])"></ion-checkbox>
+                                      </ion-item>
+                                  </ion-list>
+                                  <!-- Short-Answer Type -->                                  
+                                  <ion-list *ngSwitchCase="'4'">
+                                        <div class="shortans-box">  
+                                            <ion-item class="ion-item-textbox">
+                                                <ion-input type="text" [(ngModel)]="short_ans" name="short_ans"  ng-model-onblur (change)="markShortAns()" ></ion-input>
+                                            </ion-item>
+                                        </div>
+                                  </ion-list>          
+                                  <!-- Essay Type -->                        
+                                  <ion-list *ngSwitchCase="'5'">
+                                      <div class="essay-box">
+                                        <ion-item class="ion-item-textarea">
+                                            <ion-textarea type="text" rows="5" maxLength="500" [(ngModel)]="essay" name="essay"></ion-textarea>
+                                            <!-- formControlName="shortAnswers" -->
+                                        </ion-item>
+                                       </div>
+                                  </ion-list>
+                            </div>
+                      
+                  <ion-row>
+                      <ion-col> 
+                          <button (click)="prev_button()" color="danger" ion-button text-only [disabled]="i === 0">Previous</button>
+                      </ion-col>
+                      <ion-col>
+                          <button [disabled]="!item_exam" *ngIf="i<item_exam.length - 1" ion-button text-only color="danger" (click)="next_button()">Next</button>
+                      </ion-col>
+                      <ion-col>                 
+                          <button [disabled]="!item_exam" *ngIf="i === item_exam.length - 1" ion-button text-only color="danger" (click)="submitAnswer()">Submit</button>                   
+                      </ion-col>
+                  </ion-row>
+    
+                  </ion-slide>        
+              </ion-slides> 
           </ion-grid>
-
       </ion-list>
-  </ion-card>   
-
-
-
-
-
-
-
-
-  <!-- <div>
-      <ion-item>
-        <h1 text-center>{{displayTime}}</h1>
-      </ion-item>
-      <ion-fab bottom right *ngIf="runTimer && hasStarted && !hasFinished">
-        <button ion-fab (click)="pauseTimer()">
-      <ion-icon name="pause"></ion-icon>
-      </button>
-      </ion-fab>
-      <ion-fab bottom right *ngIf="!runTimer && hasStarted && !hasFinished">
-        <button ion-fab (click)="resumeTimer()">
-         <ion-icon name="play"></ion-icon>
-         </button>
-      </ion-fab>
-      <ion-fab bottom right *ngIf="!hasStarted">
-        <button ion-fab (click)="startTimer()" item-right>
-         <ion-icon name="play"></ion-icon>
-         </button>
-      </ion-fab>
-      <ion-fab bottom left *ngIf="!runTimer && (hasStarted || hasFinished) || hasFinished">
-        <button ion-fab color="danger" (click)="initTimer()" item-left>
-         <ion-icon name="refresh"></ion-icon>
-        </button>
-      </ion-fab>
-     </div> -->
-     
-
-</ion-content>
+      </form>
+    
+    </div>
+    </ion-card>
+    
+    
+      <ion-card>
+          <ion-list>
+              <ion-grid>
+                  <ion-row>
+                      <ion-col class="title_text">> Paper Sheet</ion-col>
+                  </ion-row>     
+                  
+                  <ion-row *ngFor="let etest of number_array;let i = index;">  
+                      <ion-col class="colTitle" *ngIf="i %3==0">{{number_array[i]}}</ion-col>    
+    
+                      <ion-col class="colContent"    *ngIf="(i %3==0)"  >{{Answer[i]}}</ion-col>
+                   
+    
+    
+                      <ion-col class="colTitle" *ngIf="i %3==0">{{number_array[i+1]}}  </ion-col>
+                      <ion-col class="colContent"    *ngIf="(i %3==0)"  > {{Answer[i+1]}}</ion-col>
+          
+    
+                      <ion-col class="colTitle" *ngIf="i %3==0">{{number_array[i+2]}}  </ion-col>
+           
+                      <ion-col class="colContent"    *ngIf="(i %3==0)"  > {{Answer[i+2]}}</ion-col>
+                    
+                                   
+                  </ion-row>    
+                        
+              </ion-grid>
+    
+          </ion-list>
+      </ion-card>   
+    
+    
+    
+    
+    
+    
+    
+    
+      <!-- <div>
+          <ion-item>
+            <h1 text-center>{{displayTime}}</h1>
+          </ion-item>
+          <ion-fab bottom right *ngIf="runTimer && hasStarted && !hasFinished">
+            <button ion-fab (click)="pauseTimer()">
+          <ion-icon name="pause"></ion-icon>
+          </button>
+          </ion-fab>
+          <ion-fab bottom right *ngIf="!runTimer && hasStarted && !hasFinished">
+            <button ion-fab (click)="resumeTimer()">
+             <ion-icon name="play"></ion-icon>
+             </button>
+          </ion-fab>
+          <ion-fab bottom right *ngIf="!hasStarted">
+            <button ion-fab (click)="startTimer()" item-right>
+             <ion-icon name="play"></ion-icon>
+             </button>
+          </ion-fab>
+          <ion-fab bottom left *ngIf="!runTimer && (hasStarted || hasFinished) || hasFinished">
+            <button ion-fab color="danger" (click)="initTimer()" item-left>
+             <ion-icon name="refresh"></ion-icon>
+            </button>
+          </ion-fab>
+         </div> -->
+         
+    
+    </ion-content>
+    

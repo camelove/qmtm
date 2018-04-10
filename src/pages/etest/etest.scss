@@ -196,4 +196,17 @@ page-etest {
     }
 
 
+    .ion-card_resize {
+        // height: 50% !important;
+         display:block;
+         height: auto !important;
+        
+        // margin-top: 0;
+        // margin-bottom:0;
+        // padding-top:0;
+    }
+    ion-slides {
+        height: auto !important;
+    }
+
 }

@@ -44,7 +44,10 @@ export class EtestPage {
   num_page=1;
   page :any;
   Answer = new Array();
-  is_answer = new Array(); // define answer question;
+
+  // define answer question;
+  is_answer = new Array(); 
+  
   /* define parameter for timer */
   timeInSeconds: number; 
   time: number;
@@ -155,6 +158,7 @@ export class EtestPage {
   }
 
   ionViewDidEnter () {
+    eval('MathJax.Hub.Queue(["Typeset", MathJax.Hub])');
     this.initTimer();
     this.startTimer();
     this.slides.lockSwipes(true);
@@ -171,6 +175,7 @@ export class EtestPage {
      
 
   }
+ 
   // ionViewDidLeave() {
   //      this.displayTime = this.remainingTime;
   // }
