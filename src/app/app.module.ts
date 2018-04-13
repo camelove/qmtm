@@ -24,6 +24,8 @@ import { CommonModule } from '@angular/common';
 import { Network } from '@ionic-native/network';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { RichTextComponent } from '../components/rich-text/rich-text';
+import { Storage } from '@ionic/storage';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 
 
@@ -65,10 +67,12 @@ import { RichTextComponent } from '../components/rich-text/rich-text';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    // Storage,
+    NativeStorage,    
+    { provide: ErrorHandler, useClass: IonicErrorHandler },    
     PrincipalProvider,
     AppEventsProvider,
-    AuthServiceProvider
+    AuthServiceProvider    
   ]
 })
 export class AppModule {}

@@ -194,7 +194,7 @@ export class AuthServiceProvider {
   /*
   * Method paper_etest() to show detail score
   * URL: http://192.168.100.9:8080/QMTM_DEMO/mobile/paper/etest.jsp
-  * parameter: examPaperURL
+  * parameter: credentials
   */
   public paper_etest(credentials) {
 
@@ -213,6 +213,31 @@ export class AuthServiceProvider {
 
   }
 
+  /*
+  * Method paper_refresh() to show detail score
+  * URL: http://192.168.100.9:8080/QMTM_DEMO/mobile/paper/etest.jsp
+  * parameter: credentials
+  */
+ public paper_refresh(credentials) {
+
+  this.exampaperurl = examPaperURL+'?'+'userid='+credentials.userid+'&'+'id_exam='+credentials.id_exam;
+    return new Promise((resolve, reject) => {  
+      let headers = new Headers();
+      headers.append('content-type','application/json');
+
+      this.http.get(this.exampaperurl).map(res => res.json()).subscribe(data => {
+          console.log(data);     
+          console.log(data.headers);
+          resolve(data);    
+      });
+    });
+  }
+  
+  /*
+  * Method submitted_result() to show detail score
+  * URL: http://192.168.100.9:8080/QMTM_DEMO/mobile/paper/etest.jsp
+  * parameter: credentials
+  */
   public submitted_result(credentials) {
 
     this.submittedresulturl = submitURL+'?'+'userid='+credentials.userid+'&'+'id_exam='+credentials.id_exam + '&yn_open_score_direct='+credentials.yn_open_score_direct+'&allotting=' + credentials.allotting+'&qcount='+credentials.qcount;
@@ -235,7 +260,7 @@ export class AuthServiceProvider {
   * URL: http://192.168.100.9:8080/QMTM_DEMO/mobile/paper/etest.jsp
   * parameter: saveAnswerAndLogURL
   */
- save_ans(credentials ){
+ save_ans(credentials){
   
   let headers = new Headers(
     {
@@ -257,7 +282,7 @@ export class AuthServiceProvider {
 
   }
 
-  Submit_ans(credentials ) {
+  Submit_ans(credentials) {
   
     let headers = new Headers({
         'Content-Type': 'application/x-www-form-urlencoded'

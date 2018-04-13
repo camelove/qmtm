@@ -11,8 +11,11 @@ import { Slides } from 'ionic-angular';
 import { TimerObservable } from "rxjs/observable/TimerObservable";
 import { Http } from '@angular/http';
 import { FinalResultPage } from '../final-result/final-result';
-
 import { Compiler } from '@angular/core';
+import { Storage } from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/Storage';
+import { NativeStorage } from '@ionic-native/native-storage';
+
 /**
  * Generated class for the EtestPage page.
  *
@@ -33,7 +36,7 @@ export class EtestPage {
 
   view_exam = { "userid":"", "id_exam":"" };
   
-  data = {"remain_time":"","title":"", "qcount":"","yn_open_score_direct":""};
+  data = {"remain_time":"","title":"", "qcount":"","yn_open_score_direct":"","id_movepage":""};
   number_array = new Array();
   items = { "q":"", "allotting":"" };
   save_data = { "answers":"","userid":"", "id_exam":"","remain_time":"","yn_open_score_direct":"","Test_name":"","alloting":"","qcount":""};
@@ -69,7 +72,7 @@ export class EtestPage {
   ex_count:any;
   limittime:any;
   timeOutEsc : any;
-
+  only_next_move = false;
    /* define object of short-answer and essay type question */
    short_ans:String ;
    essay:string = "String of essay"; 
@@ -102,6 +105,10 @@ export class EtestPage {
     view_result = result;
     this.viewexams = view_result;
     this.limittime = view_result.limittime;
+    this.data.id_movepage = view_result.id_movepage;
+    if(this.data.id_movepage == 'N'){
+      this.only_next_move = true;
+    }
     // get object properties
     this.data.remain_time= view_result.remain_time;
     //check time to test
@@ -255,7 +262,7 @@ export class EtestPage {
    * click button and call refresh_onclick() method on etest.html
    */
 check_time(){
-  if(parseInt(this.remainingTime) == 90){
+  if(parseInt(this.remainingTime) == 120){
     let alert = this.alertCtrl.create({
       title: 'Your time exist is two minutes,',
      
@@ -270,19 +277,22 @@ check_time(){
 
 }
 
-public refresh_onclick(refresher) {
+  public refresh_onclick() {
+    this.ionViewWillEnter();
+  }
+  public ionViewWillEnter() {
+    this.myDefaultMethodToFetchData();
+  }
+  /*
+  * get data from question and answer to load refresh 
+  */
+  public myDefaultMethodToFetchData() {    
+    console.log("you are refreshed !!!");        
+  } 
 
-  console.log('Started', refresher);
-  setTimeout(() => {
-      console.log('Async operation has ended');
-      refresher.complete();
-  }, 2000);
-
-}
-
-public close_page() {
-
-}
+  public close_page() {
+    this.navCtrl.pop();
+  }
 
 
 public check_remainquestion() {
@@ -304,15 +314,7 @@ public check_remainquestion() {
 public view_question() {
     this.navCtrl.setRoot('ViewQuestion');
 }
-presentAlert() {
-    let alert = this.alertCtrl.create({
-      title: 'You have not answer question'+this.num_page,
-     
-      buttons: ['OK']
-    });
-    alert.present();
-    
-}
+
 
 //Submit answer to Serve
 save_ans() {   
@@ -329,9 +331,45 @@ save_ans() {
    */
   public prev_button() {
     if(this.is_answer[this.num_page-1] !=true) {
-      this.presentAlert(); 
+      let alert = this.alertCtrl.create({
+        title: 'You have not answer question ' + this.num_page,
+        message: 'Are you sure to next question',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          },
+          {
+            text: 'OK',
+            handler: () => {
+              this.num_page--;
+              this.short_ans = this.Answer[this.num_page-1]; //view shortanswer  if is hasanswer=true
+              this.presentToast("Trang so: "+this.num_page);
+              console.log("trang so:" + this.num_page);
+              console.log("data:" +this.Answer[this.num_page-1]);
+              
+              
+              this.slides.lockSwipes(false);
+              this.slides.slidePrev(500);
+              this.slides.lockSwipes(true); 
+                  
+             
+              this.page = this.num_page.toString();
+            
+              this.check_remainquestion();   
+              this.save_ans();
+              // this.navCtrl.setRoot('FinalResultPage');
+              console.log('OK clicked');
+            }
+          }
+        ]
+      });
+      alert.present();
     }
-
+else {
     this.num_page--;
     this.short_ans = this.Answer[this.num_page-1]; //view shortanswer  if is hasanswer=true
     this.presentToast("Trang so: "+this.num_page);
@@ -341,30 +379,67 @@ save_ans() {
     
     this.slides.lockSwipes(false);
     this.slides.slidePrev(500);
-    this.slides.lockSwipes(true); 
-        
+    this.slides.lockSwipes(true);         
    
     this.page = this.num_page.toString();
   
     this.check_remainquestion();   
     this.save_ans();
     // this.navCtrl.setRoot('PrevPage');
-  }
+  }}
 
   /**
    * next_button
    * click button and call next_button() method on etest.html
    */
   public next_button() {
+   
+
     if(this.is_answer[this.num_page-1] !=true) {
-      this.presentAlert();
+      let alert = this.alertCtrl.create({
+        title: 'You have not answer question ' + this.num_page,
+        message: 'Are you sure to next question',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          },
+          {
+            text: 'OK',
+            handler: () => {
+              this.num_page++;
+              this.short_ans = this.Answer[this.num_page-1];//view shortanswer if is hasanswer=true
+              this.presentToast("Trang so: "+this.num_page);
+             
+              console.log("trang so:" + this.num_page);
+              console.log("data:" +this.Answer[this.num_page-1]);
+              
+              /* TODO Something, add more condition check parameter here */          
+                  
+              this.slides.lockSwipes(false);
+              this.slides.slideNext(500);
+              this.slides.lockSwipes(true); 
+               
+              this.page = this.num_page.toString();
+              this.check_remainquestion();
+              this.save_ans(); 
+              // this.navCtrl.setRoot('FinalResultPage');
+              console.log('OK clicked');
+            }
+          }
+        ]
+      });
+      alert.present();
  
     }
-    
+    else{
     this.num_page++;
     this.short_ans = this.Answer[this.num_page-1];//view shortanswer if is hasanswer=true
     this.presentToast("Trang so: "+this.num_page);
-    this.presentToast("You don't answer for this question.."); 
+   
     console.log("trang so:" + this.num_page);
     console.log("data:" +this.Answer[this.num_page-1]);
     
@@ -378,6 +453,8 @@ save_ans() {
     this.check_remainquestion();
     this.save_ans();
     // this.loading.dismiss();    
+    }
+  
   }
 
   ///Submit  all answer to serve and 
@@ -394,6 +471,10 @@ save_ans() {
   * submitAnswer()method
   * click button and send all answers to server
   */
+
+
+
+
 
   public submitAnswer(exam) {
     
@@ -530,6 +611,18 @@ markShortAns(){
   //console.log("You answerd : "+this.question_answered); 
   this.is_answer[this.num_page-1] =true;
   this.Answer[this.num_page-1] = this.short_ans;   
+}
+
+
+
+ //go to correct slide question
+Goto_currentquestion(number_page:any) {
+  this.slides.lockSwipes(false);
+  this.slides.slideTo(number_page,100,true);
+  this.slides.lockSwipes(true); 
+  this.num_page = number_page + 1 ;
+  //this.next_button();
+
 }
 
   /*
