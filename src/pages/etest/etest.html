@@ -97,23 +97,23 @@
                             <ion-list radio-group *ngSwitchCase="'3'">
                                   <ion-item no-lines no-padding>
                                       <ion-label>① <div class="mark_answer" [innerHTML]="etest.ex1"></div></ion-label>
-                                      <ion-checkbox  [checked]= "check_mul[0]"    value="etest.ex1" (ionChange)="markedValueAnswerMultiChoice(etest,'1',check_mul[0])"></ion-checkbox>
+                                      <ion-checkbox  [checked]= "check_mul[0]" value="etest.ex1" (click)="markedValueAnswerMultiChoice(etest,'1',check_mul[0])"></ion-checkbox>
                                   </ion-item>
                                   <ion-item no-lines no-padding>
                                      <ion-label>② <div class="mark_answer" [innerHTML]="etest.ex2"></div></ion-label>
-                                      <ion-checkbox [checked]= "check_mul[1]" (ionChange)="markedValueAnswerMultiChoice(etest,'2',check_mul[1])"></ion-checkbox>
+                                      <ion-checkbox [checked]= "check_mul[1]" (click)="markedValueAnswerMultiChoice(etest,'2',check_mul[1])"></ion-checkbox>
                                   </ion-item>
                                   <ion-item no-lines no-padding>
                                       <ion-label>③ <div class="mark_answer" [innerHTML]="etest.ex3"></div></ion-label>
-                                      <ion-checkbox  [checked]= "check_mul[2]" (ionChange)="markedValueAnswerMultiChoice(etest,'3',check_mul[2])"></ion-checkbox>
+                                      <ion-checkbox  [checked]= "check_mul[2]" (click)="markedValueAnswerMultiChoice(etest,'3',check_mul[2])"></ion-checkbox>
                                   </ion-item>
                                   <ion-item no-lines no-padding  *ngIf="etest.excount==4">
                                       <ion-label>④ <div class="mark_answer" [innerHTML]="etest.ex4"></div></ion-label>
-                                      <ion-checkbox  [checked]= "check_mul[3]" (ionChange)="markedValueAnswerMultiChoice(etest,'4',check_mul[3])"></ion-checkbox>
+                                      <ion-checkbox  [checked]= "check_mul[3]" (click)="markedValueAnswerMultiChoice(etest,'4',check_mul[3])"></ion-checkbox>
                                   </ion-item>
                                   <ion-item no-lines no-padding  *ngIf="etest.excount==5">
                                       <ion-label>⑤ <div class="mark_answer" [innerHTML]="etest.ex5"></div></ion-label>
-                                      <ion-checkbox  [checked]= "check_mul[4]" (ionChange)="markedValueAnswerMultiChoice(etest,'5',check_mul[4])"></ion-checkbox>
+                                      <ion-checkbox  [checked]= "check_mul[4]" (click)="markedValueAnswerMultiChoice(etest,'5',check_mul[4])"></ion-checkbox>
                                   </ion-item>
                               </ion-list>
                               <!-- Short-Answer Type -->                                  
