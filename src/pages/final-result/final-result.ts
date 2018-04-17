@@ -11,7 +11,7 @@ import { CKEditorModule } from 'ng2-ckeditor';
 import { Slides } from 'ionic-angular';
 import { TimerObservable } from "rxjs/observable/TimerObservable";
 import { Http } from '@angular/http';
-
+import {ExamDetailPage} from '../exam-detail/exam-detail';
 /**
  * Generated class for the FinalResultPage page.
  *
@@ -28,7 +28,7 @@ export class FinalResultPage {
 
   public userID:any;
 
-  view_exam = { "userid":"", "id_exam":"","yn_open_score_direct":"","allotting":"","qcount":"","Test_name":"" };
+  view_exam = { "userid":"", "Test_code":"","yn_open_score_direct":"","allotting":"","qcount":"","Test_name":"" };
   
   data = {"remain_time":"","title":"", "qcount":"", "allotting":"","My_score":"My_score"};
   
@@ -52,7 +52,7 @@ export class FinalResultPage {
     var json;
     json = this.exam;
    
-    this.view_exam.id_exam =  json.id_exam;
+    this.view_exam.Test_code =  json.id_exam;
     this.view_exam.userid = info.userID;
     this.view_exam.yn_open_score_direct = json.yn_open_score_direct;
     this.view_exam.allotting = json.alloting;
@@ -82,7 +82,7 @@ export class FinalResultPage {
   }
 
   public finish_button() {
-    this.navCtrl.setRoot('LoginPage');
+    this.navCtrl.setRoot(ExamDetailPage,{exam:this.view_exam});
     console.log("you have clicked finished button !!");
   }
 
