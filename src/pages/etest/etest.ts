@@ -67,14 +67,19 @@ export class EtestPage {
   arr_mutilchoice =new Array;
   arr_mutil_answerd = new Array;
   ans_mutilchoice:any;
+  multil_index= new Array;
   count=0;
-  check_mul = [false,false,false,false,false];
+  check_mul = new Array;
   ex_count:any;
   limittime:any;
   timeOutEsc : any;
   only_next_move = false;
    /* define object of short-answer and essay type question */
-   short_ans:String ;
+   short_ans=new Array ;
+   short_index=new Array;
+   
+   arr_short_ans = new Array;
+   ans_short:any;
    essay:string = "String of essay"; 
    
   constructor(public navCtrl: NavController, 
@@ -96,7 +101,7 @@ export class EtestPage {
     for(var k = 0;k<5;k++){
       this.arr_mutilchoice[k]=0;
     }
-   
+    
     this.view_exam.id_exam =  json.Test_code;
     this.view_exam.userid = info.userID;
     this.auth.paper_etest(this.view_exam).then((result) => {
@@ -127,40 +132,59 @@ export class EtestPage {
     this.has_answer = view_result.hasAnswer;
     this.str_answer = view_result.answers;
    // this.initTimer();
+
+
+   //find index of short_answer in array all answer
+   for( var i = 0; i < this.item_exam.length;i++){
+        if(this.item_exam[i].id_qtype == 4){
+          this.short_index[this.item_exam[i].page] = this.item_exam[i].page - 1;
+         
+        }
+
+   }
+//find index of multilchoice in array all answer
+for( var i = 0; i < this.item_exam.length;i++){
+  if(this.item_exam[i].id_qtype == 3){
+    this.multil_index[this.item_exam[i].page] = this.item_exam[i].page - 1;
+  }
+
+}
+
+
     for(var i= 0; i<this.question_count;i++) {
       this.Answer[i]=null;
       this.number_array[i]=i+1;
     }
     // init array answer if hasanswer == true
     if((this.has_answer == true)&&(this.str_answer!="")) {
-
+   
       this.Answer = this.str_answer.split("{:}",this.data.qcount);
+      
         for(var j =0;j<this.question_count;j++) {
             if(this.Answer[j]!="") {
                 this.is_answer[j]=true;
             }
           //this.multil_Str = this.Answer[j];
-             if( this.Answer[j].includes("{|}")){
+            
                // check all choiced in mutil question
-               this.arr_mutil_answerd= this.Answer[j].split("{|}");
-               //init again arr_mutilchoice if answered
-               for(var k=0;k<5;k++){
-                 var index = this.arr_mutil_answerd[k];
-                 if(this.arr_mutil_answerd[k]!=null){
-                 this.arr_mutilchoice[index-1]= this.arr_mutil_answerd[k];
-                 }
-               }
-
-             }
+            //    this.arr_mutil_answerd= this.Answer[this.multil_index[i]].split("{|}");
+            //    //init again arr_mutilchoice if answered
+            //    for(var k=0;k<5;k++){
+            //      var index = this.arr_mutil_answerd[k];
+            //      if(this.arr_mutil_answerd[k]!=null){
+            //      this.arr_mutilchoice[index-1]= this.arr_mutil_answerd[k];
+            //      }
+            //  }
              
         }
     }
- 
+
+
     
 
  // check mutil ans;
-    this.short_ans = this.Answer[0];
-    this.check_multi();
+   // this.short_ans = this.Answer[0];
+   
     }) 
   }
 
@@ -294,6 +318,46 @@ check_time(){
     this.navCtrl.pop();
   }
 
+load_data_shortans(){
+  for( var i = 0 ; i<(this.item_exam[this.num_page-1].cacount);i++){
+    this.arr_short_ans[i] = null;
+  }
+
+  if (( this.short_index[this.num_page] == this.num_page -1)&&(this.Answer[this.num_page -1] != null)){
+    this.short_ans = this.Answer[this.num_page -1 ].split("{|}");
+    this.arr_short_ans = this.short_ans;
+   }
+}
+
+
+
+
+load_data_mutilchoice(){
+  for ( var i = 0;i<5;i++){
+    this.arr_mutilchoice[i]=null;
+   }
+if (( this.multil_index[this.num_page] == this.num_page -1)&&(this.Answer[this.num_page -1] != null))   {
+   
+   
+   this.arr_mutil_answerd= this.Answer[this.num_page -1].split("{|}");
+  
+   //init again arr_mutilchoice if answered
+   for(var k=0;k<5;k++){
+     var index = this.arr_mutil_answerd[k];
+     
+     if(this.arr_mutil_answerd[k]!=null){
+     this.arr_mutilchoice[index-1]= this.arr_mutil_answerd[k];
+     }
+ }
+}
+this.check_multi();
+}
+
+
+
+
+
+
 
 public check_remainquestion() {
   var question_answered = 0;
@@ -330,7 +394,11 @@ save_ans() {
    * click button and call prev_button() method on etest.html
    */
   public prev_button() {
+    
+   
+
     if(this.is_answer[this.num_page-1] !=true) {
+    
       let alert = this.alertCtrl.create({
         title: 'You have not answer question ' + this.num_page,
         message: 'Are you sure to next question',
@@ -346,7 +414,7 @@ save_ans() {
             text: 'OK',
             handler: () => {
               this.num_page--;
-              this.short_ans = this.Answer[this.num_page-1]; //view shortanswer  if is hasanswer=true
+            //  this.short_ans = this.Answer[this.num_page-1]; //view shortanswer  if is hasanswer=true
               this.presentToast("Trang so: "+this.num_page);
               console.log("trang so:" + this.num_page);
               console.log("data:" +this.Answer[this.num_page-1]);
@@ -363,6 +431,8 @@ save_ans() {
               this.save_ans();
               // this.navCtrl.setRoot('FinalResultPage');
               console.log('OK clicked');
+              this.load_data_mutilchoice();
+              this.load_data_shortans();
             }
           }
         ]
@@ -371,7 +441,7 @@ save_ans() {
     }
 else {
     this.num_page--;
-    this.short_ans = this.Answer[this.num_page-1]; //view shortanswer  if is hasanswer=true
+    //this.short_ans = this.Answer[this.num_page-1]; //view shortanswer  if is hasanswer=true
     this.presentToast("Trang so: "+this.num_page);
     console.log("trang so:" + this.num_page);
     console.log("data:" +this.Answer[this.num_page-1]);
@@ -385,8 +455,12 @@ else {
   
     this.check_remainquestion();   
     this.save_ans();
+    this.load_data_mutilchoice();
+    this.load_data_shortans();
     // this.navCtrl.setRoot('PrevPage');
-  }}
+  }
+
+}
 
   /**
    * next_button
@@ -396,6 +470,7 @@ else {
    
 
     if(this.is_answer[this.num_page-1] !=true) {
+   
       let alert = this.alertCtrl.create({
         title: 'You have not answer question ' + this.num_page,
         message: 'Are you sure to next question',
@@ -411,7 +486,7 @@ else {
             text: 'OK',
             handler: () => {
               this.num_page++;
-              this.short_ans = this.Answer[this.num_page-1];//view shortanswer if is hasanswer=true
+           //   this.short_ans = this.Answer[this.num_page-1];//view shortanswer if is hasanswer=true
               this.presentToast("Trang so: "+this.num_page);
              
               console.log("trang so:" + this.num_page);
@@ -428,6 +503,8 @@ else {
               this.save_ans(); 
               // this.navCtrl.setRoot('FinalResultPage');
               console.log('OK clicked');
+              this.load_data_mutilchoice();
+              this.load_data_shortans();
             }
           }
         ]
@@ -437,7 +514,7 @@ else {
     }
     else{
     this.num_page++;
-    this.short_ans = this.Answer[this.num_page-1];//view shortanswer if is hasanswer=true
+   // this.short_ans = this.Answer[this.num_page-1];//view shortanswer if is hasanswer=true
     this.presentToast("Trang so: "+this.num_page);
    
     console.log("trang so:" + this.num_page);
@@ -452,9 +529,12 @@ else {
     this.page = this.num_page.toString();
     this.check_remainquestion();
     this.save_ans();
-    // this.loading.dismiss();    
+    // this.loading.dismiss();   
+    this.load_data_mutilchoice();
+    this.load_data_shortans(); 
     }
-  
+    // this.load_data_mutilchoice();
+    // this.load_data_shortans();
   }
 
   ///Submit  all answer to serve and 
@@ -537,7 +617,7 @@ else {
 
     // virtualarr = this.arr_mutilchoice;
     for (var i=4; i>=0; i--) {
-      if ((virtualarr[i] === 0)) {
+      if ((virtualarr[i] === 0)||(virtualarr[i] === null)) {
         virtualarr.splice(i, 1);
           // break;       //<-- Uncomment  if only the first term has to be removed
       }
@@ -556,7 +636,7 @@ else {
  
         // break;       //<-- Uncomment  if only the first term has to be removed
          for (var k=4; k>=0; k--) {
-          if (virtualArr[k] === 0) {
+          if ((virtualArr[k] === 0)||(virtualArr[k] === null)) {
             virtualArr.splice(k, 1);
                   // break;       //<-- Uncomment  if only the first term has to be removed
           }
@@ -574,6 +654,9 @@ else {
   
   //check mutil question is answered;
   check_multi(){
+    for(var i=0;i<5;i++){
+      this.check_mul[i]= false;
+    }
     for (var i =0;i<5;i++){
       if (this.arr_mutilchoice[i]==i+1){
         this.check_mul[i] = true;
@@ -605,29 +688,52 @@ else {
 
 // question short_answer
 
-markShortAns(){
+markShortAns(index:any){
   console.log("your page: "+this.num_page);
   //this.question_answered ++;
   //console.log("You answerd : "+this.question_answered); 
+   
+  this.arr_short_ans[index] = this.short_ans[index];
+  
+
+  // var virtualarr= new Array;
+  // for(var j=0;j<5;j++){
+  //   virtualarr[j]= this.arr_short_ans[j];
+  // }
+
+  // // virtualarr = this.arr_mutilchoice;
+  // for (var i=4; i>=0; i--) {
+  //   if ((virtualarr[i] === null)||(virtualarr[i] === "")) {
+  //     virtualarr.splice(i, 1);
+  //       // break;       //<-- Uncomment  if only the first term has to be removed
+  //   }
+  // }
+  this.ans_short = this.arr_short_ans.join("{|}");
+
+ 
+
   this.is_answer[this.num_page-1] =true;
-  this.Answer[this.num_page-1] = this.short_ans;   
+  this.Answer[this.num_page-1] = this.ans_short;   
 }
 
 
 
  //go to correct slide question
 Goto_currentquestion(number_page:any) {
+
   this.slides.lockSwipes(false);
   this.slides.slideTo(number_page,100,true);
   this.slides.lockSwipes(true); 
   this.num_page = number_page + 1 ;
+  this.load_data_mutilchoice();
+  this.load_data_shortans();
   //this.next_button();
 
 }
 
   /*
   * Show and check all condition: 
-  * [1]check if not answered quetion and click 'next' button, 
+  * [1]check if have not answered quetion and click 'next' button, 
   * [2]check remain time, 
   * [3]check answer is checked or not checked
   */ 

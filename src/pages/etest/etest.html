@@ -97,7 +97,7 @@
                             <ion-list radio-group *ngSwitchCase="'3'">
                                   <ion-item no-lines no-padding>
                                       <ion-label>① <div class="mark_answer" [innerHTML]="etest.ex1"></div></ion-label>
-                                      <ion-checkbox  [checked]= "check_mul[0]" value="etest.ex1" (click)="markedValueAnswerMultiChoice(etest,'1',check_mul[0])"></ion-checkbox>
+                                      <ion-checkbox  [checked]= "check_mul[0]"    value="etest.ex1" (click)="markedValueAnswerMultiChoice(etest,'1',check_mul[0])"></ion-checkbox>
                                   </ion-item>
                                   <ion-item no-lines no-padding>
                                      <ion-label>② <div class="mark_answer" [innerHTML]="etest.ex2"></div></ion-label>
@@ -107,20 +107,43 @@
                                       <ion-label>③ <div class="mark_answer" [innerHTML]="etest.ex3"></div></ion-label>
                                       <ion-checkbox  [checked]= "check_mul[2]" (click)="markedValueAnswerMultiChoice(etest,'3',check_mul[2])"></ion-checkbox>
                                   </ion-item>
-                                  <ion-item no-lines no-padding  *ngIf="etest.excount==4">
+                                  
+                                  <div *ngIf="etest.excount==4">
+                                    <ion-item no-lines no-padding>
+                                        <ion-label>④ <div class="mark_answer" [innerHTML]="etest.ex4"></div></ion-label>
+                                        <ion-checkbox  [checked]= "check_mul[3]" (click)="markedValueAnswerMultiChoice(etest,'4',check_mul[3])"></ion-checkbox>
+                                    </ion-item>
+                                  </div>
+                                  
+                                  <div *ngIf="etest.excount==5">
+                                  <ion-item no-lines no-padding>
                                       <ion-label>④ <div class="mark_answer" [innerHTML]="etest.ex4"></div></ion-label>
                                       <ion-checkbox  [checked]= "check_mul[3]" (click)="markedValueAnswerMultiChoice(etest,'4',check_mul[3])"></ion-checkbox>
-                                  </ion-item>
-                                  <ion-item no-lines no-padding  *ngIf="etest.excount==5">
+                                   </ion-item>
+
+                                   <ion-item no-lines no-padding>
                                       <ion-label>⑤ <div class="mark_answer" [innerHTML]="etest.ex5"></div></ion-label>
                                       <ion-checkbox  [checked]= "check_mul[4]" (click)="markedValueAnswerMultiChoice(etest,'5',check_mul[4])"></ion-checkbox>
                                   </ion-item>
+                                  </div>
                               </ion-list>
                               <!-- Short-Answer Type -->                                  
                               <ion-list *ngSwitchCase="'4'">
                                     <div class="shortans-box">  
                                         <ion-item class="ion-item-textbox">
-                                            <ion-input type="text" [(ngModel)]="short_ans" name="short_ans"  ng-model-onblur (change)="markShortAns()" ></ion-input>
+                                            <ion-input type="text" [(ngModel)]="short_ans[0]" name="short_ans[0]"  ng-model-onblur (change)="markShortAns('0')" ></ion-input>
+                                        </ion-item>
+                                        <ion-item class="ion-item-textbox" *ngIf= "etest.cacount >1">
+                                            <ion-input type="text" [(ngModel)]="short_ans[1]" name="short_ans[1]"  ng-model-onblur (change)="markShortAns('1')" ></ion-input>
+                                        </ion-item>
+                                        <ion-item class="ion-item-textbox" *ngIf= "etest.cacount >2">
+                                            <ion-input type="text" [(ngModel)]="short_ans[2]" name="short_ans[2]"  ng-model-onblur (change)="markShortAns('2')" ></ion-input>
+                                        </ion-item>
+                                        <ion-item class="ion-item-textbox" *ngIf= "etest.cacount >3">
+                                            <ion-input type="text" [(ngModel)]="short_ans[3]" name="short_ans[3]"  ng-model-onblur (change)="markShortAns('3')" ></ion-input>
+                                        </ion-item>
+                                        <ion-item class="ion-item-textbox"  *ngIf= "etest.cacount >4">
+                                            <ion-input type="text" [(ngModel)]="short_ans[4]" name="short_ans[4]"  ng-model-onblur (change)="markShortAns('4')" ></ion-input>
                                         </ion-item>
                                     </div>
                               </ion-list>          
@@ -165,17 +188,15 @@
               </ion-row>     
               
               <ion-row *ngFor="let etest of number_array;let i = index;">  
-                <button class = "button button-positive"  (click)="Goto_currentquestion(i)" class="colTitle" *ngIf="i %3==0">{{number_array[i]}}</button>
+                <button class = "button button-positive"  (click)="Goto_currentquestion(i)" class="colTitle" *ngIf="i %3==0"><div class="paper_sheet_mark">{{number_array[i]}}</div></button>
 
-                  <ion-col class="colContent"    *ngIf="(i %3==0)"  >{{Answer[i]}}</ion-col>
-               
+                  <ion-col class="colContent" *ngIf="(i %3==0)">{{Answer[i]}}</ion-col>
 
-
-                  <button  class = "button button-positive" (click)="Goto_currentquestion(i+1)" class="colTitle" *ngIf="i %3==0">{{number_array[i+1]}} </button>
+                  <button  class = "button button-positive" (click)="Goto_currentquestion(i+1)" class="colTitle" *ngIf="i %3==0"><div class="paper_sheet_mark">{{number_array[i+1]}} </div></button>
                   <ion-col  class="colContent"    *ngIf="(i %3==0)"  > {{Answer[i+1]}}</ion-col>
       
 
-                  <button  class = "button button-positive" (click)="Goto_currentquestion(i+2)" class="colTitle" *ngIf="i %3==0">{{number_array[i+2]}}  </button>
+                  <button  class = "button button-positive" (click)="Goto_currentquestion(i+2)" class="colTitle" *ngIf="i %3==0"><div class="paper_sheet_mark">{{number_array[i+2]}} </div></button>
        
                   <ion-col class="colContent"    *ngIf="(i %3==0)"  > {{Answer[i+2]}}</ion-col>
                 
