@@ -321,6 +321,7 @@ check_time(){
 load_data_shortans(){
   for( var i = 0 ; i<(this.item_exam[this.num_page-1].cacount);i++){
     this.arr_short_ans[i] = null;
+    this.short_ans[i]= null;
   }
 
   if (( this.short_index[this.num_page] == this.num_page -1)&&(this.Answer[this.num_page -1] != null)){
@@ -733,7 +734,7 @@ Goto_currentquestion(number_page:any) {
 
   /*
   * Show and check all condition: 
-  * [1]check if have not answered quetion and click 'next' button, 
+  * [1]check if not answered quetion and click 'next' button, 
   * [2]check remain time, 
   * [3]check answer is checked or not checked
   */ 
@@ -774,4 +775,3 @@ Goto_currentquestion(number_page:any) {
     clearInterval(this.timeOutEsc );
   }
 }
-
