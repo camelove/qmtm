@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { CKEditorModule } from 'ng2-ckeditor';
+
 /**
  * Generated class for the AdminTab3Page page.
  *
@@ -45,5 +47,10 @@ export class AdminTab3Page {
   ionViewDidLoad() {
     console.log('ionViewDidLoad AdminTab3Page');
   }
+
+  ionViewDidEnter () {
+    eval('MathJax.Hub.Queue(["Typeset", MathJax.Hub])');
+  }
+
 
 }

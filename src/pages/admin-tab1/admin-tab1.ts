@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { CKEditorModule } from 'ng2-ckeditor';
 
 /**
  * Generated class for the AdminTab1Page page.
@@ -43,6 +44,10 @@ data = {"My_score":"","Test_name":""};
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AdminTab1Page');
+  }
+
+  ionViewDidEnter () {
+    eval('MathJax.Hub.Queue(["Typeset", MathJax.Hub])');
   }
 
 }

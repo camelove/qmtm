@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { NgIf } from '@angular/common';
+import { CKEditorModule } from 'ng2-ckeditor';
+
 /**
  * Generated class for the AdminTab2Page page.
  *
@@ -44,5 +46,10 @@ export class AdminTab2Page {
   ionViewDidLoad() {
     console.log('ionViewDidLoad AdminTab2Page');
   }
+
+  ionViewDidEnter () {
+    eval('MathJax.Hub.Queue(["Typeset", MathJax.Hub])');
+  }
+
 
 }
