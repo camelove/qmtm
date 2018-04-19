@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild, Input } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading, ToastController, App } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, AlertController, LoadingController, Loading, ToastController, App } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
@@ -85,6 +85,7 @@ export class EtestPage {
   constructor(public navCtrl: NavController, 
               private app: App, 
               public navParams: NavParams, 
+              public viewCtrl: ViewController,
               public loadingCtrl: LoadingController, 
               private alertCtrl: AlertController,
               private toastCtrl: ToastController,
@@ -282,44 +283,74 @@ for( var i = 0; i < this.item_exam.length;i++){
 
 
   /**
-   * refresh_onclick() method
-   * click button and call refresh_onclick() method on etest.html
-   */
-check_time(){
-  if(parseInt(this.remainingTime) == 120){
-    let alert = this.alertCtrl.create({
-      title: 'Your time exist is two minutes,',
-     
-      buttons: ['OK']
-    });
-    alert.present();
-  }
-    if(parseInt(this.remainingTime) == 0){
-      this.submit_ans();
-      this.navCtrl.setRoot(FinalResultPage,{exam:this.save_data});  
+    * refresh_onclick() method
+    * click button and call refresh_onclick() method on etest.html
+  */
+  check_time() {
+    if(parseInt(this.remainingTime) == 120) {
+      let alert = this.alertCtrl.create({
+        title: 'Your time exist is two minutes,',
+      
+        buttons: ['OK']
+      });
+      alert.present();
     }
-
-}
-
-  public refresh_onclick() {
-    this.ionViewWillEnter();
+      if(parseInt(this.remainingTime) == 0){
+        this.submit_ans();
+        this.navCtrl.setRoot(FinalResultPage,{exam:this.save_data});  
+      }
   }
-  public ionViewWillEnter() {
-    this.myDefaultMethodToFetchData();
+
+  ionViewDidLoad() { 
+
+    let info = this.auth.getUserInfo();
+    this.exam = this.navParams.get('exam');
+
+    var fetchData;
+    fetchData = this.exam;
+    this.save_data.Test_name = this.exam.Test_name;    
+    this.view_exam.id_exam =  fetchData.Test_code;
+    this.view_exam.userid = info.userID;
+    
+    this.auth.paper_refresh(this.view_exam).then((result) => {
+      var view_result;
+      view_result = result;
+      this.data.remain_time= view_result.remain_time;      
+      this.data.title = view_result.title;      
+      this.data.qcount = view_result.qcount;      
+      this.save_data.yn_open_score_direct = view_result.yn_open_score_direct;      
+      this.save_data.alloting = view_result.allotting;      
+      this.save_data.qcount =view_result.qcount;
+      this.item_exam = this.viewexams.Items;      
+      this.total_question = this.data.qcount;      
+      this.remain_question = this.total_question;      
+      this.has_answer = view_result.hasAnswer;
+      this.str_answer = view_result.answers;
+
+    })  
   }
   /*
-  * get data from question and answer to load refresh 
+  * fetch data from question and answer to load refresh 
   */
-  public myDefaultMethodToFetchData() {    
-    console.log("you are refreshed !!!");        
-  } 
+  public refresh_onclick() {        
+    //get the currently active page component
+    var component = this.navCtrl.getActive().instance;
+    //re-run the view load function if the page has one declared    
+    if (component.ionViewDidLoad) {    
+      this.loadDataRefresh();
+      component.ionViewDidLoad();    
+    }
+    console.log("you are refreshed !!!");
+  }
 
   public close_page() {
     this.navCtrl.pop();
   }
 
-load_data_shortans(){
-  for( var i = 0 ; i<(this.item_exam[this.num_page-1].cacount);i++){
+load_data_shortans() {
+if(this.item_exam[this.num_page-1].id_qtype == 4)
+{ 
+  for( var i = 0 ; i<(this.item_exam[this.num_page-1].cacount);i++) {
     this.arr_short_ans[i] = null;
     this.short_ans[i]= null;
   }
@@ -329,11 +360,11 @@ load_data_shortans(){
     this.arr_short_ans = this.short_ans;
    }
 }
-
-
-
+}
 
 load_data_mutilchoice(){
+if(this.item_exam[this.num_page-1].id_qtype == 3)
+{ 
   for ( var i = 0;i<5;i++){
     this.arr_mutilchoice[i]=null;
    }
@@ -351,14 +382,9 @@ if (( this.multil_index[this.num_page] == this.num_page -1)&&(this.Answer[this.n
      }
  }
 }
+}
 this.check_multi();
 }
-
-
-
-
-
-
 
 public check_remainquestion() {
   var question_answered = 0;
@@ -440,26 +466,26 @@ save_ans() {
       });
       alert.present();
     }
-else {
-    this.num_page--;
-    //this.short_ans = this.Answer[this.num_page-1]; //view shortanswer  if is hasanswer=true
-    this.presentToast("Trang so: "+this.num_page);
-    console.log("trang so:" + this.num_page);
-    console.log("data:" +this.Answer[this.num_page-1]);
-    
-    
-    this.slides.lockSwipes(false);
-    this.slides.slidePrev(500);
-    this.slides.lockSwipes(true);         
-   
-    this.page = this.num_page.toString();
-  
-    this.check_remainquestion();   
-    this.save_ans();
-    this.load_data_mutilchoice();
-    this.load_data_shortans();
-    // this.navCtrl.setRoot('PrevPage');
-  }
+    else {
+        this.num_page--;
+        //this.short_ans = this.Answer[this.num_page-1]; //view shortanswer  if is hasanswer=true
+        this.presentToast("Trang so: "+this.num_page);
+        console.log("trang so:" + this.num_page);
+        console.log("data:" +this.Answer[this.num_page-1]);
+        
+        
+        this.slides.lockSwipes(false);
+        this.slides.slidePrev(500);
+        this.slides.lockSwipes(true);         
+      
+        this.page = this.num_page.toString();
+      
+        this.check_remainquestion();   
+        this.save_ans();
+        this.load_data_mutilchoice();
+        this.load_data_shortans();
+        // this.navCtrl.setRoot('PrevPage');
+      }
 
 }
 
@@ -773,5 +799,17 @@ Goto_currentquestion(number_page:any) {
 
   ngOnDestroy(){
     clearInterval(this.timeOutEsc );
+  }
+
+
+  loadDataRefresh() {
+    this.loading = this.loadingCtrl.create({
+        content: 'refreshing data...'
+    });
+
+    this.loading.present();
+    setTimeout(() => {
+      this.loading.dismiss();
+    }, 2000);
   }
 }

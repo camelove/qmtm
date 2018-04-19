@@ -15,6 +15,7 @@ let loginURL = 'http://localhost:8080/QMTM_DEMO/mobile/user_check.jsp';
 let examListURL = 'http://localhost:8080/QMTM_DEMO/mobile/exam/mytest.jsp';
 let examDetailURL = 'http://localhost:8080/QMTM_DEMO/mobile/exam/etest.jsp';
 let examPaperURL = 'http://localhost:8080/QMTM_DEMO/mobile/paper/etest.jsp';
+let refreshPaperURL = 'http://localhost:8080/QMTM_DEMO/mobile/paper/etest.jsp';
 let saveAnswerURL = 'http://localhost:8080/QMTM_DEMO/mobile/paper/saveans.jsp';
 let scoreListURL = 'http://localhost:8080/QMTM_DEMO/mobile/score/myscore.jsp';
 let scoreDetailURL = 'http://localhost:8080/QMTM_DEMO/mobile/score/scoreinfo.jsp';
@@ -40,6 +41,7 @@ export class AuthServiceProvider {
   login_url:any;
   examlisturl:any;
   examdetailurl:any;
+  refreshpaperurl: any;
   scorelist_url:any;
   scoredetail_url:any;
   exampaperurl:any;
@@ -220,15 +222,16 @@ export class AuthServiceProvider {
   */
  public paper_refresh(credentials) {
 
-  this.exampaperurl = examPaperURL+'?'+'userid='+credentials.userid+'&'+'id_exam='+credentials.id_exam;
+  this.refreshpaperurl = refreshPaperURL+'?'+'userid='+credentials.userid+'&'+'id_exam='+credentials.id_exam;
     return new Promise((resolve, reject) => {  
       let headers = new Headers();
       headers.append('content-type','application/json');
 
-      this.http.get(this.exampaperurl).map(res => res.json()).subscribe(data => {
+      this.http.get(this.refreshpaperurl).map(res => res.json()).subscribe(data => {
           console.log(data);     
           console.log(data.headers);
           resolve(data);    
+          console.log("|200 status|");
       });
     });
   }
