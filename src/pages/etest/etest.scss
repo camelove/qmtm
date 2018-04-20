@@ -113,7 +113,24 @@ page-etest {
         background-color: #fff;
         color: #000;
     }
-
+    .line_mark_answer { 
+        
+        font-size: 11pt;
+        float: right;
+        /* height: 67px; */
+        width: 326px;
+        text-align: left;
+        white-space: normal;
+        /*
+        font-size: 11pt;
+        display: inline;
+        float: right;
+        white-space: normal;
+        */
+    }
+    .span {
+        
+    }
     .mark_answer {
         font-size: 11pt;
         // color: #d50000;

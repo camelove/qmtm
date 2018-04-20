@@ -56,7 +56,7 @@
               <ion-slide *ngFor="let etest of item_exam; let i = index;">
                     <div class="row_ans">
                         <!-- <ion-item text-wrap> -->
-                            <ion-label>{{etest.page}}. <div class="mark_answer" [innerHTML]= "etest.q"></div></ion-label>
+                            <ion-label><div class="line_mark_answer">{{etest.page}}. <span [innerHTML]= "etest.q"></span></div></ion-label>
                             <ion-label><div class="score_ans">(alloting) {{etest.allotting}} scores </div></ion-label>
                         <!-- </ion-item> -->
                     </div>
