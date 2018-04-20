@@ -24,6 +24,7 @@ export class AdminTab2Page {
   my_score = {"My_score":"","Test_name":"", "Test_allott":""};
 
   constructor(public navCtrl: NavController, public navParams: NavParams,private auth:AuthServiceProvider) {
+    eval('MathJax.Hub.Queue(["Typeset", MathJax.Hub])');
     let info = this.auth.getUserInfo();
     this.exam = navParams.data;
     var json;
