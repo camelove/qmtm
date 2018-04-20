@@ -72,8 +72,8 @@
 
 
       <ion-item>          
-        <ion-label stacked>Test guide</ion-label>
-        <ion-label *ngIf="viewexam.Test_guide">{{viewexam.Test_guide}}</ion-label>
+        <ion-label stacked><div class="test_guide">TEST GUIDE</div></ion-label>
+        <ion-label *ngIf="viewexam.Test_guide"><div class="textAreaGuide">{{viewexam.Test_guide}}</div></ion-label>
         <ion-label *ngIf="!viewexam.Test_guide">NONE</ion-label>
       </ion-item>
     </div>

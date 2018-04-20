@@ -24,10 +24,20 @@ page-exam-detail {
        background: #e0e0e0;
        color: #ffff;
     }
-    // .textAreaGuide {
-    //     width: calc(100% - 10px);
-    //     border: 1;
-    //     border-radius: 2;
-    //     background: transparent;
-    // }
+    .textAreaGuide {
+        font-size: 10pt;
+        float: right;
+        height: 70px;
+        width: 317px;
+        text-align: left;
+        white-space: normal;
+    }
+    .test_guide {
+        font-size: 11pt;
+        float: right;
+        height: 10px;
+        width: 317px;
+        text-align: left;
+        white-space: normal;
+    }
 }
