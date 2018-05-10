@@ -1,6 +1,6 @@
 {
   "name": "mixed-nav",
-  "app_id": "",
+  "app_id": "1c64be0c",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
