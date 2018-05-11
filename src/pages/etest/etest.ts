@@ -13,7 +13,7 @@ import { Http } from '@angular/http';
 import { FinalResultPage } from '../final-result/final-result';
 import { Compiler } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { IonicStorageModule } from '@ionic/Storage';
+// import { IonicStorageModule } from '@ionic/Storage';
 import { NativeStorage } from '@ionic-native/native-storage';
 
 /**
