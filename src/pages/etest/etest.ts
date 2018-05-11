@@ -12,9 +12,9 @@ import { TimerObservable } from "rxjs/observable/TimerObservable";
 import { Http } from '@angular/http';
 import { FinalResultPage } from '../final-result/final-result';
 import { Compiler } from '@angular/core';
-import { Storage } from '@ionic/storage';
+// import { Storage } from '@ionic/storage';
 // import { IonicStorageModule } from '@ionic/Storage';
-import { NativeStorage } from '@ionic-native/native-storage';
+// import { NativeStorage } from '@ionic-native/native-storage';
 
 /**
  * Generated class for the EtestPage page.
@@ -684,7 +684,7 @@ save_ans() {
     for(var i=0;i<5;i++){
       this.check_mul[i]= false;
     }
-    for (var i =0;i<5;i++){
+    for (var i =0;i<5;i++) {
       if (this.arr_mutilchoice[i]==i+1){
         this.check_mul[i] = true;
       }
