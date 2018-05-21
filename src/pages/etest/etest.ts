@@ -12,13 +12,13 @@ import { TimerObservable } from "rxjs/observable/TimerObservable";
 import { Http } from '@angular/http';
 import { FinalResultPage } from '../final-result/final-result';
 import { Compiler } from '@angular/core';
-// import { Storage } from '@ionic/storage';
-// import { IonicStorageModule } from '@ionic/Storage';
-// import { NativeStorage } from '@ionic-native/native-storage';
-
+/*
+import { Storage } from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/Storage';
+import { NativeStorage } from '@ionic-native/native-storage';
+*/
 /**
  * Generated class for the EtestPage page.
- *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
@@ -39,7 +39,7 @@ export class EtestPage {
   data = {"remain_time":"","title":"", "qcount":"","yn_open_score_direct":"","id_movepage":""};
   number_array = new Array();
   items = { "q":"", "allotting":"" };
-  save_data = { "answers":"","userid":"", "id_exam":"","remain_time":"","yn_open_score_direct":"","Test_name":"","alloting":"","qcount":""};
+  save_data = { "answers":"","userid":"", "id_exam":"","remain_time":"","yn_open_score_direct":"","Test_name":"","alloting":"","qcount":"","essay":"","id_q":""};
   exam:any; 
   viewexams:any;
   item_exam:any;
@@ -77,11 +77,12 @@ export class EtestPage {
    /* define object of short-answer and essay type question */
    short_ans=new Array ;
    short_index=new Array;
-   
+   essay_ans = new Array;
    arr_short_ans = new Array;
    ans_short:any;
-   essay:string = "String of essay"; 
-   
+   // essay:any = "String of essay"; 
+   nonAns = "";      /*  = "String of essay"; */
+   id_q : any;
   constructor(public navCtrl: NavController, 
               private app: App, 
               public navParams: NavParams, 
@@ -112,13 +113,13 @@ export class EtestPage {
     this.viewexams = view_result;
     this.limittime = view_result.limittime;
     this.data.id_movepage = view_result.id_movepage;
-    if(this.data.id_movepage == 'N'){
+    if(this.data.id_movepage == 'N') {  
       this.only_next_move = true;
     }
     // get object properties
     this.data.remain_time= view_result.remain_time;
     //check time to test
-    if(this.data.remain_time>this.limittime){
+    if(this.data.remain_time>this.limittime) {
       this.data.remain_time = this.limittime;
     }
     this.data.title = view_result.title;
@@ -132,30 +133,31 @@ export class EtestPage {
     this.remain_question = this.total_question;
     this.has_answer = view_result.hasAnswer;
     this.str_answer = view_result.answers;
-   // this.initTimer();
+    // this.initTimer();
 
-
-   //find index of short_answer in array all answer
-   for( var i = 0; i < this.item_exam.length;i++){
-        if(this.item_exam[i].id_qtype == 4){
-          this.short_index[this.item_exam[i].page] = this.item_exam[i].page - 1;
-         
-        }
-
-   }
-//find index of multilchoice in array all answer
-for( var i = 0; i < this.item_exam.length;i++){
-  if(this.item_exam[i].id_qtype == 3){
-    this.multil_index[this.item_exam[i].page] = this.item_exam[i].page - 1;
-  }
-
-}
-
-
+    //find index of short_answer in array all answer
+    
     for(var i= 0; i<this.question_count;i++) {
       this.Answer[i]=null;
+      this.essay_ans[i] = "";
       this.number_array[i]=i+1;
     }
+
+    for( var i = 0; i < this.item_exam.length;i++) { 
+        if(this.item_exam[i].id_qtype == 4) {
+          this.short_index[this.item_exam[i].page] = this.item_exam[i].page - 1;
+        }
+        if(this.item_exam[i].id_qtype == 5) {
+          this.essay_ans[this.item_exam[i].page] = this.item_exam[i].nonAns;
+        }
+    }
+    //find index of multilchoice in array all answer
+    for( var i = 0; i < this.item_exam.length;i++) {
+      if(this.item_exam[i].id_qtype == 3) {
+        this.multil_index[this.item_exam[i].page] = this.item_exam[i].page - 1;
+      }
+    }
+
     // init array answer if hasanswer == true
     if((this.has_answer == true)&&(this.str_answer!="")) {
    
@@ -187,6 +189,8 @@ for( var i = 0; i < this.item_exam.length;i++){
    // this.short_ans = this.Answer[0];
    
     }) 
+
+    
   }
 
   ionViewDidEnter () {
@@ -413,6 +417,7 @@ save_ans() {
   this.save_data.id_exam = this.view_exam.id_exam;
   this.save_data.userid = this.view_exam.userid;
   this.save_data.remain_time = this.remainingTime; 
+  this.save_data.id_q = this.id_q;
   this.auth.save_ans(this.save_data);
 }
 
@@ -420,11 +425,9 @@ save_ans() {
    * prev_button() method
    * click button and call prev_button() method on etest.html
    */
-  public prev_button() {
-    
-   
-
-    if(this.is_answer[this.num_page-1] !=true) {
+public prev_button() {
+  
+    if((this.is_answer[this.num_page-1] !=true)&&(this.essay_ans[this.num_page]=="")) {
     
       let alert = this.alertCtrl.create({
         title: 'You have not answer question ' + this.num_page,
@@ -440,6 +443,8 @@ save_ans() {
           {
             text: 'OK',
             handler: () => {
+              this.id_q = this.item_exam[this.num_page-1].id_q;
+              this.save_data.essay = this.essay_ans[this.num_page];
               this.num_page--;
             //  this.short_ans = this.Answer[this.num_page-1]; //view shortanswer  if is hasanswer=true
               this.presentToast("Trang so: "+this.num_page);
@@ -467,16 +472,17 @@ save_ans() {
       alert.present();
     }
     else {
+        this.id_q = this.item_exam[this.num_page-1].id_q;
+        this.save_data.essay = this.essay_ans[this.num_page];
         this.num_page--;
         //this.short_ans = this.Answer[this.num_page-1]; //view shortanswer  if is hasanswer=true
         this.presentToast("Trang so: "+this.num_page);
         console.log("trang so:" + this.num_page);
         console.log("data:" +this.Answer[this.num_page-1]);
-        
-        
         this.slides.lockSwipes(false);
         this.slides.slidePrev(500);
-        this.slides.lockSwipes(true);         
+        this.slides.lockSwipes(true); 
+            
       
         this.page = this.num_page.toString();
       
@@ -486,17 +492,16 @@ save_ans() {
         this.load_data_shortans();
         // this.navCtrl.setRoot('PrevPage');
       }
-
+     
 }
 
   /**
    * next_button
    * click button and call next_button() method on etest.html
    */
-  public next_button() {
-   
-
-    if(this.is_answer[this.num_page-1] !=true) {
+  public next_button() {   
+    
+    if((this.is_answer[this.num_page-1] !=true)&&(this.essay_ans[this.num_page]=="")){
    
       let alert = this.alertCtrl.create({
         title: 'You have not answer question ' + this.num_page,
@@ -512,14 +517,14 @@ save_ans() {
           {
             text: 'OK',
             handler: () => {
+              this.id_q = this.item_exam[this.num_page-1].id_q;
+              this.save_data.essay = this.essay_ans[this.num_page];
               this.num_page++;
-           //   this.short_ans = this.Answer[this.num_page-1];//view shortanswer if is hasanswer=true
+              // this.short_ans = this.Answer[this.num_page-1];//view shortanswer if is hasanswer=true
               this.presentToast("Trang so: "+this.num_page);
              
               console.log("trang so:" + this.num_page);
               console.log("data:" +this.Answer[this.num_page-1]);
-              
-              /* TODO Something, add more condition check parameter here */          
                   
               this.slides.lockSwipes(false);
               this.slides.slideNext(500);
@@ -527,6 +532,7 @@ save_ans() {
                
               this.page = this.num_page.toString();
               this.check_remainquestion();
+             
               this.save_ans(); 
               // this.navCtrl.setRoot('FinalResultPage');
               console.log('OK clicked');
@@ -536,29 +542,29 @@ save_ans() {
           }
         ]
       });
-      alert.present();
- 
+      alert.present(); 
     }
-    else{
-    this.num_page++;
-   // this.short_ans = this.Answer[this.num_page-1];//view shortanswer if is hasanswer=true
-    this.presentToast("Trang so: "+this.num_page);
-   
-    console.log("trang so:" + this.num_page);
-    console.log("data:" +this.Answer[this.num_page-1]);
+    else {
+      this.id_q = this.item_exam[this.num_page-1].id_q;
+      this.save_data.essay = this.essay_ans[this.num_page];
+      this.num_page++;
+      // this.short_ans = this.Answer[this.num_page-1];//view shortanswer if is hasanswer=true
+      this.presentToast("Trang so: "+this.num_page);
     
-    /* TODO Something, add more condition check parameter here */          
-        
-    this.slides.lockSwipes(false);
-    this.slides.slideNext(500);
-    this.slides.lockSwipes(true); 
-     
-    this.page = this.num_page.toString();
-    this.check_remainquestion();
-    this.save_ans();
-    // this.loading.dismiss();   
-    this.load_data_mutilchoice();
-    this.load_data_shortans(); 
+      console.log("trang so:" + this.num_page);
+      console.log("data:" +this.Answer[this.num_page-1]);
+              
+      this.slides.lockSwipes(false);
+      this.slides.slideNext(500);
+      this.slides.lockSwipes(true); 
+      
+      this.page = this.num_page.toString();
+      this.check_remainquestion();
+      
+      this.save_ans();
+      // this.loading.dismiss();   
+      this.load_data_mutilchoice();
+      this.load_data_shortans(); 
     }
     // this.load_data_mutilchoice();
     // this.load_data_shortans();
@@ -578,11 +584,6 @@ save_ans() {
   * submitAnswer()method
   * click button and send all answers to server
   */
-
-
-
-
-
   public submitAnswer(exam) {
     
     this.presentToast("You have clicked submit answer !!");
@@ -713,58 +714,55 @@ save_ans() {
     this.Answer[this.num_page-1] = ans;   
   }
 
-// question short_answer
-
-markShortAns(index:any){
-  console.log("your page: "+this.num_page);
-  //this.question_answered ++;
-  //console.log("You answerd : "+this.question_answered); 
+  // question short_answer
+  markShortAns(index:any) {
+    console.log("your page: "+this.num_page);
+    //this.question_answered ++;
+    //console.log("You answerd : "+this.question_answered); 
    
-  this.arr_short_ans[index] = this.short_ans[index];
+    this.arr_short_ans[index] = this.short_ans[index];
+    // var virtualarr= new Array;
+    // for(var j=0;j<5;j++){
+    //   virtualarr[j]= this.arr_short_ans[j];
+    // }
+
+    // // virtualarr = this.arr_mutilchoice;
+    // for (var i=4; i>=0; i--) {
+    //   if ((virtualarr[i] === null)||(virtualarr[i] === "")) {
+    //     virtualarr.splice(i, 1);
+    //       // break;       //<-- Uncomment  if only the first term has to be removed
+    //   }
+    // }
+    this.ans_short = this.arr_short_ans.join("{|}");
+
   
 
-  // var virtualarr= new Array;
-  // for(var j=0;j<5;j++){
-  //   virtualarr[j]= this.arr_short_ans[j];
-  // }
+    this.is_answer[this.num_page-1] =true;
+    this.Answer[this.num_page-1] = this.ans_short;   
+  }
 
-  // // virtualarr = this.arr_mutilchoice;
-  // for (var i=4; i>=0; i--) {
-  //   if ((virtualarr[i] === null)||(virtualarr[i] === "")) {
-  //     virtualarr.splice(i, 1);
-  //       // break;       //<-- Uncomment  if only the first term has to be removed
-  //   }
-  // }
-  this.ans_short = this.arr_short_ans.join("{|}");
-
- 
-
-  this.is_answer[this.num_page-1] =true;
-  this.Answer[this.num_page-1] = this.ans_short;   
-}
+  essayQuestionType() {
+    console.log("Sending data to server: " + this.nonAns);   
+  }
 
 
-
- //go to correct slide question
-Goto_currentquestion(number_page:any) {
-
-  this.slides.lockSwipes(false);
-  this.slides.slideTo(number_page,100,true);
-  this.slides.lockSwipes(true); 
-  this.num_page = number_page + 1 ;
-  this.load_data_mutilchoice();
-  this.load_data_shortans();
-  //this.next_button();
-
-}
+  //go to correct slide question
+  Goto_currentquestion(number_page:any) {
+    this.slides.lockSwipes(false);
+    this.slides.slideTo(number_page,100,true);
+    this.slides.lockSwipes(true); 
+    this.num_page = number_page + 1 ;
+    this.load_data_mutilchoice();
+    this.load_data_shortans();
+    //this.next_button();
+  }
 
   /*
   * Show and check all condition: 
-  * [1]check if not answered quetion and click 'next' button, 
+  * [1]check if not answered quetion and clitck 'next' button, 
   * [2]check remain time, 
   * [3]check answer is checked or not checked
   */ 
-
   check_button( ans:any ) {
     let _return = false;
     if(this.Answer[this.num_page-1] == ans ){
