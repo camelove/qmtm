@@ -576,7 +576,7 @@ public prev_button() {
     this.save_data.id_exam = this.view_exam.id_exam;
     this.save_data.userid = this.view_exam.userid;
     this.save_data.remain_time = this.remainingTime; 
-
+    this.save_data.essay = this.essay_ans[this.num_page];
     this.auth.Submit_ans(this.save_data);
   }
 

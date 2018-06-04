@@ -194,13 +194,14 @@
                 
                   <ion-col class="colContent" *ngIf="(i %3==0)&&(item_exam[i].id_qtype==5)">{{essay_ans[i+1]}}</ion-col>
                   <button  class = "button button-positive" (click)="Goto_currentquestion(i+1)" class="colTitle" *ngIf="i %3==0"><div class="paper_sheet_mark">{{number_array[i+1]}} </div></button>
-                  <ion-col  class="colContent"    *ngIf="(i %3==0)&&(item_exam[i].id_qtype!=5)" > {{Answer[i+1]}}</ion-col>
-                  <ion-col  class="colContent"    *ngIf="(i %3==0)&&(item_exam[i].id_qtype!=5)"  >{{essay_ans[i+2]}}</ion-col>
+            
+                    <ion-col  class="colContent"    *ngIf="(i %3==0)&&(item_exam[i+1])&&(item_exam[i+1].id_qtype!=5)" > {{Answer[i+1]}}</ion-col>
+                    <ion-col  class="colContent"    *ngIf="(i %3==0)&&(item_exam[i+1])&&(item_exam[i+1].id_qtype==5)"  >{{essay_ans[i+2]}}</ion-col>
 
                   <button  class = "button button-positive" (click)="Goto_currentquestion(i+2)" class="colTitle" *ngIf="i %3==0"><div class="paper_sheet_mark">{{number_array[i+2]}} </div></button>
-       
-                  <ion-col  class="colContent"    *ngIf="(i %3==0)&&(item_exam[i].id_qtype!=5)" > {{Answer[i+2]}}</ion-col>
-                  <ion-col  class="colContent"    *ngIf="(i %3==0)&&(item_exam[i].id_qtype!=5)"  >{{essay_ans[i+3]}}</ion-col>
+                 
+                    <ion-col  class="colContent"    *ngIf="(i %3==0)&&(item_exam[i+2])&&(item_exam[i+2].id_qtype!=5)" > {{Answer[i+2]}}</ion-col>
+                    <ion-col  class="colContent"    *ngIf="(i %3==0)&&(item_exam[i+2])&&(item_exam[i+2].id_qtype==5)"  >{{essay_ans[i+3]}}</ion-col>
                                
               </ion-row>    
                     
