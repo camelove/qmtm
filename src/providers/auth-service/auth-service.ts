@@ -11,7 +11,20 @@ import 'rxjs/add/operator/map';
   and Angular DI.
 */
 
-/*=============================== TEST IP LOCAL ================================ */
+/*=============================== TEST IP SERVER VINAHAN ================================ */
+let loginURL = 'http://14.231.188.135:8080/QMTM_DEMO/mobile/user_check.jsp';
+let examListURL = 'http://14.231.188.135:8080/QMTM_DEMO/mobile/exam/mytest.jsp';
+let examDetailURL = 'http://14.231.188.135:8080/QMTM_DEMO/mobile/exam/etest.jsp';
+let examPaperURL = 'http://14.231.188.135:8080/QMTM_DEMO/mobile/paper/etest.jsp';
+let refreshPaperURL = 'http://14.231.188.135:8080/QMTM_DEMO/mobile/paper/etest.jsp';
+let saveAnswerURL = 'http://14.231.188.135:8080/QMTM_DEMO/mobile/paper/saveans.jsp';
+let scoreListURL = 'http://14.231.188.135:8080/QMTM_DEMO/mobile/score/myscore.jsp';
+let scoreDetailURL = 'http://14.231.188.135:8080/QMTM_DEMO/mobile/score/scoreinfo.jsp';
+let viewTestURL = 'http://14.231.188.135:8080/QMTM_DEMO/mobile/score/qa.jsp';
+let viewStaticURL = 'http://14.231.188.135:8080/QMTM_DEMO/mobile/score/multistat.jsp';
+let submitURL = 'http://14.231.188.135:8080/QMTM_DEMO/mobile/paper/submitResult.jsp';
+
+/*=============================== TEST IP LOCAL VINAHAN ================================
 let loginURL = 'http://localhost:8080/QMTM_DEMO/mobile/user_check.jsp';
 let examListURL = 'http://localhost:8080/QMTM_DEMO/mobile/exam/mytest.jsp';
 let examDetailURL = 'http://localhost:8080/QMTM_DEMO/mobile/exam/etest.jsp';
@@ -23,8 +36,9 @@ let scoreDetailURL = 'http://localhost:8080/QMTM_DEMO/mobile/score/scoreinfo.jsp
 let viewTestURL = 'http://localhost:8080/QMTM_DEMO/mobile/score/qa.jsp';
 let viewStaticURL = 'http://localhost:8080/QMTM_DEMO/mobile/score/multistat.jsp';
 let submitURL = 'http://localhost:8080/QMTM_DEMO/mobile/paper/submitResult.jsp';
+*/
 
-/*=============================== TEST IP SERVER PUBLIC ================================ 
+/*=============================== TEST IP SERVER PUBLIC KOREA ================================ 
 let loginURL = 'http://61.100.1.238/mobile/user_check.jsp';
 let examListURL = 'http://61.100.1.238/mobile/exam/mytest.jsp';
 let examDetailURL = 'http://61.100.1.238/mobile/exam/etest.jsp';
